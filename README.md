@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Getting Started with React-Firebase Auth
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Use npm install or yarn add after you clone/download the repository.
 
 ## Available Scripts
 
