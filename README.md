@@ -1,5 +1,7 @@
 # Getting Started with React-Firebase Auth
 
+### Use npm install or yarn add after you clone/download the repository.
+
 ## Available Scripts
 
 In the project directory, you can run:
