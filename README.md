@@ -1,4 +1,4 @@
-# Getting Started with React-Firebase Auth
+# Getting Started with React-Firebase CRUD
 
 ### Use npm install or yarn add after you clone/download the repository.
 
