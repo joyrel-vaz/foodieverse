@@ -23,17 +23,39 @@ export default function Dashboard() {
         <>
         <Card>
             <Card.Body>
-                <h2 className="text-center mb-4">Profile</h2>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <strong>Email:</strong> {currentUser.email}
-                <Link to="/update-profile" className="btn btn-primary w-100 mt-3">Update Profile</Link>
+                <div className="text-center mb-4" >
+                    <h2 className="mb-2">Profile</h2>
+
+                    {error && <Alert variant="danger">{error}</Alert>}
+
+                    <strong>Email:</strong> {currentUser.email}
+                </div>                
+
+                <div className="d-flex justify-content-around mt-2">
+                    <Link to="/update-profile" className="btn btn-primary">Update Profile</Link>
+
+                    <Button onClick={handleLogOut}>
+                        Log Out
+                    </Button>
+                </div>
             </Card.Body>
         </Card>
-        <div className="w-100 text-right mt-2">
-            <Button onClick={handleLogOut}>
-                Log Out
-            </Button>
-        </div>
+        <br></br>
+        <Card>
+            <Card.Body>
+                <h2 className="text-center mb-4">Search</h2>
+                <div className="mb-2" >
+                    <input type="text" className=" w-100"></input>
+                </div>                
+
+                <div className="text-right mt-2">
+                    <Button /*onClick={}*/>
+                       Search
+                    </Button>
+                </div>
+            </Card.Body>
+        </Card>
+        
         </>
     )
 }
