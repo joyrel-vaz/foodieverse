@@ -1,9 +1,9 @@
-#This is the INGREDIENT TO RECIPE APP
+# This is the INGREDIENT TO RECIPE APP
 
-##App built using React
+## App built using React
 
-##APP developed by
-###Vritika Naik
-###Rushabh Wadkar
-###Joyrel Vaz
-###Apurva Virgincar
+## APP developed by
+### Vritika Naik
+### Rushabh Wadkar
+### Joyrel Vaz
+### Apurva Virgincar
