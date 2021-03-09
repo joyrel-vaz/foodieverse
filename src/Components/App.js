@@ -9,6 +9,7 @@ import PrivateRoute from './PrivateRoute'
 import ForgotPassword from './ForgotPassword'
 import UpdateProfile from './UpdateProfile'
 import ShoppingList from './ShoppingList'
+import HomeRemedies from './HomeRemedies'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
+              <Route path ="/home-remedies" component={HomeRemedies}/>
             </Switch>
           </AuthProvider>
         </Router>        
