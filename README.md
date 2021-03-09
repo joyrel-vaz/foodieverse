@@ -3,7 +3,7 @@
 ## App built using React
 
 ## APP developed by
-  Vritika Naik
-  Rushabh Wadkar
-  Joyrel Vaz
-  Apurva Virgincar
+  Vritika Naik,
+  Rushabh Wadkar,
+  Joyrel Vaz,
+  Apurva Virgincar.
