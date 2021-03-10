@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore';
 import "firebase/auth"
+import { FireSQL } from 'firesql';
 
 const app = firebase.initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -19,5 +20,6 @@ export const googleProvider = new firebase.auth.GoogleAuthProvider()
 export const appleProvider = new firebase.auth.OAuthProvider('apple.com')
 export const facebookProvider = new firebase.auth.FacebookAuthProvider()
 export const twitterProvider = new firebase.auth.TwitterAuthProvider()
-export const db = firebase.firestore();
+//export const db = firebase.firestore();
+export const fireSQL = new FireSQL(firebase.firestore());
 export default app;
