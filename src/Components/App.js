@@ -9,6 +9,8 @@ import PrivateRoute from './PrivateRoute'
 import ForgotPassword from './ForgotPassword'
 import UpdateProfile from './UpdateProfile'
 import ShoppingList from './ShoppingList'
+import AilmentList from './AilmentList'
+import AilmentCategory from './AilmentCategory'
 import HomeRemedies from './HomeRemedies'
 
 
@@ -27,7 +29,9 @@ function App() {
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={Login} />
               <Route path="/forgot-password" component={ForgotPassword} />
-              <Route path ="/home-remedies" component={HomeRemedies}/>
+              <Route path="/home-remedies/:a_category/:a_name" component={HomeRemedies}/>
+              <Route path="/home-remedies/:a_category" component={AilmentList}/>
+              <Route path="/home-remedies" component={AilmentCategory}/>
             </Switch>
           </AuthProvider>
         </Router>        
