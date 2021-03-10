@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
     function signup(email,password,displayName) {
         const sign = auth.createUserWithEmailAndPassword(email,password)
             .then(function(result) {
+                result.user.sendEmailVerification()
                 return result.user.updateProfile({
                 displayName: displayName
                 })

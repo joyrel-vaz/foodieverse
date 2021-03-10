@@ -25,7 +25,8 @@ export default function SignUp (){
         try{
             setError('');
             setLoading(true);
-            await signup(emailRef.current.value, passwordRef.current.value, displayNameRef.current.value);   
+            await signup(emailRef.current.value, passwordRef.current.value, displayNameRef.current.value);
+            alert("Email verification mail sent.");
             history.push('/')
         }catch(error){
             setError(error.message);
