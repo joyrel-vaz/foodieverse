@@ -9,7 +9,7 @@ function HomeRemedies() {
   const fetchRemedies=async()=>{
 
     try{
-      const data = await db.collection('dadiKeNuske').get();
+      const data = await db.collection('dadiKeNuske').limit(10).get();
       setRemedies(data.docs.map(doc=>doc.data()));
     }catch(error){
       setError(error.message)
@@ -20,7 +20,7 @@ function HomeRemedies() {
   
   useEffect(() => {
     fetchRemedies();
-  });
+  },[]);
 
   return (
         <div>
