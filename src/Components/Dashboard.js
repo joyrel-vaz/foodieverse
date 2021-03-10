@@ -46,9 +46,11 @@ export default function Dashboard() {
                         <h2 className="mb-2">Profile</h2>
 
                         {error && <Alert variant="danger">{error}</Alert>}
-
-                        <strong>Email:</strong> {currentUser && currentUser.email}
-
+                        
+                        <strong>Name:</strong> {currentUser.displayName}<br></br>
+                        <strong>Email:</strong> {currentUser.email}
+                        
+                        {console.log( currentUser)}
                         <Col>
                             <Row className="d-flex justify-content-around mt-2">
                                 <Link to="/update-profile" className="btn btn-primary">Update Profile</Link>

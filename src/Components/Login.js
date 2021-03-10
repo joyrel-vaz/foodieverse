@@ -42,6 +42,7 @@ export default function Login (){
         setLoading(false);
     }
 
+    // eslint-disable-next-line
     async function fbLogin(e){
         e.preventDefault();
 
@@ -57,6 +58,7 @@ export default function Login (){
         setLoading(false);
     }
 
+    // eslint-disable-next-line
     async function twLogin(e){
         e.preventDefault();
 
@@ -72,6 +74,7 @@ export default function Login (){
         setLoading(false);
     }
 
+    // eslint-disable-next-line
     async function appleLogin(e){
         e.preventDefault();
 
@@ -119,10 +122,10 @@ export default function Login (){
                 <Col>
                     <Row className="d-flex align-items-center justify-content-around ">
                         <button class="btn btn-light" onClick={googleLogin}>
-                            <img src="https://img.icons8.com/color/24/000000/google-logo.png" alt="google-logo" className="p-2"/> 
+                            <img src="https://img.icons8.com/color/24/000000/google-logo.png" alt="google-logo" className="p-2"/> Login with Google
                         </button>
 
-                        <button class="btn btn-light" onClick={appleLogin}>
+                        {/* <button class="btn btn-light" onClick={appleLogin}>
                             <img src="https://img.icons8.com/color/30/000000/apple-logo.png" alt="google-logo" className="p-2"/> 
                         </button>
 
@@ -132,7 +135,7 @@ export default function Login (){
 
                         <button class="btn btn-light" onClick={twLogin}>
                             <img src="https://img.icons8.com/color/35/000000/twitter.png" alt="google-logo" className="p-2"/> 
-                        </button>
+                        </button> */}
                     </Row>
                 </Col>
                    
