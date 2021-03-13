@@ -4,19 +4,20 @@ import {fireSQL} from '../firebase';
 import { Alert } from 'react-bootstrap'
 
 function AilmentCategory() {
-    const [categories,setCategories]=useState([])
+    const [uniqueCategories,setUniqueCategories]=useState([])
     const [error, setError] = useState("")
-
+    const [catgs,setCatgs] = useState([]);
   const fetchCategories=async()=>{
 
     try{
     const catgs = await fireSQL.query(`
-    SELECT ailment_category FROM dadiKeNuske
+    SELECT * FROM dadiKeNuske
     `);
 
     //code to filter unique elements 
    const uniqueCatgs =  catgs.map(catgs => catgs.ailment_category).filter((value, index, self) => self.indexOf(value) === index)
-    setCategories(uniqueCatgs)
+    setUniqueCategories(uniqueCatgs)
+    setCatgs(catgs);
 
     }catch(error){
       setError(error.message)
@@ -33,8 +34,11 @@ function AilmentCategory() {
           {error && <Alert variant="danger">{error}</Alert>}
           <ul>
             { 
-              categories.map(c => 
-              <Link to={`/home-remedies/${c}`}><li key={c}>{c}</li></Link>
+              uniqueCategories.map(c => 
+              <Link 
+              to={{ pathname: `/home-remedies/${c}`,
+                    state: catgs}}>
+                <li key={c}>{c}</li></Link>
               )
             }
           </ul>
