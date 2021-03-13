@@ -1,39 +1,32 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState , useEffect} from 'react';
 import { Link, useParams } from "react-router-dom";
-import {fireSQL} from '../firebase';
-import { Alert } from 'react-bootstrap'
 
-function AilmentList() {
+function AilmentList(props) {
     const [ailments,setAilments]=useState([])
-    const [error, setError] = useState("")
     const {a_category} = useParams();
+    let list = []
+  const state = props.location.state;
 
-  const fetchAilments=async()=>{
+    state.forEach((remedy) => {
+    if(remedy.ailment_category === a_category)
+      list.push(remedy);
+  })
 
-    try{
-    const ails = await fireSQL.query(`
-    SELECT ailment_name FROM dadiKeNuske WHERE ailment_category = '${a_category}'
-    `);
-
-    setAilments(ails)
-
-    }catch(error){
-      setError(error.message)
-    }
-  }
-  
   useEffect(() => {
-    fetchAilments();
+    setAilments(list);
   },[]);
+  
+  
 
   return (
         <div>
           <h1>{a_category}</h1>
-          {error && <Alert variant="danger">{error}</Alert>}
           <ul>
             { 
               ailments.map(a => 
-              <Link to={`/home-remedies/${a_category}/${a.ailment_name}`}><li key={a.ailment_name}>{a.ailment_name}</li></Link>
+              <Link to={{ pathname: `/home-remedies/${a.ailment_category}/${a.ailment_name}`,
+                          state:state
+            }}><li key={a.ailment_name}>{a.ailment_name}</li></Link>
               )
             }
           </ul>
