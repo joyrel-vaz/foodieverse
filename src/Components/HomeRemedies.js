@@ -8,7 +8,7 @@ function HomeRemedies(props) {
     const state = props.location.state;
   
     let list = [];
-    state.forEach((d) => {
+    state.forEach((d) => { 
       if(d.ailment_name === a_name)
         list.push(d);
     })
