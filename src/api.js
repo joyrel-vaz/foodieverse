@@ -1,0 +1,1 @@
+export const getRemedies = () => fetch("/home-remedies").then(res => res.json());
