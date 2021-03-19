@@ -5,6 +5,7 @@ import { useAuth } from '../Contexts/AuthContext'
 
 
 
+
 export default function Dashboard() {
     const [error, setError] = useState('')
     const { currentUser, logout } = useAuth()
@@ -46,35 +47,20 @@ export default function Dashboard() {
                         <h2 className="mb-2">Profile</h2>
 
                         {error && <Alert variant="danger">{error}</Alert>}
-                        
-                        <strong>Name:</strong> {currentUser.displayName}<br></br>
-                        <strong>Email:</strong> {currentUser.email}
-                        {console.log( currentUser)}
 
-                        {currentUser.emailVerified ?
-                            <Col>
-                                <Row className="d-flex justify-content-around mt-2">
-                                    <Link to="/update-profile" className="btn btn-primary">Update Profile</Link>
-                                    <Link to="/shopping-list" className="btn btn-primary">Shopping List</Link>
-                                </Row>
-                                <Row className="d-flex justify-content-around mt-2">
-                                    <Button onClick={handleLogOut}>
-                                        Log Out
-                                    </Button>
-                                </Row>
-                            </Col>
-                        :
-                            <div className="text-center mt-3" >
-                                <Alert variant="danger">
-                                    <strong>User Not Verified</strong>
-                                    <br></br>
-                                    Please verify email to avail features. Refresh page if verification has been completed.
-                                </Alert>
-                                    <Button onClick={handleLogOut}>
-                                        Log Out
-                                    </Button>
-                            </div>
-                        }
+                        <strong>Email:</strong> {currentUser && currentUser.email}
+
+                        <Col>
+                            <Row className="d-flex justify-content-around mt-2">
+                                <Link to="/update-profile" className="btn btn-primary">Update Profile</Link>
+                                <Link to="/shopping-list" className="btn btn-primary">Shopping List</Link>
+                            </Row>
+                            <Row className="d-flex justify-content-around mt-2">
+                                <Button onClick={handleLogOut}>
+                                    Log Out
+                                </Button>
+                            </Row>
+                        </Col>                      
                     </div>
                 </div>
                 :

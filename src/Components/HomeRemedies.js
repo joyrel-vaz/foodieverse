@@ -1,30 +1,38 @@
-import React,{useState , useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import React,{useState,useEffect} from 'react';
+import {db} from '../firebase';
+import { Alert } from 'react-bootstrap'
 
-
-function HomeRemedies(props) {
+function HomeRemedies() {
     const [remedies,setRemedies]=useState([])
-    const {a_name} = useParams();
-    const state = props.location.state;
+    const [error, setError] = useState("")
+
+  const fetchRemedies=async()=>{
+
+    try{
+      const data = await db.collection('dadiKeNuske').limit(10).get();
+      setRemedies(data.docs.map(doc=>doc.data()));
+    }catch(error){
+      setError(error.message)
+    }
+    
+    
+  }
   
-    let list = [];
-    state.forEach((d) => { 
-      if(d.ailment_name === a_name)
-        list.push(d);
-    })
-    
-    useEffect(() => {
-      setRemedies(list);
-    },[]);
-    
+  useEffect(() => {
+    fetchRemedies();
+  },[]);
 
   return (
         <div>
-          <h1>Home remedies for {a_name}</h1>
-            { 
-              remedies.map(r => 
-              <p key={r.methods}>{r.methods}</p>)
-            }
+          <h1>Home remedies</h1>
+          {error && <Alert variant="danger">{error}</Alert>}
+          {remedies.map(remedy => (
+            <div>       
+            <h5>{remedy.ailment_name}</h5>
+           <p>{remedy.methods}</p>
+           </div>  
+          ))}
+           
         </div>
   );
 }
