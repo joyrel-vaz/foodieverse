@@ -5,11 +5,10 @@ import { useAuth } from '../Contexts/AuthContext';
 
 
 export default function UpdateProfile (){
-    const displayNameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
     const confirmPasswordRef = useRef();
-    const { currentUser, updateEmail, updatePassword, updateDetails } = useAuth();
+    const { currentUser, updateEmail, updatePassword } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory()
@@ -34,10 +33,6 @@ export default function UpdateProfile (){
             promises.push(updatePassword(passwordRef.current.value)) 
         }
 
-        if(displayNameRef.current.value !== currentUser.displayName){
-            promises.push(updateDetails(displayNameRef.current.value)) 
-        }
-
         Promise.all(promises)
             .then(()=>{
                 history.push("/");
@@ -57,12 +52,6 @@ export default function UpdateProfile (){
                 <h2 className="text-center mb-4">Update Profile</h2>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
-
-                    <Form.Group id="displayName ">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" ref={displayNameRef} defaultValue={currentUser.displayName} required/>
-                    </Form.Group>
-
                     <Form.Group id="email">
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="email" ref={emailRef} defaultValue={currentUser.email} required/>

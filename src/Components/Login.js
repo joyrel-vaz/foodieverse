@@ -1,5 +1,5 @@
 import React,{useRef, useState} from 'react';
-import { Form, Card, Button, Alert, Row, Col} from 'react-bootstrap';
+import { Form, Card, Button, Alert} from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
 
@@ -7,7 +7,7 @@ import { useAuth } from '../Contexts/AuthContext';
 export default function Login (){
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { login,loginGoogle, loginFB, loginTw, loginApple } = useAuth();
+    const { login } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory()
@@ -26,70 +26,6 @@ export default function Login (){
         
         setLoading(false);
     }
-
-    async function googleLogin(e){
-        e.preventDefault();
-
-        try{
-            setError('');
-            setLoading(true);
-            await loginGoogle();
-            history.push('/')   
-        }catch(error){
-            setError(error.message);
-        }
-        
-        setLoading(false);
-    }
-
-    // eslint-disable-next-line
-    async function fbLogin(e){
-        e.preventDefault();
-
-        try{
-            setError('');
-            setLoading(true);
-            await loginFB();
-            history.push('/')   
-        }catch(error){
-            setError(error.message);
-        }
-        
-        setLoading(false);
-    }
-
-    // eslint-disable-next-line
-    async function twLogin(e){
-        e.preventDefault();
-
-        try{
-            setError('');
-            setLoading(true);
-            await loginTw();
-            history.push('/')   
-        }catch(error){
-            setError(error.message);
-        }
-        
-        setLoading(false);
-    }
-
-    // eslint-disable-next-line
-    async function appleLogin(e){
-        e.preventDefault();
-
-        try{
-            setError('');
-            setLoading(true);
-            await loginApple();
-            history.push('/')   
-        }catch(error){
-            setError(error.message);
-        }
-        
-        setLoading(false);
-    }
-
 
     return(
         <>
@@ -114,31 +50,6 @@ export default function Login (){
                 </Form>
                 <div className="w-100 text-center mt-3">
                     <Link to="/forgot-password">Forgot Password?</Link>
-                </div>
-                <hr></hr>
-                <div className="w-100 text-center mt-3 text-muted">
-                    or
-                <br></br>
-                <Col>
-                    <Row className="d-flex align-items-center justify-content-around ">
-                        <button class="btn btn-light" onClick={googleLogin}>
-                            <img src="https://img.icons8.com/color/24/000000/google-logo.png" alt="google-logo" className="p-2"/> Login with Google
-                        </button>
-
-                        {/* <button class="btn btn-light" onClick={appleLogin}>
-                            <img src="https://img.icons8.com/color/30/000000/apple-logo.png" alt="google-logo" className="p-2"/> 
-                        </button>
-
-                        <button class="btn btn-light" onClick={fbLogin}>
-                            <img src="https://img.icons8.com/offices/28/000000/facebook-new.png" alt="google-logo" className="p-2"/> 
-                        </button>
-
-                        <button class="btn btn-light" onClick={twLogin}>
-                            <img src="https://img.icons8.com/color/35/000000/twitter.png" alt="google-logo" className="p-2"/> 
-                        </button> */}
-                    </Row>
-                </Col>
-                   
                 </div>
             </Card.Body>
         </Card>
