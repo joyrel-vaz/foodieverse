@@ -7,13 +7,16 @@ function AilmentCategory() {
     const [catgs,setCatgs] = useState([]);
 
   const fetchCategories=async()=>{
-    const catgs = await getRemedies();
-    //code to filter unique elements 
-   const uniqueCatgs =  catgs.map(catgs => catgs.ailment_category).filter((value, index, self) => self.indexOf(value) === index)
-    setUniqueCategories(uniqueCatgs)
-    setCatgs(catgs);
-
-    }
+    try{
+      const catgs = await getRemedies();
+      //code to filter unique elements 
+      const uniqueCatgs =  catgs.map(catgs => catgs.ailment_category).filter((value, index, self) => self.indexOf(value) === index)
+      setUniqueCategories(uniqueCatgs)
+      setCatgs(catgs);
+    }catch(error){
+      console.log(error);
+    }  
+  }
   
   useEffect(() => {
     fetchCategories();

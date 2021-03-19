@@ -14,7 +14,7 @@ if (result.error) {
 app.use(express.json())
 app.use(cors());
 
-const uri = "mongodb+srv://root:root@ingredient2recipe.uoh3o.mongodb.net/recipe-app?retryWrites=true&w=majority";
+const uri = process.env.MONGO_DB_URI;
 mongoose.connect(uri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
