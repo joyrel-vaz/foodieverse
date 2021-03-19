@@ -8,7 +8,7 @@ const express = require('express'),
 app.use(express.json())
 app.use(cors());
 
-const uri = process.env.MONGO_DB_URI;
+const uri = "mongodb+srv://root:root@ingredient2recipe.uoh3o.mongodb.net/recipe-app?retryWrites=true&w=majority";
 
 mongoose.connect(uri, {
 	useNewUrlParser: true,
