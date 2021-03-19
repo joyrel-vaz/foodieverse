@@ -53,5 +53,6 @@
     "less": "^4.1.1",
     "less-loader": "^8.0.0",
     "style-loader": "^1.3.0"
-  }
+  },
+  "proxy":"http://localhost:8080"
 }
