@@ -12,11 +12,15 @@ import ShoppingList from './ShoppingList'
 import AilmentList from './AilmentList'
 import AilmentCategory from './AilmentCategory'
 import HomeRemedies from './HomeRemedies'
+import NavigationBar from './NavBar'
+import Recipes from './Recipe'
 
 
 function App() {
   
   return (
+    <React.Fragment>
+      <NavigationBar></NavigationBar>
     <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh"}}
     >
       <div className="w-100" style={{maxWidth:"400px", padding:"20px"}}>
@@ -32,11 +36,13 @@ function App() {
               <Route path="/home-remedies/:a_category/:a_name" component={HomeRemedies}/>
               <Route path="/home-remedies/:a_category" component={AilmentList}/>
               <Route path="/home-remedies" component={AilmentCategory}/>
+              <Route path="/recipes" component={Recipes}/>
             </Switch>
           </AuthProvider>
         </Router>        
       </div>
     </Container>
+    </React.Fragment>
    
   );
 }
