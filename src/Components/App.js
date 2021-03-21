@@ -13,7 +13,7 @@ import AilmentList from './AilmentList'
 import AilmentCategory from './AilmentCategory'
 import HomeRemedies from './HomeRemedies'
 import NavigationBar from './NavBar'
-import Recipes from './Recipe'
+import RecipePage from './Recipe'
 
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
               <Route path="/home-remedies/:a_category/:a_name" component={HomeRemedies}/>
               <Route path="/home-remedies/:a_category" component={AilmentList}/>
               <Route path="/home-remedies" component={AilmentCategory}/>
-              <Route path="/recipes" component={Recipes}/>
+              <Route path="/recipes" component={RecipePage}/>
             </Switch>
           </AuthProvider>
         </Router>        
