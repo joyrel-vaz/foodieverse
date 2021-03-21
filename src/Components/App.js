@@ -14,6 +14,7 @@ import AilmentCategory from './AilmentCategory'
 import HomeRemedies from './HomeRemedies'
 import NavigationBar from './NavBar'
 import RecipePage from './Recipe'
+import './App.css';
 
 
 function App() {
