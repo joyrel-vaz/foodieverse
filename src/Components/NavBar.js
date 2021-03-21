@@ -9,13 +9,11 @@ export default function NavigationBar() {
             <>
             <Navbar bg="light" expand="lg">
             <Navbar.Brand href="/">
-      <img
+      {/*<img
         alt="Logo"
-        src="/images/logo.png"
-        width="30"
-        height="30"
-        className="d-inline-block align-top"
-      />{' '}
+        src="images/logo.png"
+        className="d-inline-block align-top img-responsive"
+      />{' '}*/}
       FOODKART
     </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav"/>
@@ -53,7 +51,7 @@ export default function NavigationBar() {
                   <Nav.Link className="login-button"
                   href="/Login">Login</Nav.Link>
                   <Nav.Link
-                  href="/recipe">Recipe Cards</Nav.Link>
+                  href="/recipes">Recipe Cards</Nav.Link>
                 </Nav>
     
                 <Form inline>
