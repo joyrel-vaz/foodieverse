@@ -23,7 +23,7 @@ export default function Dashboard() {
 
     return (
         <>
-        <Card>
+        {/* <Card>
             <Card.Body>
                 <h2 className="text-center mb-4">Search</h2>
                 <div className="mb-2" >
@@ -31,12 +31,12 @@ export default function Dashboard() {
                 </div>                
 
                 <div className="text-right mt-2">
-                    <Button /*onClick={}*/>
+                    <Button onclick={}>
                        Search
                     </Button>
                 </div>
             </Card.Body>
-        </Card>
+        </Card> */}
         <br></br>
         <Card>
             <Card.Body>

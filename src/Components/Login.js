@@ -1,5 +1,5 @@
 import React,{useRef, useState} from 'react';
-import { Form, Card, Button, Alert, Row, Col} from 'react-bootstrap';
+import { Form, Card, Button, Alert, Row, Col, Image} from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
 
@@ -121,8 +121,8 @@ export default function Login (){
                 <br></br>
                 <Col>
                     <Row className="d-flex align-items-center justify-content-around ">
-                        <button class="btn btn-light" onClick={googleLogin}>
-                            <img src="https://img.icons8.com/color/24/000000/google-logo.png" alt="google-logo" className="p-2"/> Login with Google
+                        <button class="btn btn-outline-dark" onClick={googleLogin}>
+                            <Image src="https://img.icons8.com/color/24/000000/google-logo.png" /> Login with Google
                         </button>
 
                         {/* <button class="btn btn-light" onClick={appleLogin}>

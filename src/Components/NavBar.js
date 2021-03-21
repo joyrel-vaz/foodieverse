@@ -24,13 +24,13 @@ export default function NavigationBar() {
                   <NavDropdown title="Features"
                   id="basic-nav-dropdown">
                     <NavDropdown.Item
-                    href="#recipe">Recipes</NavDropdown.Item>
+                    href="/recipes">Recipes</NavDropdown.Item>
                     <NavDropdown.Item
-                    href="#">Dadi Ke Nuske</NavDropdown.Item>
+                    href="/home-remedies">Dadi Ke Nuske</NavDropdown.Item>
                     <NavDropdown.Item
                     href="#">Meal Planner</NavDropdown.Item>
                     <NavDropdown.Item
-                    href="#">Shopping List</NavDropdown.Item>
+                    href="/shopping-list">Shopping List</NavDropdown.Item>
                     <NavDropdown.Item
                     href="#">Favourites</NavDropdown.Item>
                     <NavDropdown.Item
