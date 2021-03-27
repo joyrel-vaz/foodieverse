@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import './Recipe.css';
-import Card2 from './Card2';
+import './Recipe.css'
+import Card2 from './Card2'
+import Search from './Search'
+
+import {Container, Row, Col} from 'react-bootstrap'
 export default class Recipes extends Component {
     
     constructor(props){
@@ -14,20 +17,46 @@ export default class Recipes extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div>
-            <div className="row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-8">
-                </div>
-                <div className="col-sm-2"></div>
-            </div>
-            <div className="row">
-            <Card2/>
-            
-            </div> 
-            </div> 
-        </div>
+            <>
+            <br></br><br></br>
+            <Search></Search>
+            <Container fluid>
+                <Row>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                </Row>
+                <Row>
+                <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                
+                </Row>
+                <Row>
+                <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                
+                </Row>
+                <Row>
+                <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                
+                </Row>
+                <Row>
+                <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                    <Col><Card2></Card2></Col>
+                
+                </Row>
+                </Container>
+            </>
         )
     }
 }
