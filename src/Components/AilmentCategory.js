@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { Link} from "react-router-dom";
 import {getRemedies} from '../api.js';
+import {Card, CardColumns}  from 'react-bootstrap'
 
 function AilmentCategory() {
     const [uniqueCategories,setUniqueCategories]=useState([])
@@ -24,17 +25,24 @@ function AilmentCategory() {
 
   return (
         <div>
-          <h1>Ailment categories</h1>
-          <ul>
+          <CardColumns>
             { 
               uniqueCategories.map(c => 
-              <Link 
-              to={{ pathname: `/home-remedies/${c}`,
-                    state: catgs}}>
-                <li key={c}>{c}</li></Link>
+                <Card className="text-center">
+                  <Card.Body>
+                    <Card.Title> 
+                      <ul>
+                    <Link 
+                    to={{ pathname: `/home-remedies/${c}`,
+                          state: catgs}}>
+                      <li key={c}>{c}</li></Link>
+                      </ul>
+                    </Card.Title>
+                  </Card.Body>
+                </Card>
               )
             }
-          </ul>
+          </CardColumns>
         </div>
   );
 }

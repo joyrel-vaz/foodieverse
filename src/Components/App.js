@@ -15,8 +15,13 @@ import HomeRemedies from './HomeRemedies'
 import NavigationBar from './NavBar'
 import RecipePage from './Recipe'
 import Home from './Home'
+import Settings from './Settings'
 import Footer from './Footer'
+import Help from './Help'
+import Demo from './Demo'
 import './App.css';
+import Feedback from './Feedback'
+import Payments from './Payments'
 
 
 function App() {
@@ -41,6 +46,11 @@ function App() {
               <Route path="/home-remedies/:a_category" component={AilmentList}/>
               <Route path="/home-remedies" component={AilmentCategory}/>
               <Route exact path="/recipes" component={RecipePage}/>
+              <Route path="/settings" component={Settings}/>
+              <Route path="/help" component={Help}/>
+              <Route path="/demo" component={Demo}/>
+              <Route path="/feedback" component={Feedback}/>
+              <Route path="/payments" component={Payments}/>
             </Switch>
           </AuthProvider>
         </Router>        

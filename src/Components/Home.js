@@ -1,5 +1,5 @@
 import React from 'react'
-import { Jumbotron, Button, Form, FormControl, Image}  from 'react-bootstrap'
+import { Jumbotron}  from 'react-bootstrap'
 import './Home.css'
 import ControlledCarousel from './ControlledCarousel'
 import Recipe from './Recipe'
