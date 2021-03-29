@@ -1,5 +1,6 @@
 import React from 'react'
-import {Button, Nav, Navbar, NavDropdown, Form, FormControl}  from 'react-bootstrap'
+import {Nav, Navbar, NavDropdown}  from 'react-bootstrap'
+import './NavBar.css'
 
 export default function NavigationBar() {
 
@@ -7,13 +8,8 @@ export default function NavigationBar() {
     return (
         <div>
             <>
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="light" expand="lg" fixed="top">
             <Navbar.Brand href="/">
-      {/*<img
-        alt="Logo"
-        src="images/logo.png"
-        className="d-inline-block align-top img-responsive"
-      />{' '}*/}
       FOODKART
     </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav"/>
@@ -28,37 +24,25 @@ export default function NavigationBar() {
                     <NavDropdown.Item
                     href="/home-remedies">Dadi Ke Nuske</NavDropdown.Item>
                     <NavDropdown.Item
-                    href="#">Meal Planner</NavDropdown.Item>
+                    href="/mealPlanner">Meal Planner</NavDropdown.Item>
                     <NavDropdown.Item
                     href="/shopping-list">Shopping List</NavDropdown.Item>
                     <NavDropdown.Item
-                    href="#">Favourites</NavDropdown.Item>
+                    href="/settings">Settings</NavDropdown.Item>
                     <NavDropdown.Item
-                    href="#">Settings</NavDropdown.Item>
+                    href="/foodium">Foodium</NavDropdown.Item>
                     <NavDropdown.Item
-                    href="#">Foodium</NavDropdown.Item>
+                    href="/help">Help</NavDropdown.Item>
                     <NavDropdown.Item
-                    href="#">Help</NavDropdown.Item>
-                    <NavDropdown.Item
-                    href="#">Recipe of the day</NavDropdown.Item>
+                    href="/surprise">Surprise</NavDropdown.Item>
                   </NavDropdown>
                   <Nav.Link
-                  href="#">About</Nav.Link>
+                  href="/about">About</Nav.Link>
                    <Nav.Link
-                  href="#">Demo</Nav.Link>
-                   <Nav.Link
-                  href="#">Contact Us</Nav.Link>
+                  href="/contact">Contact Us</Nav.Link>
                   <Nav.Link className="login-button"
                   href="/Login">Login</Nav.Link>
-                  <Nav.Link
-                  href="/recipes">Recipe Cards</Nav.Link>
                 </Nav>
-    
-                <Form inline>
-                  <FormControl type="text"
-                  placeholder="Search" className="mr-sm-2"/>
-                  <Button variant="outline-success">Search</Button>
-                  </Form>
               </Navbar.Collapse>
             </Navbar>
   </>

@@ -1,5 +1,6 @@
 import React,{useState , useEffect} from 'react';
 import { Link, useParams } from "react-router-dom";
+import {Card, CardColumns}  from 'react-bootstrap'
 
 function AilmentList(props) {
     const [ailments,setAilments]=useState([])
@@ -21,15 +22,23 @@ function AilmentList(props) {
   return (
         <div>
           <h1>{a_category}</h1>
-          <ul>
-            { 
-              ailments.map(a => 
-              <Link to={{ pathname: `/home-remedies/${a.ailment_category}/${a.ailment_name}`,
+          <CardColumns>
+           {     
+             ailments.map(a => 
+              <Card className="text-center">
+                <Card.Body>
+                  <Card.Title> 
+                    <ul>
+                      <Link to={{ pathname: `/home-remedies/${a.ailment_category}/${a.ailment_name}`,
                           state:state
-            }}><li key={a.ailment_name}>{a.ailment_name}</li></Link>
+                    }}><li key={a.ailment_name}>{a.ailment_name}</li></Link>
+                    </ul>
+                  </Card.Title>
+                  </Card.Body>
+                </Card>
               )
             }
-          </ul>
+          </CardColumns>
         </div>
   );
 }
