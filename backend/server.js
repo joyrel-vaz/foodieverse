@@ -39,7 +39,7 @@ app.get('/api/recipes',(req,res) => {
         else {
         res.json(recipesFound);
         }
-    });
+    }).limit(10);
     });
 
 
