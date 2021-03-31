@@ -3,6 +3,7 @@ app = express(),
 cors = require('cors'),
 mongoose = require('mongoose'),
 dadiKeNuske = require('./models/dadiKeNuske.js'),
+recipe = require('./models/recipe.js'),
 PORT = 8080;
 
 const dotenv = require('dotenv');
@@ -21,7 +22,7 @@ mongoose.connect(uri, {
 }).then(() => console.log("Database Connected Successfully"))
 .catch(err => console.log(err));;
 
-app.get('/home-remedies',(req,res) => {
+app.get('/api/home-remedies',(req,res) => {
 dadiKeNuske.find(function(err,dKNFound)
 {
     if(err) console.log(err);
@@ -30,6 +31,16 @@ dadiKeNuske.find(function(err,dKNFound)
     }
 });
 });
+
+app.get('/api/recipes',(req,res) => {
+    recipe.find( {"Cook Time" : 10} , function(err,recipesFound)
+    {
+        if(err) console.log(err);
+        else {
+        res.json(recipesFound);
+        }
+    });
+    });
 
 
 app.listen(PORT, ()=> console.log(`Listening on port ${PORT}`));
