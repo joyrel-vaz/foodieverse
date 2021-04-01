@@ -41,7 +41,7 @@ app.get('/api/recipes',(req,res) => {
         else {
         res.json(recipesFound);
         }
-    }).limit(10).sort({ score : { $meta : 'textScore' } });
+    }).limit(12).sort({ score : { $meta : 'textScore' } });
     });
 
 
