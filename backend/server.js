@@ -23,7 +23,7 @@ mongoose.connect(uri, {
 .catch(err => console.log(err));;
 
 app.get('/api/home-remedies',(req,res) => {
-dadiKeNuske.find(function(err,dKNFound)
+dadiKeNuske.find((err,dKNFound) =>
 {
     if(err) console.log(err);
     else {
@@ -33,13 +33,15 @@ dadiKeNuske.find(function(err,dKNFound)
 });
 
 app.get('/api/recipes',(req,res) => {
-    recipe.find( {"Cook Time" : 10} , function(err,recipesFound)
+    recipe.find( {$text : {$search : "bean ham"}} ,  
+    { score : { $meta: "textScore" } } , 
+    function(err,recipesFound)
     {
         if(err) console.log(err);
         else {
         res.json(recipesFound);
         }
-    }).limit(10);
+    }).limit(10).sort({ score : { $meta : 'textScore' } });
     });
 
 
