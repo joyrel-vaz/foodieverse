@@ -32,6 +32,7 @@ export default function Recipes () {
                     {
                     recipes.map(r =>
                     <Col><Card2 
+                    id = {r.__id}
                     title = {r["Recipe Title"]}
                     instructions = {r["Instructions"]}
                     ingredients = {r["Ingredients"]}
