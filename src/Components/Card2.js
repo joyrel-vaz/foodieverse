@@ -72,11 +72,6 @@ export default function RecipeReviewCard(props) {
         image={image}
         title={title}
       />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {ingredients}
-        </Typography>
-      </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
@@ -97,6 +92,8 @@ export default function RecipeReviewCard(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
+        <Typography paragraph>Ingredients:</Typography>
+        <Typography color="textSecondary" paragraph>{ingredients}</Typography>
           <Typography paragraph>Method:</Typography>
           <Typography paragraph>
             {instructions}
