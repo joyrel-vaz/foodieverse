@@ -13,7 +13,7 @@ import AilmentList from './AilmentList'
 import AilmentCategory from './AilmentCategory'
 import HomeRemedies from './HomeRemedies'
 import NavigationBar from './NavBar'
-import RecipePage from './Recipe'
+import Recipes from './Recipe'
 import Home from './Home'
 import Settings from './Settings'
 import Footer from './Footer'
@@ -45,7 +45,7 @@ function App() {
               <Route path="/home-remedies/:a_category/:a_name" component={HomeRemedies}/>
               <Route path="/home-remedies/:a_category" component={AilmentList}/>
               <Route path="/home-remedies" component={AilmentCategory}/>
-              <Route exact path="/recipes" component={RecipePage}/>
+              <Route exact path="/recipes" component={Recipes}/>
               <Route path="/settings" component={Settings}/>
               <Route path="/help" component={Help}/>
               <Route path="/demo" component={Demo}/>
