@@ -4,6 +4,7 @@ cors = require('cors'),
 mongoose = require('mongoose'),
 dadiKeNuske = require('./models/dadiKeNuske.js'),
 recipe = require('./models/recipe.js'),
+shopList = require('./models/shopList.js'),
 PORT = 8080;
 
 
@@ -58,6 +59,13 @@ app.post('/api/createShop',(req,res) => {
           res.send();
         });
       }); 
+});
+
+app.get('/api/userShopList/:id',(req,res) => {\
+    shopList.findOne({ 'userID': req.params.id }, 'userID Items', function (err, list) {
+        if (err) return handleError(err);
+        res.json(list);
+      });
 });
 
 

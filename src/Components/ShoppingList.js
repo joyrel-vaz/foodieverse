@@ -1,10 +1,30 @@
-import React,{useRef, useState} from 'react';
+import React,{useRef, useState, useEffect} from 'react';
 import { Form, Card, Button, Alert} from 'react-bootstrap';
+import { useAuth } from '../Contexts/AuthContext'
+import {Container, Row, Col} from 'react-bootstrap'
+import {getShopList} from '../api.js'
 
 export default function ShoppingList() {
     const itemRef = useRef();
     const [error, setError] = useState("");
+    const [shopList, setShopList] = useState({});
     const [loading, setLoading] = useState(false);
+    const { currentUser } = useAuth()
+
+    
+    const fetchShopList=async()=>{
+        try{
+          var shopList = await getShopList(currentUser.email);
+          setShopList(shopList);
+        }catch(error){
+            setError(error);
+        }  
+      }
+      
+      useEffect(() => {
+        fetchShopList();
+      },[]);
+
     function addItem(e){
 
     }
@@ -33,7 +53,13 @@ export default function ShoppingList() {
 
         <Card>
             <Card.Body className="text-center">
-                //shoppinglist display
+                {  shopList.userID}
+
+                {shopList.Items.map(item=>
+                    <ul>
+                        <li key={item}>{item}</li>
+                    </ul>
+                    )} 
             </Card.Body>
         </Card>
         
