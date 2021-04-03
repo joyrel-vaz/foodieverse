@@ -19,6 +19,7 @@ export default function Login (){
             setError('');
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value);
+            //check shoplist
             history.push('/')   
         }catch(error){
             setError(error.message);
@@ -34,6 +35,7 @@ export default function Login (){
             setError('');
             setLoading(true);
             await loginGoogle();
+            //check shoplist
             history.push('/')   
         }catch(error){
             setError(error.message);

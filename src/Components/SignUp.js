@@ -2,6 +2,7 @@ import React,{useRef, useState} from 'react';
 import { Form, Card, Button, Alert} from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
+import {createShop} from '../api.js'
 
 
 export default function SignUp (){
@@ -27,6 +28,12 @@ export default function SignUp (){
             setLoading(true);
             await signup(emailRef.current.value, passwordRef.current.value, displayNameRef.current.value);
             alert("Email verification mail sent.");
+            //create entry for shopping list
+            try{
+                createShop(emailRef.current.value);
+            }catch(error){
+                console.log(error.message);
+            }
             history.push('/')
         }catch(error){
             setError(error.message);
