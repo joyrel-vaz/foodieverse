@@ -1,7 +1,7 @@
 import React,{useRef, useState, useEffect} from 'react';
 import { Form, Card, Button, Alert} from 'react-bootstrap';
 import { useAuth } from '../Contexts/AuthContext'
-import {Container, Row, Col} from 'react-bootstrap'
+import {Row, Col} from 'react-bootstrap'
 import {getShopList, addShopList, delShopList} from '../api.js'
 
 export default function ShoppingList() {
@@ -11,7 +11,7 @@ export default function ShoppingList() {
                                              _id: NaN,
                                              userID: "User Not Logged In"});
     const [loading, setLoading] = useState(false);
-    const { currentUser } = useAuth()
+    const { currentUser } = useAuth();
 
     const fetchShopList=async()=>{
         try{
@@ -34,6 +34,7 @@ export default function ShoppingList() {
             setLoading(true);
             //shoplist update
             var shopList = await addShopList(currentUser.email,itemRef.current.value);
+            itemRef.current.value='';
             //console.log(shopList);
             if(shopList._id){
                 setShopList(shopList);
@@ -42,6 +43,7 @@ export default function ShoppingList() {
             }
             setLoading(false);
         }catch(error){
+            itemRef.current.value='';
             setError(error);
         }
     }
@@ -69,7 +71,7 @@ export default function ShoppingList() {
                 <Form onSubmit={addItem}>
                     <Form.Group id="addItem">
                         <Form.Label>Add Item</Form.Label>
-                        <Form.Control type="text" ref={itemRef}required/>
+                        <Form.Control type="text" ref={itemRef} required placeholder="Item Name"/>
                     </Form.Group>
 
                    
