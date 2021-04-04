@@ -11,3 +11,8 @@ export function getShopList(user){
     console.log("in getshop API")
     return fetch("/api/userShopList/"+user).then(res => res.json());
 }
+
+export function updateShopList(user,item){
+    console.log("in updateshop API")
+    return fetch("/api/userShopList/"+user+"/"+item).then(res => res.json());
+}

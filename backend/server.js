@@ -61,9 +61,18 @@ app.post('/api/createShop',(req,res) => {
       }); 
 });
 
-app.get('/api/userShopList/:id',(req,res) => {\
+app.get('/api/userShopList/:id',(req,res) => {
     shopList.findOne({ 'userID': req.params.id }, 'userID Items', function (err, list) {
         if (err) return handleError(err);
+        // console.log(list);
+        res.json(list);
+      });
+});
+
+app.get('/api/userShopList/:id/:item',(req,res) => {
+    shopList.findOneAndUpdate({'userID': req.params.id}, { $push:{Items:req.params.item} }, {new:true}, function (err, list) {
+        if (err) return handleError(err);
+        // console.log(list);
         res.json(list);
       });
 });
