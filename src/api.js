@@ -1,5 +1,12 @@
+
 export const getRemedies = () => fetch("/api/home-remedies").then(res => res.json());
-export const getRecipes = () => fetch("/api/recipes").then(res => res.json());
+
+export const getRecipes = async (search) => {
+    const url = `/api/recipes${search}`;
+    const res = await fetch(url);
+    return await res.json();
+
+}
 
 export function createShop(user){
     const data = { userID: user };
