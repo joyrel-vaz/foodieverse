@@ -35,16 +35,28 @@ app.get('/api/home-remedies',(req,res) => {
 });
 
 app.get('/api/recipes',(req,res) => {
-    recipe.find( {$text : {$search : "bean ham"}} ,  
-    { score : { $meta: "textScore" } } , 
-    function(err,recipesFound)
-    {
-        if(err) console.log(err);
-        else {
-        res.json(recipesFound);
-        }
-    }).limit(12).sort({ score : { $meta : 'textScore' } });
-});
+    let searchTerm = req.query.searchTerm;
+    if(searchTerm === ""){
+        recipe.find({},(err,recipesFound) =>{
+            if(err) console.log(err);
+            else {
+            res.json(recipesFound);
+            }
+        }).limit(12)
+    }
+
+    else{ 
+        recipe.find( {$text : {$search : searchTerm}} ,  
+            { score : { $meta: "textScore" } } , 
+            function(err,recipesFound)
+            {
+                if(err) console.log(err);
+                else {
+                res.json(recipesFound);
+                }
+            }).limit(12).sort({ score : { $meta : 'textScore' } });
+}});
+
 
 app.post('/api/createShop',(req,res) => {
     console.log("In createshop");
@@ -61,9 +73,9 @@ app.post('/api/createShop',(req,res) => {
       }); 
 });
 
-app.get('/api/userShopList/:id',(req,res) => {\
+app.get('/api/userShopList/:id',(req,res) => {
     shopList.findOne({ 'userID': req.params.id }, 'userID Items', function (err, list) {
-        if (err) return handleError(err);
+        if (err) return console.err(err);
         res.json(list);
       });
 });
