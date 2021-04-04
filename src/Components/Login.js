@@ -2,12 +2,13 @@ import React,{useRef, useState} from 'react';
 import { Form, Card, Button, Alert, Row, Col, Image, Container} from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
+import {createShop} from '../api.js'
 
 
 export default function Login (){
     const emailRef = useRef();
     const passwordRef = useRef();
-    const { login,loginGoogle, loginFB, loginTw, loginApple } = useAuth();
+    const { login, loginGoogle, loginFB, loginTw, loginApple, currentUser } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory()
@@ -19,7 +20,6 @@ export default function Login (){
             setError('');
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value);
-            //check shoplist
             history.push('/')   
         }catch(error){
             setError(error.message);
@@ -34,8 +34,13 @@ export default function Login (){
         try{
             setError('');
             setLoading(true);
-            await loginGoogle();
+            var local = await loginGoogle();
             //check shoplist
+            try{
+                createShop(local.user.email);
+            }catch(error){
+                console.log(error.message);
+            }
             history.push('/')   
         }catch(error){
             setError(error.message);
