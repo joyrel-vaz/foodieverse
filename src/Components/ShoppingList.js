@@ -34,7 +34,12 @@ export default function ShoppingList() {
             setLoading(true);
             //shoplist update
             var shopList = await addShopList(currentUser.email,itemRef.current.value);
-            setShopList(shopList);
+            //console.log(shopList);
+            if(shopList._id){
+                setShopList(shopList);
+            }else{
+                setError(shopList.userID);
+            }
             setLoading(false);
         }catch(error){
             setError(error);
@@ -78,16 +83,15 @@ export default function ShoppingList() {
 
         <Card>
             <Card.Body className="text-center">
-            {shopList.userID}
             <Col>
-            {shopList.Items ? shopList.Items.map(item=>
+            {shopList.Items.length>0 ? shopList.Items.map(item=>
                 <Row>
                     <Col>{item}</Col>
                     <Col><Button onClick={()=>delItem(item)} disabled={loading}>delete</Button></Col>
                 </Row>
                 )
                 :
-                "empty list"
+                "Your Shopping List is Empty."
             } 
             </Col>
             

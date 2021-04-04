@@ -71,11 +71,26 @@ app.get('/api/userShopList/:id',(req,res) => {
 });
 
 app.get('/api/userShopList/add/:id/:item',(req,res) => {
-    shopList.findOneAndUpdate({'userID': req.params.id}, { $push:{Items:req.params.item} }, {new:true}, function (err, list) {
-        if (err) return handleError(err);
-        // console.log(list);
-        res.json(list);
-      });
+    shopList.exists({'userID': req.params.id, Items:{"$in": [req.params.item]}},function (err, doc){
+        if (err){
+            console.log(err)
+        }else{
+            //console.log("Result :", doc);
+            if(doc==false){
+                shopList.findOneAndUpdate({'userID': req.params.id}, { $push:{Items:req.params.item} }, {new:true}, function (err, list) {
+                if (err) return handleError(err);
+                // console.log(list);
+                res.json(list);
+              });
+            }else{
+                res.json({Items: [],
+                    _id: null,
+                    userID: "Item Already Exists!"});
+            }
+        }
+    });
+
+    
 });
 
 app.get('/api/userShopList/del/:id/:item',(req,res) => {
