@@ -49,17 +49,28 @@ app.get('/api/recipes',(req,res) => {
 
 app.post('/api/createShop',(req,res) => {
     console.log("In createshop");
-    MongoClient.connect(uri,{ useUnifiedTopology: true }, function(err, db) {
-        if (err) throw err;
-        var dbo = db.db("recipe-app");
-        var myobj = { userID: req.body.userID };
-        dbo.collection("shoppingList").insertOne(myobj, function(err) {
-          if (err) throw err;
-          db.close();
-          console.log("ShoppingList Document created");
-          res.send();
-        });
-      }); 
+    shopList.exists({'userID': req.body.userID},function (err, doc){
+        if (err){
+            console.log(err)
+        }else{
+            if(!doc){
+                MongoClient.connect(uri,{ useUnifiedTopology: true }, function(err, db) {
+                    if (err) throw err;
+                    var dbo = db.db("recipe-app");
+                    var myobj = { userID: req.body.userID };
+                    dbo.collection("shoppingList").insertOne(myobj, function(err) {
+                    if (err) throw err;
+                    db.close();
+                    console.log("ShoppingList Document created");
+                    res.send();
+                    });
+                });
+            }else{
+                console.log("ShoppingList Document Exists");
+                res.send();
+            }            
+        }
+    });
 });
 
 app.get('/api/userShopList/:id',(req,res) => {
