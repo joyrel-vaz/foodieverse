@@ -2,23 +2,21 @@ import React,{useRef, useState, useEffect} from 'react';
 import { Form, Card, Button, Alert} from 'react-bootstrap';
 import { useAuth } from '../Contexts/AuthContext'
 import {Container, Row, Col} from 'react-bootstrap'
-import {getShopList, updateShopList} from '../api.js'
+import {getShopList, addShopList, delShopList} from '../api.js'
 
 export default function ShoppingList() {
     const itemRef = useRef();
     const [error, setError] = useState("");
-    const [shopList, setShopList] = useState({Items: ["No Items added"],
+    const [shopList, setShopList] = useState({Items: [],
                                              _id: NaN,
                                              userID: "User Not Logged In"});
     const [loading, setLoading] = useState(false);
     const { currentUser } = useAuth()
 
-    console.log(currentUser.email)
     const fetchShopList=async()=>{
         try{
             //get user shopList
             var shopList = await getShopList(currentUser.email);
-            console.log(shopList);
             setShopList(shopList);
         }catch(error){
             setError(error);
@@ -35,7 +33,20 @@ export default function ShoppingList() {
             setError('');
             setLoading(true);
             //shoplist update
-            var shopList = await updateShopList(currentUser.email,itemRef.current.value);
+            var shopList = await addShopList(currentUser.email,itemRef.current.value);
+            setShopList(shopList);
+            setLoading(false);
+        }catch(error){
+            setError(error);
+        }
+    }
+
+    async function delItem(item){
+        try{
+            setError('');
+            setLoading(true);
+            //shoplist update
+            var shopList = await delShopList(currentUser.email,item);
             setShopList(shopList);
             setLoading(false);
         }catch(error){
@@ -68,15 +79,18 @@ export default function ShoppingList() {
         <Card>
             <Card.Body className="text-center">
             {shopList.userID}
-
+            <Col>
             {shopList.Items ? shopList.Items.map(item=>
-                <ul>
-                    <li key={item}>{item}</li>
-                </ul>
+                <Row>
+                    <Col>{item}</Col>
+                    <Col><Button onClick={()=>delItem(item)} disabled={loading}>delete</Button></Col>
+                </Row>
                 )
                 :
                 "empty list"
             } 
+            </Col>
+            
             </Card.Body>
         </Card>
         

@@ -12,7 +12,12 @@ export function getShopList(user){
     return fetch("/api/userShopList/"+user).then(res => res.json());
 }
 
-export function updateShopList(user,item){
-    console.log("in updateshop API")
-    return fetch("/api/userShopList/"+user+"/"+item).then(res => res.json());
+export function addShopList(user,item){
+    console.log("in updateshop add API")
+    return fetch("/api/userShopList/add/"+user+"/"+item).then(res => res.json());
+}
+
+export function delShopList(user,item){
+    console.log("in updateshop del API")
+    return fetch("/api/userShopList/del/"+user+"/"+item).then(res => res.json());
 }

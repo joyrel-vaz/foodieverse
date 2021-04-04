@@ -22,6 +22,7 @@ var MongoClient = require('mongodb').MongoClient;
 mongoose.connect(uri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
+    useFindAndModify: false,
 }).then(() => console.log("Database Connected Successfully"))
 .catch(err => console.log(err));;
 
@@ -69,8 +70,16 @@ app.get('/api/userShopList/:id',(req,res) => {
       });
 });
 
-app.get('/api/userShopList/:id/:item',(req,res) => {
+app.get('/api/userShopList/add/:id/:item',(req,res) => {
     shopList.findOneAndUpdate({'userID': req.params.id}, { $push:{Items:req.params.item} }, {new:true}, function (err, list) {
+        if (err) return handleError(err);
+        // console.log(list);
+        res.json(list);
+      });
+});
+
+app.get('/api/userShopList/del/:id/:item',(req,res) => {
+    shopList.findOneAndUpdate({'userID': req.params.id}, { $pull:{Items:req.params.item} }, {new:true, multi:false}, function (err, list) {
         if (err) return handleError(err);
         // console.log(list);
         res.json(list);
