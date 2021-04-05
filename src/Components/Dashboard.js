@@ -49,7 +49,6 @@ export default function Dashboard() {
                         
                         <strong>Name:</strong> {currentUser.displayName}<br></br>
                         <strong>Email:</strong> {currentUser.email}
-                        {console.log( currentUser)}
 
                         {currentUser.emailVerified ?
                             <Col>

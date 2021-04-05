@@ -1,5 +1,5 @@
 import React,{useRef, useState} from 'react';
-import { Form, Card, Button, Alert} from 'react-bootstrap';
+import { Form, Card, Button, Alert, Container} from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
 import {createShop} from '../api.js'
@@ -44,6 +44,9 @@ export default function SignUp (){
 
     return(
         <>
+         <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'3rem 0'}}
+    >
+         <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
         <Card>
             <Card.Body>
                 <h2 className="text-center mb-4">Sign Up</h2>
@@ -78,7 +81,8 @@ export default function SignUp (){
         <div className="w-100 text-center mt-2">
             Already have an account? <Link to="/login">Log In</Link>
         </div>
-        
+        </div>
+        </Container>
         </>
     );
 }

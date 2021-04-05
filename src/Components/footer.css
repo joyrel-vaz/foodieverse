@@ -5,3 +5,9 @@
 .nav-footer{
     color:black !important;
 }
+
+.footer-list{
+    list-style-type: none;
+    text-align:right;
+    margin-top:0.5rem;
+}

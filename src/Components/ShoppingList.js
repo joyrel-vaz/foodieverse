@@ -1,21 +1,23 @@
 import React,{useRef, useState, useEffect} from 'react';
 import { Form, Card, Button, Alert} from 'react-bootstrap';
 import { useAuth } from '../Contexts/AuthContext'
-import {Container, Row, Col} from 'react-bootstrap'
-import {getShopList} from '../api.js'
+import {Row, Col} from 'react-bootstrap'
+import {getShopList, addShopList, delShopList} from '../api.js'
 
 export default function ShoppingList() {
     const itemRef = useRef();
     const [error, setError] = useState("");
-    const [shopList, setShopList] = useState({});
+    const [shopList, setShopList] = useState({Items: [],
+                                             _id: NaN,
+                                             userID: "User Not Logged In"});
     const [loading, setLoading] = useState(false);
-    const { currentUser } = useAuth()
+    const { currentUser } = useAuth();
 
-    
     const fetchShopList=async()=>{
         try{
-          var shopList = await getShopList(currentUser.email);
-          setShopList(shopList);
+            //get user shopList
+            var shopList = await getShopList(currentUser.email);
+            setShopList(shopList);
         }catch(error){
             setError(error);
         }  
@@ -25,8 +27,38 @@ export default function ShoppingList() {
         fetchShopList();
       },[]);
 
-    function addItem(e){
+    async function addItem(e){
+        e.preventDefault();
+        try{
+            setError('');
+            setLoading(true);
+            //shoplist update
+            var shopList = await addShopList(currentUser.email,itemRef.current.value);
+            itemRef.current.value='';
+            //console.log(shopList);
+            if(shopList._id){
+                setShopList(shopList);
+            }else{
+                setError(shopList.userID);
+            }
+            setLoading(false);
+        }catch(error){
+            itemRef.current.value='';
+            setError(error);
+        }
+    }
 
+    async function delItem(item){
+        try{
+            setError('');
+            setLoading(true);
+            //shoplist update
+            var shopList = await delShopList(currentUser.email,item);
+            setShopList(shopList);
+            setLoading(false);
+        }catch(error){
+            setError(error);
+        }
     }
 
     return (
@@ -39,7 +71,7 @@ export default function ShoppingList() {
                 <Form onSubmit={addItem}>
                     <Form.Group id="addItem">
                         <Form.Label>Add Item</Form.Label>
-                        <Form.Control type="text" ref={itemRef} required/>
+                        <Form.Control type="text" ref={itemRef} required placeholder="Item Name"/>
                     </Form.Group>
 
                    
@@ -53,16 +85,20 @@ export default function ShoppingList() {
 
         <Card>
             <Card.Body className="text-center">
-                {  shopList.userID}
-
-                {shopList.Items.map(item=>
-                    <ul>
-                        <li key={item}>{item}</li>
-                    </ul>
-                    )} 
+            <Col>
+            {shopList.Items.length>0 ? shopList.Items.map(item=>
+                <Row>
+                    <Col>{item}</Col>
+                    <Col><Button onClick={()=>delItem(item)} disabled={loading}>delete</Button></Col>
+                </Row>
+                )
+                :
+                "Your Shopping List is Empty."
+            } 
+            </Col>
+            
             </Card.Body>
         </Card>
-        
         </>
         </div>
     )

@@ -22,6 +22,7 @@ var MongoClient = require('mongodb').MongoClient;
 mongoose.connect(uri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
+    useFindAndModify: false,
 }).then(() => console.log("Database Connected Successfully"))
 .catch(err => console.log(err));;
 
@@ -60,22 +61,65 @@ app.get('/api/recipes',(req,res) => {
 
 app.post('/api/createShop',(req,res) => {
     console.log("In createshop");
-    MongoClient.connect(uri,{ useUnifiedTopology: true }, function(err, db) {
-        if (err) throw err;
-        var dbo = db.db("recipe-app");
-        var myobj = { userID: req.body.userID };
-        dbo.collection("shoppingList").insertOne(myobj, function(err) {
-          if (err) throw err;
-          db.close();
-          console.log("ShoppingList Document created");
-          res.send();
-        });
-      }); 
+    shopList.exists({'userID': req.body.userID},function (err, doc){
+        if (err){
+            console.log(err)
+        }else{
+            if(!doc){
+                MongoClient.connect(uri,{ useUnifiedTopology: true }, function(err, db) {
+                    if (err) throw err;
+                    var dbo = db.db("recipe-app");
+                    var myobj = { userID: req.body.userID };
+                    dbo.collection("shoppingList").insertOne(myobj, function(err) {
+                    if (err) throw err;
+                    db.close();
+                    console.log("ShoppingList Document created");
+                    res.send();
+                    });
+                });
+            }else{
+                console.log("ShoppingList Document Exists");
+                res.send();
+            }            
+        }
+    });
 });
 
 app.get('/api/userShopList/:id',(req,res) => {
     shopList.findOne({ 'userID': req.params.id }, 'userID Items', function (err, list) {
-        if (err) return console.err(err);
+        if (err) return handleError(err);
+        // console.log(list);
+        res.json(list);
+      });
+});
+
+app.get('/api/userShopList/add/:id/:item',(req,res) => {
+    shopList.exists({'userID': req.params.id, Items:{"$in": [req.params.item]}},function (err, doc){
+        if (err){
+            console.log(err)
+        }else{
+            //console.log("Result :", doc);
+            if(doc==false){
+                shopList.findOneAndUpdate({'userID': req.params.id}, { $push:{Items:req.params.item} }, {new:true}, function (err, list) {
+                if (err) return handleError(err);
+                // console.log(list);
+                res.json(list);
+              });
+            }else{
+                res.json({Items: [],
+                    _id: null,
+                    userID: "Item Already Exists!"});
+            }
+        }
+    });
+
+    
+});
+
+app.get('/api/userShopList/del/:id/:item',(req,res) => {
+    shopList.findOneAndUpdate({'userID': req.params.id}, { $pull:{Items:req.params.item} }, {new:true, multi:false}, function (err, list) {
+        if (err) return handleError(err);
+        // console.log(list);
         res.json(list);
       });
 });
