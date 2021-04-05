@@ -37,7 +37,7 @@ app.get('/api/home-remedies',(req,res) => {
 
 app.get('/api/recipes',(req,res) => {
     let searchTerm = req.query.searchTerm;
-    if(searchTerm === ""){
+    if(searchTerm === undefined || searchTerm === ''){
         recipe.find({},(err,recipesFound) =>{
             if(err) console.log(err);
             else {
