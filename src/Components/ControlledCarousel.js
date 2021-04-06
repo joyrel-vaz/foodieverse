@@ -10,7 +10,7 @@ export default function ControlledCarousel() {
     };
   
     return (
-      <Carousel activeIndex={index} onSelect={handleSelect} >
+      <Carousel>
         <Carousel.Item>
           <img
             className="d-block w-100"

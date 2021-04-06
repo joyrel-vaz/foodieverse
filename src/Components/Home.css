@@ -88,3 +88,7 @@ header {
   .subtitle{
     margin-bottom:0!important;
   }
+
+  .carousel-indicators{
+   z-index:0 !important; 
+  }
