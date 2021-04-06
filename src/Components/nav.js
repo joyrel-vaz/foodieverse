@@ -341,9 +341,10 @@ export default class extends Component {
             transition: all 0.5s;
             width: 200px;
             padding: 0.5rem 0;
-            opacity: 0;
+            z-index:9;
+            background-color:#C90F03;
+            border-radius:5px;
             box-shadow: 0px 0px 20px 0px #f1f1f1d1, 0px 0px 20px 0px #ffffff2b;
-            z-index: 3;
           }
           .drop__item .nav {
             align-items: flex-start;
