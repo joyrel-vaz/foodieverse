@@ -22,7 +22,7 @@ class MobileMenu extends Component {
             <NavLink href="/" className="navL">home</NavLink>
           </NavItem>
           <NavItem className="nav-item-m">
-            <NavLink href="/about" className="navL">about</NavLink>
+            <NavLink href="/aboutus" className="navL">about</NavLink>
           </NavItem>
           <NavItem className="nav-item-m">
             <NavLink href="/recipes" className="navL">recipes</NavLink>
@@ -225,7 +225,7 @@ export default class extends Component {
               <NavLink href="/">home</NavLink>
             </NavItem>
             <NavItem className="nav-item-n">
-              <NavLink href="/about">about</NavLink>
+              <NavLink href="/aboutus">about</NavLink>
             </NavItem>
             <NavItem className="nav-item-n">
               <NavLink href="/recipes">recipes</NavLink>

@@ -22,6 +22,7 @@ import Demo from './Demo'
 import './App.css';
 import Feedback from './Feedback'
 import Payments from './Payments'
+import AboutUs from './AboutUs'
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
               <Route path="/demo" component={Demo}/>
               <Route path="/feedback" component={Feedback}/>
               <Route path="/payments" component={Payments}/>
+              <Route path="/aboutus" component={AboutUs}/>
             </Switch>
           </AuthProvider>
         </Router>        

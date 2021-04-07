@@ -1,6 +1,6 @@
 import React, {useState , useEffect, Component } from 'react'
 import './Recipe.css'
-import Card2 from './Card2'
+import Card from './Card'
 import Search from './Search'
 import {getRecipes} from '../api.js'
 
@@ -28,18 +28,19 @@ export default function Recipes () {
             <>
             <br></br><br></br>
             <Search></Search>
-            <Container fluid>
-                <Row>
+            <Container fluid className="wrapper">
+                
                     {
                     recipes.map(r =>
-                    <Col><Card2 
+                    <Card 
                     id = {r._id}
                     title = {r["Recipe Title"]}
                     instructions = {r["Instructions"]}
                     ingredients = {r["Ingredients"]}
-                    image = {r["Images"]}          
-                    ></Card2></Col>)}
-                </Row>
+                    img = {r["Images"]}          
+                    description={r["Description"]}
+                    ></Card>)}
+                
                 </Container>
             </>
         )
