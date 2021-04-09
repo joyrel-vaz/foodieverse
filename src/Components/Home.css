@@ -92,3 +92,12 @@ header {
   .carousel-indicators{
    z-index:0 !important; 
   }
+
+  .navR{
+    text-decoration: none !important;
+    color:#C90F03;
+  }
+  .navR:hover{
+    color:#C90F03;
+    text-shadow: 2px 2px 2px #540103;
+  }

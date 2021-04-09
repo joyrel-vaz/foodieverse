@@ -19,6 +19,7 @@ import Settings from './Settings'
 import Footer from './Footer'
 import Help from './Help'
 import Demo from './Demo'
+import Surprise from './Surprise'
 import './App.css';
 import Feedback from './Feedback'
 import Payments from './Payments'
@@ -53,6 +54,7 @@ function App() {
               <Route path="/feedback" component={Feedback}/>
               <Route path="/payments" component={Payments}/>
               <Route path="/aboutus" component={AboutUs}/>
+              <Route path="/surprise" component={Surprise}/>
             </Switch>
           </AuthProvider>
         </Router>        
