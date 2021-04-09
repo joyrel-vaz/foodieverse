@@ -24,6 +24,7 @@ import './App.css';
 import Feedback from './Feedback'
 import Payments from './Payments'
 import AboutUs from './AboutUs'
+import MealPlanner from './MealPlanner'
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
               <Route path="/payments" component={Payments}/>
               <Route path="/aboutus" component={AboutUs}/>
               <Route path="/surprise" component={Surprise}/>
+              <Route path="/mealPlanner" component={MealPlanner}/>
             </Switch>
           </AuthProvider>
         </Router>        
