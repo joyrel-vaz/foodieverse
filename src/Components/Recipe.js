@@ -26,7 +26,6 @@ export default function Recipes () {
 
         return (
             <>
-            <br></br><br></br>
             <Search></Search>
             <Container fluid className="wrapper">
                 

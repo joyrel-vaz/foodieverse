@@ -1,6 +1,8 @@
 import React,{useState , useEffect} from 'react';
 import { Link, useParams } from "react-router-dom";
 import {Card, CardColumns}  from 'react-bootstrap'
+import HealingIcon from '@material-ui/icons/Healing';
+import './Ailment.css';
 
 function AilmentList(props) {
     const [ailments,setAilments]=useState([])
@@ -21,17 +23,18 @@ function AilmentList(props) {
 
   return (
         <div>
-          <h1>{a_category}</h1>
+          <h1 style={{paddingTop:'2rem'}}><center>{a_category}</center></h1>
           <CardColumns>
            {     
              ailments.map(a => 
-              <Card className="text-center">
+              <Card className="text-center" style={{ height: '10rem' }}>
                 <Card.Body>
+                <HealingIcon style={{ fontSize: 60, color: '#C90F03' }}/>
                   <Card.Title> 
-                    <ul>
-                      <Link to={{ pathname: `/home-remedies/${a.ailment_category}/${a.ailment_name}`,
+                    <ul className='list-bul-no'>
+                      <Link className='noLink' to={{ pathname: `/home-remedies/${a.ailment_category}/${a.ailment_name}`,
                           state:state
-                    }}><li key={a.ailment_name}>{a.ailment_name}</li></Link>
+                    }}><li className = 'navD' key={a.ailment_name}>{a.ailment_name}</li></Link>
                     </ul>
                   </Card.Title>
                   </Card.Body>

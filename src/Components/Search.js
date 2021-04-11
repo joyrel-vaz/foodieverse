@@ -18,9 +18,9 @@ export default function Search(){
 
     return(
       <>
-      <Container className="d-flex align-items-center justify-content-center" style={{ padding:'0'}}
+      <Container className="d-flex align-items-center justify-content-center" style={{padding:'0 0 0 0'}}
       >
-           <div className="w-100" style={{maxWidth:"600px" , padding:"20px", }}>
+            <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
         <Form inline class="form-center">
           <FormControl type="text" placeholder="Search" className="mr-sm-2 inp" name="searchTerm" onChange={handleChange}/>
           <Button type="submit" variant="outline-success" onClick={handleClick}>Search</Button>
