@@ -1,10 +1,9 @@
-import React, {useState , useEffect, Component } from 'react'
+import React, {useState , useEffect} from 'react'
 import './Recipe.css'
 import Card from './Card'
 import Search from './Search'
 import {getRecipes} from '../api.js'
 
-import {Container, Row, Col} from 'react-bootstrap'
 import { useLocation } from 'react-router'
 
 export default function Recipes () {
@@ -27,7 +26,7 @@ export default function Recipes () {
         return (
             <>
             <Search></Search>
-            <Container fluid className="wrapper">
+            <div className="wrapper">
                 
                     {
                     recipes.map(r =>
@@ -39,8 +38,8 @@ export default function Recipes () {
                     img = {r["Images"]}          
                     description={r["Description"]}
                     ></Card>)}
-                
-                </Container>
+             
+                </div>
             </>
         )
 }

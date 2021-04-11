@@ -13,11 +13,11 @@ export default function Home() {
         <div className="company-icons">
           <span className="company-icons__item">
             <i className="fas fa-carrot" />
-            <a href="./recipe" class="navL">Search by Ingredient</a>
+            <a href="./recipes" class="navL">Search by Ingredient</a>
           </span>
           <span className="company-icons__item">
             <i className="fas fa-utensils" />
-            <a href="./recipe" class="navL">Search by Recipe</a>
+            <a href="./recipes" class="navL">Search by Recipe</a>
           </span>
           <span className="company-icons__item">
             <i className="fas fa-mortar-pestle" />
