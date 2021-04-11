@@ -1,16 +1,5 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
 import { Container} from 'react-bootstrap';
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-    color: '#C90F03'
-  }
-}));
 
 export default function Surprise() {
   return (
