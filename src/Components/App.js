@@ -51,14 +51,14 @@ function App() {
               <Route path="/home-remedies/:a_category" component={AilmentList}/>
               <Route path="/home-remedies" component={AilmentCategory}/>
               <Route exact path="/recipes" component={Recipes}/>
-              <Route path="/settings" component={Settings}/>
+              <PrivateRoute path="/settings" component={Settings}/>
               <Route path="/help" component={Help}/>
               <Route path="/demo" component={Demo}/>
               <Route path="/feedback" component={Feedback}/>
               <Route path="/payments" component={Payments}/>
               <Route path="/aboutus" component={AboutUs}/>
-              <Route path="/surprise" component={Surprise}/>
-              <Route path="/mealPlanner" component={MealPlanner}/>
+              <PrivateRoute path="/surprise" component={Surprise}/>
+              <PrivateRoute path="/mealPlanner" component={MealPlanner}/>
             </Switch>
           </AuthProvider>
         </Router>        

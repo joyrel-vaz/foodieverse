@@ -1,5 +1,4 @@
-import { useAuth } from '../Contexts/AuthContext'
-import React, { useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -13,7 +12,6 @@ import BlockIcon from '@material-ui/icons/Block';
 import ShareIcon from '@material-ui/icons/Share';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import InfoIcon from '@material-ui/icons/Info';
-import { Link, useHistory } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,95 +25,61 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListDividers() {
   const classes = useStyles();
-  const [error, setError] = useState('')
-    const { currentUser, logout } = useAuth()
-    const history = useHistory()
-
-    async function handleLogOut(){
-        setError('')
-        try{
-            await logout()
-            history.push('/login')
-        }catch(error){
-            setError(error.message)
-        }
-
-    }
-
   return (
-      <>{currentUser ?
-        <div>
-                {currentUser.emailVerified ?
-                    <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'0 0 0 0'}}
-                    >
-                         <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
-                      <center><h4>SETTINGS</h4>
-                    <List component="nav" className={classes.root} aria-label="mailbox folders">
-                       <ListItem button  component="a" href="/notifications">
-                       <ListItemAvatar>
-                          <Avatar style={{ backgroundColor: '#C90F03' }}>
-                            <NotificationsActiveIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Notifications" />
-                      </ListItem>
-                      <Divider />
-                      <ListItem button  component="a" href="/permissions">
-                      <ListItemAvatar>
-                          <Avatar style={{ backgroundColor: '#C90F03' }}>
-                            <BlockIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Permissions" />
-                      </ListItem>
-                      <Divider />
-                      <ListItem button  component="a" href="/integrations">
-                      <ListItemAvatar>
-                          <Avatar style={{ backgroundColor: '#C90F03' }}>
-                            <ShareIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Integrations" />
-                      </ListItem>
-                      <Divider />
-                      <ListItem button component="a" href="/feedback">
-                      <ListItemAvatar>
-                          <Avatar style={{ backgroundColor: '#C90F03' }}>
-                            <StarRateIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Rate Us" />
-                      </ListItem>
-                      <Divider />
-                      <ListItem button  component="a" href="/legal">
-                      <ListItemAvatar>
-                          <Avatar style={{ backgroundColor: '#C90F03' }}>
-                            <InfoIcon />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Legal and Privacy Statement" />
-                      </ListItem>
-                    </List>
-                    </center>
-                    </div>
-                    </Container>
-                :
-                <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'0 0 0 0'}}
-                >
-                     <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
-                  <center><h4>PLEASE VERIFY YOUR EMAIL TO ACCESS THIS FEATURE!</h4></center>
-                </div>
-                </Container>
-                }
-            </div>
-        :
-        <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'0 0 0 0'}}
-        >
-             <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
-          <center><h4>PLEASE <Link to="/Login" className="navR">LOGIN</Link> TO ACCESS THIS FEATURE!</h4></center>
-        </div>
-        </Container>
-        }
+      <>
+      <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'0 0 0 0'}}
+      >
+            <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
+        <center><h4>SETTINGS</h4>
+      <List component="nav" className={classes.root} aria-label="mailbox folders">
+          <ListItem button  component="a" href="/notifications">
+          <ListItemAvatar>
+            <Avatar style={{ backgroundColor: '#C90F03' }}>
+              <NotificationsActiveIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Notifications" />
+        </ListItem>
+        <Divider />
+        <ListItem button  component="a" href="/permissions">
+        <ListItemAvatar>
+            <Avatar style={{ backgroundColor: '#C90F03' }}>
+              <BlockIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Permissions" />
+        </ListItem>
+        <Divider />
+        <ListItem button  component="a" href="/integrations">
+        <ListItemAvatar>
+            <Avatar style={{ backgroundColor: '#C90F03' }}>
+              <ShareIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Integrations" />
+        </ListItem>
+        <Divider />
+        <ListItem button component="a" href="/feedback">
+        <ListItemAvatar>
+            <Avatar style={{ backgroundColor: '#C90F03' }}>
+              <StarRateIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Rate Us" />
+        </ListItem>
+        <Divider />
+        <ListItem button  component="a" href="/legal">
+        <ListItemAvatar>
+            <Avatar style={{ backgroundColor: '#C90F03' }}>
+              <InfoIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Legal and Privacy Statement" />
+        </ListItem>
+      </List>
+      </center>
+      </div>
+      </Container>
     </>
   );
 }
