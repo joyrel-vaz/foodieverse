@@ -25,6 +25,7 @@ import Feedback from './Feedback'
 import Payments from './Payments'
 import AboutUs from './AboutUs'
 import MealPlanner from './MealPlanner'
+import LoginError from './LoginError'
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
               <PrivateRoute path="/shopping-list" component={ShoppingList} />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={Login} />
+              <Route path="/login-error" component={LoginError} />
               <Route path="/forgot-password" component={ForgotPassword} />
               <Route path="/home-remedies/:a_category/:a_name" component={HomeRemedies}/>
               <Route path="/home-remedies/:a_category" component={AilmentList}/>
