@@ -1,8 +1,5 @@
-import React,{useRef, useState} from 'react';
-import { Form, Card, Button, Alert, Row, Col, Image, Container} from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
-import { useAuth } from '../Contexts/AuthContext';
-import {createShop} from '../api.js'
+import React from 'react';
+import { Alert,  Container} from 'react-bootstrap';
 import Login from './Login'
 
 
