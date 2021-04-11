@@ -1,5 +1,5 @@
 import React,{useRef, useState, useEffect} from 'react';
-import { Form, Card, Button, Alert} from 'react-bootstrap';
+import { Form, Card, Button, Alert, Container} from 'react-bootstrap';
 import { useAuth } from '../Contexts/AuthContext'
 import {Row, Col} from 'react-bootstrap'
 import {getShopList, addShopList, delShopList} from '../api.js'
@@ -64,6 +64,9 @@ export default function ShoppingList() {
     return (
         <div>
            <>
+           <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'0 0 0 0'}}
+                >
+                     <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
         <Card>
             <Card.Body>
                 <h2 className="text-center mb-4">Shopping List</h2>
@@ -99,6 +102,8 @@ export default function ShoppingList() {
             
             </Card.Body>
         </Card>
+        </div>
+        </Container>
         </>
         </div>
     )
