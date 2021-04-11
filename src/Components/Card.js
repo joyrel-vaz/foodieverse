@@ -11,7 +11,7 @@ export default function Card(props) {
             <div className="card__body">
                 <img src={props.img}
                 alt="Recipe img"
-                className="card_image"/>
+                className="card__image"/>
                 <h4 className="card__title">{props.title}</h4>
                 <p className="card__description">{props.description}</p>
                 <CardActions disableSpacing>

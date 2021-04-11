@@ -2,6 +2,8 @@ import React,{useState,useEffect} from 'react';
 import { Link} from "react-router-dom";
 import {getRemedies} from '../api.js';
 import {Card, CardColumns}  from 'react-bootstrap'
+import LocalPharmacyIcon from '@material-ui/icons/LocalPharmacy';
+import './Ailment.css'
 
 function AilmentCategory() {
     const [uniqueCategories,setUniqueCategories]=useState([])
@@ -25,17 +27,18 @@ function AilmentCategory() {
 
   return (
         <div>
-          <CardColumns>
+          <CardColumns style={{paddingTop:'2rem'}}>
             { 
               uniqueCategories.map(c => 
                 <Card className="text-center">
                   <Card.Body>
+                    <LocalPharmacyIcon style={{ fontSize: 60, color: '#C90F03' }}/>
                     <Card.Title> 
-                      <ul>
-                    <Link 
+                      <ul class="list-bul-no">
+                    <Link class="noLink"
                     to={{ pathname: `/home-remedies/${c}`,
                           state: catgs}}>
-                      <li key={c}>{c}</li></Link>
+                      <li class= 'navD' key={c}>{c}</li></Link>
                       </ul>
                     </Card.Title>
                   </Card.Body>

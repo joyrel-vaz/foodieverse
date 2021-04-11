@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { Container, Nav, NavItem, NavLink, Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap'
 
-
 class MobileMenu extends Component {
   state = { isOpen: false }
   toggle = () => this.setState({ isOpen: !this.state.isOpen })
-
   render() {
     return (
       <div className="mobile-wrapper">
@@ -295,6 +293,9 @@ export default class extends Component {
           }
           .nav-item-n:not(.logo) {
             text-transform: capitalize;
+          }
+          .nav-link:hover{
+            border-bottom: 3px solid #C90F03;
           }
           .nav-item-n a {
             padding: 0.5rem 0.6rem;

@@ -100,9 +100,9 @@ export default function Login (){
 
     return(
         <>
-         <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'3rem 0'}}
+         <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'1rem 0'}}
     >
-         <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
+         <div className="w-100" style={{maxWidth:"400px" , padding:"0 20px"}}>
         <Card>
             <Card.Body>
                 <h2 className="text-center mb-4">Log In</h2>

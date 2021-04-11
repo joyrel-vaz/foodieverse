@@ -25,10 +25,6 @@ export default function SmallChips() {
     console.info('You clicked the delete icon.');
   };
 
-  const handleClick = () => {
-    console.info('You clicked the Chip.');
-  };
-
   return (
     <div className={classes.root}>
       <Chip
