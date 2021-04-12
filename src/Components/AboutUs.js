@@ -1,18 +1,9 @@
 import React, { Component } from 'react'
-
+import CountUp from 'react-countup';
 
 
 export default class AboutUs extends Component {
     
-    constructor(props){
-        super(props);
-        this.state = {
-            displayCategories : true,
-            displayRecipies: false,
-            recipes: ""
-        }
-    }
-
     render() {
         return (
             <>
@@ -105,34 +96,37 @@ export default class AboutUs extends Component {
         <section className="section bg-gray">
           <div className="container">
             <div className="row">
-              <div className="col-lg-3 col-sm-6 my-lg-0 my-3">
+            <div className="col-lg-3 col-sm-6 my-lg-0 my-3">
                 <div className="counter-content text-center bg-light py-4 rounded">
                   <i className="fa fa-smile-o d-block" />
-                  <span className="counter my-2 d-block" data-count={2314}>0</span>
-                  <h5>Happy Customers</h5>
-                </div>
-              </div>
-              <div className="col-lg-3 col-sm-6 my-lg-0 my-3">
-                <div className="counter-content text-center bg-light py-4 rounded">
-                  <i className="fa fa-user-o d-block" />
-                  <span className="counter my-2 d-block" data-count={1013}>0</span>
-                  <h5>Active Members</h5>
-                </div>
-              </div>
-              <div className="col-lg-3 col-sm-6 my-lg-0 my-3">
-                <div className="counter-content text-center bg-light py-4 rounded">
-                  <i className="fa fa-bookmark-o d-block" />
-                  <span className="counter my-2 d-block" data-count={2413}>220</span>
-                  <h5>Verified Recipes</h5>
+                  
+                    <CountUp start={0}
+                    end={2314}
+                    duration={5}></CountUp>
+                      <h5>Happy Customers</h5>
                 </div>
               </div>
               <div className="col-lg-3 col-sm-6 my-lg-0 my-3">
                 <div className="counter-content text-center bg-light py-4 rounded">
                   <i className="fa fa-smile-o d-block" />
-                  <span className="counter my-2 d-block" data-count={200}>3500</span>
-                  <h5>Happy Customers</h5>
+                  
+                    <CountUp start={0}
+                    end={1013}
+                    duration={5}></CountUp>
+                      <h5>Active Members</h5>
                 </div>
               </div>
+              <div className="col-lg-3 col-sm-6 my-lg-0 my-3">
+                <div className="counter-content text-center bg-light py-4 rounded">
+                  <i className="fa fa-smile-o d-block" />
+                  
+                    <CountUp start={220}
+                    end={2413}
+                    duration={5}></CountUp>
+                      <h5>Verified Recipes</h5>
+                </div>
+              </div>
+              
             </div>
           </div>
         </section>

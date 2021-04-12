@@ -26,6 +26,7 @@ import Payments from './Payments'
 import AboutUs from './AboutUs'
 import MealPlanner from './MealPlanner'
 import LoginError from './LoginError'
+import RecipeFullPage from './RecipeFullPage'
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
               <Route path="/aboutus" component={AboutUs}/>
               <PrivateRoute path="/surprise" component={Surprise}/>
               <PrivateRoute path="/mealPlanner" component={MealPlanner}/>
+              <Route path='/recipefull' component={RecipeFullPage}/>
             </Switch>
           </AuthProvider>
         </Router>        
