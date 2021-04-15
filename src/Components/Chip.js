@@ -1,8 +1,10 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import './Chip.css'
+import CancelIcon from '@material-ui/icons/Cancel';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,54 +16,68 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   chip1:{
+    '&:hover, &:focus': {
+      backgroundColor: '#705099',
+    },
     color:'white' ,
     backgroundColor:'#C90F03' 
+  },
+
+
+}
+));
+
+
+
+export default function SmallChips(props) {
+
+  const classes = useStyles();
+  const [chipData , setChipData]= useState([
+      { key: 0, src:"chip",label: 'Peas' },
+      { key: 1, src:"chip",label: 'Cheese' },
+      { key: 2, src:"chip",label: 'Oil' },
+      { key: 3, src:"chip",label: 'Sugar' },
+      { key: 4, src:"chip",label: 'Paneer' },
+    
+  ]);
+  const removeChip = (chipToDelete) => {
+    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
   }
-}));
 
-export default function SmallChips() {
-  const classes = useStyles()
-  const handleDelete = () => {
-    console.info('You clicked the delete icon.');
-  };
+  const addChip = (chipToAdd) =>{
+    props.setTags([...props.tags, chipToAdd]);
+    removeChip(chipToAdd); //remove from chips section
+  }
+  
+  const addToTray = ()=>{
+ if(props.hasDeleted){
+    props.setHasDeleted(false);
+    setChipData([...chipData,props.deletedChip])
+  }   
+  }
+ 
+  useEffect(()=>{
+ addToTray();   
+  })
 
-  return (
+
+ return (
     <div className={classes.root}>
-      <Chip
+      <p>Most commonly searched: </p>
+      {chipData.map(data => 
+        <Chip
+        key={data.key}
+        avatar={<Avatar alt={data.label[0]} src='xyz.jpg' />}
         className={classes.chip1}
         size="small"
-        avatar={<Avatar alt="P" src='xyz.jpg' />}
-        label="Peas"
-        onDelete={handleDelete}
+        clickable={true}
+        label={data.label}
+        onClick={() => addChip(data)}
+        deleteIcon = {<CancelIcon/>}
+        onDelete={() => removeChip(data)}
       />
-      <Chip
-      className={classes.chip1}
-        size="small"
-        avatar={<Avatar alt="C" src='xyz.jpg'/>}
-        label="Cheese"
-        onDelete={handleDelete}
-      />
-      <Chip
-      className={classes.chip1}
-        size="small"
-        avatar={<Avatar alt="O" src='xyz.jpg' />}
-        label="Oil"
-        onDelete={handleDelete}
-      />
-      <Chip
-      className={classes.chip1}
-        size="small"
-        avatar={<Avatar alt="S" src='xyz.jpg'/>}
-        label="Sugar"
-        onDelete={handleDelete}
-      />
-      <Chip
-      className={classes.chip1}
-        size="small"
-        avatar={<Avatar alt="P" src='xyz.jpg'/>}
-        label="Paneer"
-        onDelete={handleDelete}
-      />
+      )}
+      
     </div>
   );
 }
