@@ -15,7 +15,8 @@ export default function Search(){
     setSearchTerm(encodeURIComponent(searchTerm));
     history.push({
       pathname: '/recipes',
-      search : `${searchTerm}`});
+      search : `searchTerm=${searchTerm}`,
+      state: { mode : 'Recipe'}});
   }
 
 
@@ -24,10 +25,10 @@ export default function Search(){
       <Container className="d-flex align-items-center justify-content-center" style={{padding:'0 0 0 0'}}
       >
             <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
-        <Form inline className="form-center">
+        <Form  inline className="form-center">
           <FormControl type="text" placeholder="Search" value={searchTerm}
            className="mr-sm-2 inp" name="searchTerm" onChange={handleChange}/>
-          <Button type="submit" variant="outline-success" onClick={handleClick}>Search</Button>
+          <Button type="button" variant="outline-success" onClick={handleClick} >Search</Button>
         </Form>
         </div>
         </Container>
