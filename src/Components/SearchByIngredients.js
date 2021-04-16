@@ -2,13 +2,16 @@ import React,{useEffect, useState} from 'react';
 import SmallChips from './Chip'
 import {useHistory} from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
 import Chip from '@material-ui/core/Chip';
 import CancelIcon from '@material-ui/icons/Cancel';
+import { Col } from 'react-bootstrap';
 
 
 const SearchBar = () => {
   const BarStyling = {display:'block',border:'1px solid black',height:'100px', width:'500px',
-  borderRadius:'20px',maxWidth: '100%',margin:'20px',padding:'10px'};
+  borderRadius:'20px',maxWidth: '100%',margin:'0 auto'};
   
   const [searchTerm,setSearchTerm] = useState('');
   const [hasDeleted,setHasDeleted] = useState(false);
@@ -23,30 +26,44 @@ const SearchBar = () => {
     }
 };
 
-useEffect(() =>{
+const reformSearchTerm = () =>{
   tags.forEach(tag => {
-    if(typeof(tag) === 'object') setSearchTerm(searchTerm.concat(" " + tag.label)); 
-    else setSearchTerm(searchTerm.concat(" " + tag));
-  });
+    if(typeof(tag) === 'object') {
+      if(!searchTerm.includes(tag.label))
+        setSearchTerm(searchTerm.concat(" " + tag.label))
+    }
 
+    else {if(!searchTerm.includes(tag))
+      setSearchTerm(searchTerm.concat(" " + tag));}
+  })
+
+}
+
+useEffect(() =>{
+  reformSearchTerm();
+    
+  console.log('new search term is ' + searchTerm)
 },[tags])
 
 const removeTags = index => {
+  if(typeof(tags[index]) === 'string')
+    setSearchTerm(searchTerm.replace(tags[index],''));
   setTags([...tags.filter(tag => tags.indexOf(tag) !== index)]);
+
 };
 
 const removeChipTags =(index,tag) => {
   setHasDeleted(true);
+  setSearchTerm(searchTerm.replace(tag.label,''));
   setDeletedChip(tag);
   removeTags(index);
 };
 
-  const handleSubmit = (e) =>{
-    alert('in submit');
-    alert(searchTerm); 
+  const handleClick = () =>{
     setSearchTerm(encodeURIComponent(searchTerm));
       history.push({
-      pathname: '/recipe',
+      pathname: '/recipes',
+      state:{mode: 'Ingredient'},
       search : `searchTerm=${searchTerm}`});
   }
 
@@ -61,8 +78,11 @@ const removeChipTags =(index,tag) => {
     ></SmallChips>
 
     <div className="d-flex justify-content-center">
-      <Form className="form-center" onSubmit={handleSubmit}>
-            <label style={BarStyling}>
+      <Container>
+        <Row md={1}>
+          <Col>
+      <Form className="form-center" >
+            <label className="justify-content-center" style={BarStyling}>
                 {tags.map((tag, index) => (
                   
                     <span
@@ -88,7 +108,7 @@ const removeChipTags =(index,tag) => {
                     </span>
                 ))}
             <input
-                style={{appearance:'none' , border:'none' , outline:'none'}}
+                style={{appearance:'none' , border:'none' , outline:'none' , margin:'10px', padding:'10px'} }
                 type="text"
                 name="searchTerm"
                 placeholder="Press space to add tags"
@@ -96,10 +116,12 @@ const removeChipTags =(index,tag) => {
             />
             </label>
         <div className="text-center m-3" >
-        <button className="btn btn-danger" variant="outline-success">Search</button>
-       </div> </Form>
+        <input type="button" className="btn btn-outline-success" value="Search" variant="outline-success" onClick= {handleClick}/>
+       </div> </Form></Col>
+       </Row>
+       </Container>
         </div>
-
+        
     </div>
     
   );
