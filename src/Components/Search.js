@@ -1,33 +1,18 @@
-import React, { useState } from 'react'
-import { Form, FormControl, Button, Container}  from 'react-bootstrap'
-import { useHistory} from 'react-router-dom'
-import SmallChips from './Chip'
+import Search from './SearchByRecipeName'
+import SearchBar from './SearchByIngredients'
+import React, { useEffect, useState } from 'react'
+import ModeToggle from './ModeToggle'
 
-export default function Search(){
-  const [searchTerm,setSearchTerm] = useState('')
-  const history = useHistory();
-  const handleChange = (event)=>{
-    setSearchTerm(event.target.value)
-  }
-
-  const handleClick = () =>{
-    history.push({
-      pathname: '/recipes',
-      search : `${searchTerm}`});
-  }
+export default function SearchManager(props){
+    const [searchMode,setSearchMode] = useState('');
+    useEffect(() =>{
+        setSearchMode(props.currentMode);
+    },[props.currentMode])
 
     return(
-      <>
-      <Container className="d-flex align-items-center justify-content-center" style={{padding:'0 0 0 0'}}
-      >
-            <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
-        <Form inline class="form-center">
-          <FormControl type="text" placeholder="Search" className="mr-sm-2 inp" name="searchTerm" onChange={handleChange}/>
-          <Button type="submit" variant="outline-success" onClick={handleClick}>Search</Button>
-        </Form>
+        <div>
+        <ModeToggle setMode={props.setCurrentMode}></ModeToggle>
+        {searchMode === 'Recipe' ? <Search></Search> : <SearchBar></SearchBar>}
         </div>
-        </Container>
-        <SmallChips></SmallChips>
-        </>
-    )
+    );
 }
