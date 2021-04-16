@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
   chip1:{
     '&:hover, &:focus': {
-      backgroundColor: '#705099',
+      
+      backgroundColor: '#4d960c',
     },
     color:'white' ,
     backgroundColor:'#C90F03' 
