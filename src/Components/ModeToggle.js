@@ -17,6 +17,7 @@ export default function ModeToggle(props) {
             <ToggleButton
               key={idx}
               type="radio"
+              className="btn-danger"
               variant="primary"
               name="radio"
               value={radio.value}
