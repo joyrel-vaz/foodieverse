@@ -1,17 +1,15 @@
 import React, {useState , useEffect} from 'react'
 import './Recipe.css'
 import Card from './Card'
-import Search from './SearchByRecipeName'
-import SearchBar from './SearchByIngredients'
 import {getRecipes} from '../api.js'
-import ModeToggle from './ModeToggle'
 import { useLocation } from 'react-router'
+import SearchManager from './Search'
 
 export default function Recipes () {
     const [recipes, setRecipes] = useState([]);
     const [mode,setMode] = useState('Recipe');
     const location = useLocation();
-    console.log(location);
+
     const fetchRecipes=async()=>{
         try{
          const rec = await getRecipes(location.search);
@@ -22,13 +20,14 @@ export default function Recipes () {
       }
       
       useEffect(() => {
-        fetchRecipes();
-      },[]);
+        if(location.state !== undefined)
+          setMode(location.state.mode)
+          fetchRecipes();
+      },[location.search]);
 
         return (
             <>
-            <ModeToggle setMode = {setMode}></ModeToggle>
-            {mode === 'Recipe' ? <Search></Search> : <SearchBar></SearchBar>}             
+            <SearchManager setCurrentMode = {setMode} currentMode={mode}></SearchManager>    
             <div className="wrapper">
                     {
                     recipes.map(r =>
