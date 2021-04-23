@@ -31,7 +31,7 @@ export default function Card(props) {
         addFavorites(currentUser.email,props.id);
       else 
         {delFavorites(currentUser.email,props.id);
-        console.log('in delete')
+        //console.log('in delete')
         }
         
       }
@@ -50,6 +50,7 @@ export default function Card(props) {
       }
     }
 
+  
     useEffect(() =>{
       modifyFavorites();
       getAll();}
@@ -78,7 +79,7 @@ export default function Card(props) {
                   <ButtonGroup toggle className="mb-2">
                 <ToggleButton
                     type="checkbox"
-                    variant={favs.includes(props.id) ? "outline-danger":"secondary"}
+                    variant={favs.includes(props.id) || isLiked ? "danger":"secondary"}
                     checked={isLiked}
                     value="1"
                     onChange={e => handleChange(e)}
@@ -90,11 +91,12 @@ export default function Card(props) {
                 <div>
                 <Button
                 type="button"
-                variant="outline-secondary"
+                variant="danger"
                 onClick={() => {delFavorites(currentUser.email, props.id) ; 
-                  props.setChanged(true)}}
+                  //console.log('have clicked on delete')
+                  props.setChanged(!props.changed)}}
                 >
-                <DeleteIcon/>
+                <FavoriteIcon />
                 </Button></div>
                 
               }
