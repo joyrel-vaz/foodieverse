@@ -22,6 +22,7 @@ export default function MyFavorites(){
     }
 
     useEffect(() =>{
+        //console.log('reloading favs')
             getAll();
     },[changed])
 
@@ -44,6 +45,7 @@ export default function MyFavorites(){
           img = {r.images}          
           description={r.description}
           isMyFav={isMyFav}
+          changed={changed}
           setChanged={setChanged}
           ></Card>)
             :
