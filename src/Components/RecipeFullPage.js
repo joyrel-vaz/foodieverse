@@ -26,7 +26,7 @@ render(){
                 className="page__image"/>
                 <h4 className="page__title">{this.props.location.state.title}</h4>
                 <p className="page__description">{this.props.location.state.description}</p>
-                <p className="page__ingredients">Ingrdients:<br/>
+                <p className="page__ingredients">Ingredients:<br/>
                 {this.props.location.state.ingredients}</p>
                 <p className="page__insructions">Method:<br/>
                 {this.props.location.state.instructions}</p>
