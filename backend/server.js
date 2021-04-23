@@ -132,7 +132,7 @@ app.get('/api/users/:userid/favorites/add/:id' , (req,res) => {
                 { userID: req.params.userid }, 
                 { $push: { Favorites: req.params.id } },(err,updateFav) =>{
                     if(err) console.log(err);
-                    console.log(updateFav);
+                    //console.log(updateFav);
                 }
                 );
         }
