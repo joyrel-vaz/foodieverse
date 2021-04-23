@@ -27,6 +27,7 @@ import AboutUs from './AboutUs'
 import MealPlanner from './MealPlanner'
 import LoginError from './LoginError'
 import RecipeFullPage from './RecipeFullPage'
+import MyFavorites from './MyFavorites';
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
               <PrivateRoute path="/surprise" component={Surprise}/>
               <PrivateRoute path="/mealPlanner" component={MealPlanner}/>
               <Route path='/recipefull' component={RecipeFullPage}/>
+              <PrivateRoute path='/favorites' component={MyFavorites}/>
             </Switch>
           </AuthProvider>
         </Router>        
