@@ -9,6 +9,38 @@ export const getRecipes = async (search) => {
 
 }
 
+export const getFavRecipes = async (user) =>{
+    const res = await fetch(`/api/users/${user}/favorites`);
+    const jsonData  = await res.json();
+    if(jsonData.length > 0)
+        return jsonData[0].Favorites.map(obj =>
+            ({title : obj["Recipe Title"] , 
+            id : obj._id,
+            ingredients:obj.Ingredients,
+            instructions:obj.Instructions,
+            images:obj.Images,
+            cooktime : obj["Cook Time"],
+            servings : obj.Servings
+
+    }));
+    else return [];
+}
+
+export async function getFavorites(user){
+    const res = await fetch(`/api/users/${user}/favorites/show`);
+    return await res.json();
+}
+
+export async function addFavorites(user,recipeID){
+    const res = await fetch(`/api/users/${user}/favorites/add/${recipeID}`);
+    return await res.json();
+}
+
+export async function delFavorites(user,recipeID){
+    const res = await fetch(`/api/users/${user}/favorites/del/${recipeID}`);
+    return await res.json();
+}
+
 export function createShop(user){
     const data = { userID: user };
     console.log("in createshop API")
