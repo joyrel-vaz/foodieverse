@@ -10,9 +10,11 @@ import { Col } from 'react-bootstrap';
 
 
 const SearchBar = () => {
-  const BarStyling = {display:'block',border:'1px solid black',height:'100px', width:'500px',
-  borderRadius:'20px',maxWidth: '100%',margin:'0 auto'};
+  const BarStyling = {display:'block',border:'1px solid grey',height:'100px', width:'500px',
+  maxWidth: '100%',margin:'0 auto'};
   
+  const inputStyling = {appearance:'none' , border:'none' , outline:'none' , margin:'10px', padding:'10px'};
+
   const [searchTerm,setSearchTerm] = useState('');
   const [hasDeleted,setHasDeleted] = useState(false);
   const [deletedChip,setDeletedChip] = useState({});
@@ -30,19 +32,17 @@ const reformSearchTerm = () =>{
   tags.forEach(tag => {
     if(typeof(tag) === 'object') {
       if(!searchTerm.includes(tag.label))
-        setSearchTerm(searchTerm.concat(" " + tag.label))
+        setSearchTerm(searchTerm.concat(tag.label +" "))
     }
 
     else {if(!searchTerm.includes(tag))
-      setSearchTerm(searchTerm.concat(" " + tag));}
+      setSearchTerm(searchTerm.concat(tag));}
   })
 
 }
 
 useEffect(() =>{
-  reformSearchTerm();
-    
-  console.log('new search term is ' + searchTerm)
+  reformSearchTerm();   
 },[tags])
 
 const removeTags = index => {
@@ -60,7 +60,6 @@ const removeChipTags =(index,tag) => {
 };
 
   const handleClick = () =>{
-    setSearchTerm(encodeURIComponent(searchTerm));
       history.push({
       pathname: '/recipes',
       state:{mode: 'Ingredient'},
@@ -79,19 +78,19 @@ const removeChipTags =(index,tag) => {
 
     <div className="d-flex justify-content-center">
       <Container>
-        <Row md={1}>
-          <Col>
+        <Row xs={1} fluid>
+          <Col xs>
       <Form className="form-center" >
-            <label className="justify-content-center" style={BarStyling}>
+            <label className="p-1 card overflow-auto" style={BarStyling}>
                 {tags.map((tag, index) => (
                   
                     <span
                         key={index}
-                        style={{margin:'5px'}}
+                        className="m-2"
                         >
                           {typeof(tag) !== 'object' ? 
                         <Chip 
-                        className="material-icons"
+                        className="mt-1"
                         label={tag}
                         color='secondary'
                         deleteIcon = {<CancelIcon/>}
@@ -99,7 +98,7 @@ const removeChipTags =(index,tag) => {
                         ></Chip>
                     :
                     <Chip 
-                    className="material-icons"
+                    className="mt-1"
                     label={tag.label}
                     color='secondary'
                     deleteIcon = {<CancelIcon/>}
@@ -108,7 +107,7 @@ const removeChipTags =(index,tag) => {
                     </span>
                 ))}
             <input
-                style={{appearance:'none' , border:'none' , outline:'none' , margin:'10px', padding:'10px'} }
+                style={inputStyling}
                 type="text"
                 name="searchTerm"
                 placeholder="Press space to add tags"
