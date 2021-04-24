@@ -57,7 +57,7 @@ export default function Card(props) {
     ,[isLiked])
 
     useEffect(() =>{
-      console.log(isLiked + props.id)
+      //console.log(isLiked + props.id)
       if(data.length > 0)
         setFavs(data[0].Favorites);
         setIsLoading(false);
