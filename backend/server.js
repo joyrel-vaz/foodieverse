@@ -4,6 +4,7 @@ cors = require('cors'),
 mongoose = require('mongoose'),
 dadiKeNuske = require('./models/dadiKeNuske.js'),
 recipe = require('./models/recipe.js'),
+favorite = require('./models/favorite.js'),
 shopList = require('./models/shopList.js'),
 PORT = 8080;
 
@@ -124,5 +125,58 @@ app.get('/api/userShopList/del/:id/:item',(req,res) => {
       });
 });
 
+app.get('/api/users/:userid/favorites/add/:id' , (req,res) => {
+    favorite.exists({ userID: req.params.userid }).then(exists =>{
+        if(exists){
+            favorite.findOneAndUpdate(
+                { userID: req.params.userid }, 
+                { $push: { Favorites: req.params.id } },(err,updateFav) =>{
+                    if(err) console.log(err);
+                    //console.log(updateFav);
+                }
+                );
+        }
+        else
+        {favorite.create({userID: req.params.userid, 
+            $push: { Favorites: req.params.id }},(err,newFav) =>{
+            if(err) console.log(err);
+            })}
+    })
+
+})
+
+app.get('/api/users/:userid/favorites/show' , (req,res) => {
+    favorite.exists({ userID: req.params.userid }).then(exists =>{
+        if(exists){
+            favorite.find(
+                { userID: req.params.userid } ,(err,allFavs) =>{
+                    if(err) console.log(err);
+                    else res.json(allFavs)
+                }
+                );
+        }
+        else return [];
+    })
+
+})
+
+app.get('/api/users/:userid/favorites',(req,res) =>{
+    favorite.find({ userID: req.params.userid }).populate("Favorites").exec(function (err, favs)
+    {
+        if (err) console.log(err);
+        else 
+        return res.json(favs);
+    })    
+})
+
+
+app.get('/api/users/:userid/favorites/del/:id' , (req,res) => {
+            favorite.findOneAndUpdate(
+                { userID: req.params.userid }, 
+                { $pull: { Favorites: req.params.id } },(err,delFav) =>{
+                    if(err) console.log(err);
+                }
+            );
+})
 
 app.listen(PORT, ()=> console.log(`Listening on port ${PORT}`));
