@@ -12,7 +12,6 @@ export default function Search(){
 
 
   const handleClick = () =>{
-    setSearchTerm(encodeURIComponent(searchTerm));
     history.push({
       pathname: '/recipes',
       search : `searchTerm=${searchTerm}`,
