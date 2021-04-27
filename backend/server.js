@@ -149,9 +149,11 @@ app.get('/api/users/:userid/favorites/show' , (req,res) => {
     favorite.exists({ userID: req.params.userid }).then(exists =>{
         if(exists){
             favorite.find(
-                { userID: req.params.userid } ,(err,allFavs) =>{
+                { userID: req.params.userid },{Favorites:1,_id:0},{new:true} ,(err,allFavs) =>{
                     if(err) console.log(err);
-                    else res.json(allFavs)
+                    //console.log(allFavs[0].Favorites)
+                    else 
+                    res.send(allFavs)
                 }
                 );
         }
