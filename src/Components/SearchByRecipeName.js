@@ -3,7 +3,7 @@ import { Form, FormControl, Button, Container}  from 'react-bootstrap'
 import { useHistory} from 'react-router-dom'
 
 
-export default function Search(){
+export default function SearchByName(){
   const [searchTerm,setSearchTerm] = useState('')
   const history = useHistory();
   const handleChange = (event)=>{
