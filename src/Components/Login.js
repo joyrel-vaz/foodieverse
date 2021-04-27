@@ -2,7 +2,8 @@ import React,{useRef, useState} from 'react';
 import { Form, Card, Button, Alert, Row, Col, Image, Container} from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../Contexts/AuthContext';
-import {createShop} from '../api.js'
+import {addFavorites, createShop} from '../api.js'
+import { useLocation } from 'react-router'
 
 
 export default function Login (){
@@ -11,7 +12,8 @@ export default function Login (){
     const { login, loginGoogle, loginFB, loginTw, loginApple, currentUser } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useHistory()
+    const history = useHistory();
+    const location = useLocation();
 
     async function handleSubmit(e){
         e.preventDefault();
@@ -20,7 +22,13 @@ export default function Login (){
             setError('');
             setLoading(true);
             await login(emailRef.current.value, passwordRef.current.value);
-            history.push('/')   
+            if(location.state != null)
+            {
+                addFavorites(emailRef.current.value,location.state.id);
+                history.push('/favorites');
+            }
+            else
+                history.push('/')   
         }catch(error){
             setError(error.message);
         }

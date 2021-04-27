@@ -9,7 +9,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { Col } from 'react-bootstrap';
 
 
-const SearchBar = () => {
+export default function SearchByIng () {
   const BarStyling = {display:'block',border:'1px solid grey',height:'100px', width:'500px',
   maxWidth: '100%',margin:'0 auto'};
   
@@ -63,7 +63,7 @@ const removeChipTags =(index,tag) => {
       history.push({
       pathname: '/recipes',
       state:{mode: 'Ingredient'},
-      search : `searchTerm=${searchTerm}`});
+      search : `search_query=${searchTerm}`});
   }
 
   return (
@@ -78,7 +78,7 @@ const removeChipTags =(index,tag) => {
 
     <div className="d-flex justify-content-center">
       <Container>
-        <Row xs={1} fluid>
+        <Row xs={1}>
           <Col xs>
       <Form className="form-center" >
             <label className="p-1 card overflow-auto" style={BarStyling}>
@@ -126,4 +126,3 @@ const removeChipTags =(index,tag) => {
   );
 }
 
-export default SearchBar

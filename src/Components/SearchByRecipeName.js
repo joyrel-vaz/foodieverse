@@ -3,7 +3,7 @@ import { Form, FormControl, Button, Container}  from 'react-bootstrap'
 import { useHistory} from 'react-router-dom'
 
 
-export default function Search(){
+export default function SearchByName(){
   const [searchTerm,setSearchTerm] = useState('')
   const history = useHistory();
   const handleChange = (event)=>{
@@ -12,10 +12,9 @@ export default function Search(){
 
 
   const handleClick = () =>{
-    setSearchTerm(encodeURIComponent(searchTerm));
     history.push({
       pathname: '/recipes',
-      search : `searchTerm=${searchTerm}`,
+      search : `search_query=${searchTerm}`,
       state: { mode : 'Recipe'}});
   }
 

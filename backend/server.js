@@ -37,7 +37,7 @@ app.get('/api/home-remedies',(req,res) => {
 });
 
 app.get('/api/recipes',(req,res) => {
-    let searchTerm = req.query.searchTerm;
+    let searchTerm = req.query.search_query;
     if(searchTerm === undefined || searchTerm === ''){
         recipe.find({},(err,recipesFound) =>{
             if(err) console.log(err);
@@ -149,9 +149,11 @@ app.get('/api/users/:userid/favorites/show' , (req,res) => {
     favorite.exists({ userID: req.params.userid }).then(exists =>{
         if(exists){
             favorite.find(
-                { userID: req.params.userid } ,(err,allFavs) =>{
+                { userID: req.params.userid },{Favorites:1,_id:0},{new:true} ,(err,allFavs) =>{
                     if(err) console.log(err);
-                    else res.json(allFavs)
+                    //console.log(allFavs[0].Favorites)
+                    else 
+                    res.send(allFavs)
                 }
                 );
         }
