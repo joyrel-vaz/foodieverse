@@ -9,7 +9,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { Col } from 'react-bootstrap';
 
 
-const SearchBar = () => {
+export default function SearchByIng () {
   const BarStyling = {display:'block',border:'1px solid grey',height:'100px', width:'500px',
   maxWidth: '100%',margin:'0 auto'};
   
@@ -126,4 +126,3 @@ const removeChipTags =(index,tag) => {
   );
 }
 
-export default SearchBar
