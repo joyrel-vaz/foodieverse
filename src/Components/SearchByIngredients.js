@@ -78,7 +78,7 @@ const removeChipTags =(index,tag) => {
 
     <div className="d-flex justify-content-center">
       <Container>
-        <Row xs={1} fluid>
+        <Row xs={1}>
           <Col xs>
       <Form className="form-center" >
             <label className="p-1 card overflow-auto" style={BarStyling}>
