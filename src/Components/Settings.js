@@ -8,7 +8,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { Container} from 'react-bootstrap';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import BlockIcon from '@material-ui/icons/Block';
 import ShareIcon from '@material-ui/icons/Share';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import InfoIcon from '@material-ui/icons/Info';
@@ -39,15 +38,6 @@ export default function ListDividers() {
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary="Notifications" />
-        </ListItem>
-        <Divider />
-        <ListItem button  component="a" href="/permissions">
-        <ListItemAvatar>
-            <Avatar style={{ backgroundColor: '#C90F03' }}>
-              <BlockIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Permissions" />
         </ListItem>
         <Divider />
         <ListItem button  component="a" href="/integrations">

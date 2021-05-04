@@ -30,6 +30,7 @@ import RecipeFullPage from './RecipeFullPage'
 import MyFavorites from './MyFavorites';
 import Foodium from './Foodium'
 import ContactUs from './ContactUs'
+import Integration from './Integration'
 
 function App() {
   
@@ -66,6 +67,7 @@ function App() {
               <Route path='/foodium' component={Foodium}/>
               <Route path='/contact' component={ContactUs}/>
               <PrivateRoute path='/favorites' component={MyFavorites}/>
+              <Route path='/integrations' component={Integration}/>
             </Switch>
           </AuthProvider>
         </Router>        
