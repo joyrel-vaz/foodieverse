@@ -28,7 +28,7 @@ import MealPlanner from './MealPlanner'
 import LoginError from './LoginError'
 import RecipeFullPage from './RecipeFullPage'
 import MyFavorites from './MyFavorites';
-
+import Foodium from './Foodium'
 
 function App() {
   
@@ -62,6 +62,7 @@ function App() {
               <PrivateRoute path="/surprise" component={Surprise}/>
               <PrivateRoute path="/mealPlanner" component={MealPlanner}/>
               <Route path='/recipefull' component={RecipeFullPage}/>
+              <Route path='/foodium' component={Foodium}/>
               <PrivateRoute path='/favorites' component={MyFavorites}/>
             </Switch>
           </AuthProvider>
