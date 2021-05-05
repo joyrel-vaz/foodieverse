@@ -64,7 +64,7 @@ export default function ListDividers() {
               <InfoIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Legal and Privacy Statement" />
+          <ListItemText primary="Privacy Policy" />
         </ListItem>
       </List>
       </center>

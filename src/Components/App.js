@@ -31,6 +31,7 @@ import MyFavorites from './MyFavorites';
 import Foodium from './Foodium'
 import ContactUs from './ContactUs'
 import Integration from './Integration'
+import PrivacyPolicy from './PrivacyPolicy'
 
 function App() {
   
@@ -68,6 +69,7 @@ function App() {
               <Route path='/contact' component={ContactUs}/>
               <PrivateRoute path='/favorites' component={MyFavorites}/>
               <Route path='/integrations' component={Integration}/>
+              <Route path='/legal' component={PrivacyPolicy}/>
             </Switch>
           </AuthProvider>
         </Router>        
