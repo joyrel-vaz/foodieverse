@@ -159,6 +159,7 @@ export default class Demo extends React.PureComponent {
       appointmentChanges: {},
       editingAppointment: undefined,
     };
+    //when view is changed - week,month
     this.currentViewNameChange = (currentViewName) => {
       this.setState({ currentViewName });
     };
@@ -168,30 +169,38 @@ export default class Demo extends React.PureComponent {
     this.changeEditingAppointment = this.changeEditingAppointment.bind(this);
   }
 
+  //when any change is made (including add and delete)
   changeAddedAppointment(addedAppointment) {
+    console.log('adding stuff')
     this.setState({ addedAppointment });
   }
 
+  //when date/time is changed
   changeAppointmentChanges(appointmentChanges) {
+    console.log('making changes')
     this.setState({ appointmentChanges });
   }
 
+  //when editing plan
   changeEditingAppointment(editingAppointment) {
+    console.log('in editing')
     this.setState({ editingAppointment });
   }
 
+  //when save is clicked (db addition here)
   commitChanges({ added, changed, deleted }) {
+    console.log('commiting stuff')
     this.setState((state) => {
       let { data } = state;
-      if (added) {
+      if (added) { //new insert
         const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
         data = [...data, { id: startingAddedId, ...added }];
       }
-      if (changed) {
+      if (changed) { //update
         data = data.map(appointment => (
           changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
       }
-      if (deleted !== undefined) {
+      if (deleted !== undefined) { //delete
         data = data.filter(appointment => appointment.id !== deleted);
       }
       return { data };
