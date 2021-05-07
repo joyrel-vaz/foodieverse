@@ -7,7 +7,9 @@ var recipeSchema = new mongoose.Schema({
 	ingredients: String,
     recipeTitle : String,
     servings : String,
-    instructions : String
+    instructions : [
+      {type:  String}
+    ]
 });
 
 module.exports = mongoose.model('recipe', recipeSchema);
