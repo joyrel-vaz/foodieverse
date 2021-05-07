@@ -26,13 +26,11 @@ export function FavoriteManager(props){
 
     useEffect(() =>{
       setIsLiked(favs.includes(props.id));
-      console.log(favs)
     },[favs])
 
     useEffect(() =>{
         if(currentUser !== null)
       getAll();
-      console.log('getting all')
     },[change])
 
 
