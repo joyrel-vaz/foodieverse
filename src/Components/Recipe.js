@@ -34,12 +34,13 @@ export default function Recipes () {
                     <Card 
                     key={r._id}
                     id = {r._id}
-                    title = {r["Recipe Title"]}
-                    instructions = {r["Instructions"]}
-                    ingredients = {r["Ingredients"]}
-                    img = {r["Images"]}          
-                    description={r["Description"]}
-                    ></Card>)}
+                    title = {r.recipeTitle}
+                    instructions = {r.instructions}
+                    ingredients = {r.ingredients}
+                    img = {r.image}          
+                    servings={r.servings}
+                    ></Card>)
+                    }
              
                 </div>
             </>
