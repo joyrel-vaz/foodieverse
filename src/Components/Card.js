@@ -17,7 +17,7 @@ export default function Card(props) {
                 alt="Recipe img"
                 className="card__image"/>
                 <h4 className="card__title">{props.title}</h4>
-                <p className="card__description">{props.description}</p>
+                <p className="card__description">{props.servings}</p>
                 <CardActions disableSpacing>
                 <FavoriteManager
                       id={props.id}
@@ -28,14 +28,14 @@ export default function Card(props) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <Link to={{ pathname:`/recipefull/${props.id}`,
+        <Link to={{ pathname:`/full-recipe/${props.id}`,
                     state:{
                       id:props.id,
                       title:props.title,
                       instructions:props.instructions,
                       ingredients:props.ingredients,
                       img:props.img,
-                      description:props.description
+                      servings:props.servings
                       
                     }     
                       

@@ -14,13 +14,13 @@ export const getFavRecipes = async (user) =>{
     const jsonData  = await res.json();
     if(jsonData.length > 0)
         return jsonData[0].Favorites.map(obj =>
-            ({title : obj["Recipe Title"] , 
+            ({title : obj.recipeTitle , 
             id : obj._id,
-            ingredients:obj.Ingredients,
-            instructions:obj.Instructions,
-            images:obj.Images,
-            cooktime : obj["Cook Time"],
-            servings : obj.Servings
+            ingredients:obj.ingredients,
+            instructions:obj.instructions,
+            images:obj.image,
+            cooktime : obj.cookTime,
+            servings : obj.servings
 
     }));
     else return [];

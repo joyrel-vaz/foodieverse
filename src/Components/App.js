@@ -13,7 +13,7 @@ import AilmentList from './AilmentList'
 import AilmentCategory from './AilmentCategory'
 import HomeRemedies from './HomeRemedies'
 import NavigationBar from './Navbar'
-import Recipes from './Recipe'
+import Recipes from './Recipes'
 import Home from './Home'
 import Settings from './Settings'
 import Footer from './Footer'
@@ -26,7 +26,7 @@ import Payments from './Payments'
 import AboutUs from './AboutUs'
 import MealPlanner from './MealPlanner'
 import LoginError from './LoginError'
-import RecipeFullPage from './RecipeFullPage'
+import FullRecipe from './FullRecipe'
 import MyFavorites from './MyFavorites';
 import Foodium from './Foodium'
 import ContactUs from './ContactUs'
@@ -63,8 +63,8 @@ function App() {
               <Route path="/payments" component={Payments}/>
               <Route path="/aboutus" component={AboutUs}/>
               <PrivateRoute path="/surprise" component={Surprise}/>
-              <PrivateRoute path="/mealPlanner" component={MealPlanner}/>
-              <Route path='/recipefull' component={RecipeFullPage}/>
+              <PrivateRoute path="/meal-planner" component={MealPlanner}/>
+              <Route path='/full-recipe' component={FullRecipe}/>
               <Route path='/foodium' component={Foodium}/>
               <Route path='/contact' component={ContactUs}/>
               <PrivateRoute path='/favorites' component={MyFavorites}/>
