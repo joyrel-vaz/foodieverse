@@ -58,7 +58,7 @@ class MobileMenu extends Component {
         </Nav>
         <style jsx>
           {`.nav-n.nav{
-            border-bottom: 2px solid #C90F03 ;
+            border-bottom: 2px solid black ;
           }
             .mobile-wrapper {
               display: none;
@@ -87,7 +87,6 @@ class MobileMenu extends Component {
             .pos-ref {
               position: relative;
             }
-
             .mobile-nav {
               position: fixed;
               left: 0;
@@ -122,10 +121,10 @@ class MobileMenu extends Component {
               width: 100%;
               text-align: left;
               padding: 0.5rem 1rem;
-              color: white;
-              background: inherit;
               border: none;
               font-size: 14px;
+              background-color:white;
+              color: #C90F03;
             }
             .drop-item:hover {
               background-color: transparent;
@@ -280,13 +279,13 @@ export default class extends Component {
         </Container>
         <style jsx>{`
           .scroll-nav {
-            background: white;
+            background: #C90F03;
             width: 100%;
             z-index: 4;
             box-shadow: #e1dfdf 1px 1px 11px;
           }
           .navD{
-            color:black;
+            color:#C90F03;
           }
           .nav-n {
             align-items: center;
@@ -294,6 +293,7 @@ export default class extends Component {
           .nav-item-n {
             display: none;
             font-size: 14px;
+            color:white;
           }
           .nav-item-n:not(.logo) {
             text-transform: capitalize;
@@ -368,6 +368,9 @@ export default class extends Component {
             border-left: 2px solid;
             border-bottom: 2px solid;
             transform: rotate(-45deg);
+          }
+          .navi-menu{
+            background-color: #C90F03;
           }
         `}</style>
       </div>
