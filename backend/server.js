@@ -1,12 +1,14 @@
-const express = require('express'),
-app = express(),
-cors = require('cors'),
-mongoose = require('mongoose'),
-dadiKeNuske = require('./models/dadiKeNuske.js'),
-recipe = require('./models/recipe.js'),
-favorite = require('./models/favorite.js'),
-shopList = require('./models/shopList.js'),
-PORT = 8080;
+const   express = require('express'),
+        app = express(),
+        cors = require('cors'),
+        mongoose = require('mongoose'),
+        dadiKeNuske = require('./models/dadiKeNuske.js'),
+        recipe = require('./models/recipe.js'),
+        favorite = require('./models/favorite.js'),
+        shopList = require('./models/shopList.js'),
+        mealPlan = require('./models/mealPlan'),
+        meals = require('./models/meals'),
+        PORT = 8080;
 
 
 const dotenv = require('dotenv');
@@ -180,5 +182,61 @@ app.get('/api/users/:userid/favorites/del/:id' , (req,res) => {
                 }
             );
 })
+
+app.post('/api/users/:userid/mealPlanner/add',(req,res) =>{
+        mealPlan.create(req.body , (err,newMeal) =>{
+            if(err) console.log(err)
+            else{
+                meals.exists({ userID: req.params.userid }).then(exists =>{
+                    if(exists){
+                        meals.findOneAndUpdate(
+                            { userID: req.params.userid }, 
+                            { $push: { Meals: newMeal._id } },{new:true},(err,addMeal) =>{
+                                if(err) console.log(err);
+                            }
+                            );
+                    }
+                    else
+                    {
+                        meals.create({userID: req.params.userid, 
+                        $push: { Meals: newMeal._id }},(err,vnewMeal) =>{
+                        if(err) console.log(err);
+                        })}
+                })
+            }
+            return res.json(newMeal)
+        })
+})
+
+app.get('/api/users/:userid/mealPlanner/show',(req,res) =>{
+    meals.exists({ userID: req.params.userid }).then(exists =>{
+        if(exists){
+            meals.find({ userID: req.params.userid }).populate("Meals").exec(function (err, myMeals){
+                    if (err) console.log(err);
+                    else 
+                    return res.json(myMeals);
+                })
+        }
+        else return [];
+    })
+})
+
+app.post('/api/users/:userid/mealPlanner/del/:id' , (req,res) => {
+    mealPlan.findByIdAndDelete(req.params.id ,{new:true},(err,del)=>{
+        if(err) console.log(err);
+        else res.redirect(`/api/users/${req.params.userid}/mealPlanner/show`)
+    }
+        
+    );
+})
+
+app.post('/api/users/:userid/mealPlanner/:id',(req,res)=>{
+    mealPlan.findByIdAndUpdate(req.params.id, req.body,{new:true} ,(err,updatedMeal) =>{
+        if(err) console.log(err)
+        else return res.json(updatedMeal);
+    })
+})
+
+
 
 app.listen(PORT, ()=> console.log(`Listening on port ${PORT}`));
