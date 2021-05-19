@@ -22,6 +22,7 @@ app.use(cors());
 
 const uri = process.env.MONGO_DB_URI;
 var MongoClient = require('mongodb').MongoClient;
+
 mongoose.connect(uri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -184,11 +185,13 @@ app.get('/api/users/:userid/favorites/del/:id' , (req,res) => {
 })
 
 app.post('/api/users/:userid/mealPlanner/add',(req,res) =>{
+    console.log('in add post', req.body,req.params.userid)
         mealPlan.create(req.body , (err,newMeal) =>{
             if(err) console.log(err)
             else{
                 meals.exists({ userID: req.params.userid }).then(exists =>{
                     if(exists){
+                        console.log('exists')
                         meals.findOneAndUpdate(
                             { userID: req.params.userid }, 
                             { $push: { Meals: newMeal._id } },{new:true},(err,addMeal) =>{
@@ -198,13 +201,19 @@ app.post('/api/users/:userid/mealPlanner/add',(req,res) =>{
                     }
                     else
                     {
+                        console.log('not exists')
                         meals.create({userID: req.params.userid, 
                         $push: { Meals: newMeal._id }},(err,vnewMeal) =>{
                         if(err) console.log(err);
                         })}
                 })
             }
-            return res.json(newMeal)
+                let obj = newMeal.toJSON();
+                obj.id = newMeal._id;
+                delete obj._id;
+
+                return res.json(obj);
+            
         })
 })
 
@@ -213,27 +222,50 @@ app.get('/api/users/:userid/mealPlanner/show',(req,res) =>{
         if(exists){
             meals.find({ userID: req.params.userid }).populate("Meals").exec(function (err, myMeals){
                     if (err) console.log(err);
-                    else 
-                    return res.json(myMeals);
+                    else {
+                        let obj_arr = [];
+                        myMeals[0].Meals.forEach(meal => {
+                            let obj = meal.toJSON();
+                            obj.id = meal._id;
+                            delete obj._id;
+                            obj_arr.push(obj);
+                        })
+                        return res.json(obj_arr)
+                    }
                 })
         }
         else return [];
     })
 })
 
-app.post('/api/users/:userid/mealPlanner/del/:id' , (req,res) => {
-    mealPlan.findByIdAndDelete(req.params.id ,{new:true},(err,del)=>{
-        if(err) console.log(err);
-        else res.redirect(`/api/users/${req.params.userid}/mealPlanner/show`)
+app.get('/api/users/:userid/mealPlanner/:id/del' , (req,res) => {
+    mealPlan.findByIdAndDelete(req.params.id,(err,del)=>{
+        if(err) console.log(err);  
+        else {
+            if(del !== null){
+                meals.findOneAndDelete(
+                    { userID: req.params.userid }, 
+                    { $pull: { Meals: req.params.id } },(err,delMealID) =>{
+                        if(err) console.log(err);
+                    }
+                );
+            }
+            return res.redirect(`/api/users/${req.params.userid}/mealPlanner/show`)
+        }
     }
         
     );
 })
 
-app.post('/api/users/:userid/mealPlanner/:id',(req,res)=>{
-    mealPlan.findByIdAndUpdate(req.params.id, req.body,{new:true} ,(err,updatedMeal) =>{
+app.post('/api/users/:userid/mealPlanner/:id/edit',(req,res)=>{
+    console.log(req.body)
+    mealPlan.findByIdAndUpdate(req.params.id, {$set: req.body},
+        {new:true} ,
+        (err,updatedMeal) =>{
         if(err) console.log(err)
-        else return res.json(updatedMeal);
+        else {
+            return res.redirect(`/api/users/${req.params.userid}/mealPlanner/show`)
+        }
     })
 })
 
