@@ -246,7 +246,7 @@ export default class extends Component {
               <div className="drop__item" ref={this.dropNav}>
                 <Nav vertical>
                   <NavItem className="nav-item-n">
-                    <NavLink href="/mealPlanner">Meal Planner</NavLink>
+                    <NavLink href="/meal-planner">Meal Planner</NavLink>
                   </NavItem>
                   <NavItem className="nav-item-n">
                     <NavLink href="/favorites">Favorites</NavLink>
