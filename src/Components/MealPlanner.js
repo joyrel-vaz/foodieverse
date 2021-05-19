@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Paper from '@material-ui/core/Paper';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import { makeStyles } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import classNames from 'clsx';
+import {useAuth} from '../Contexts/AuthContext'
+import {getMeals , addMeal , editMeal , delMeal} from '../api.js'
 import {
   Scheduler,
   WeekView,
@@ -145,70 +147,90 @@ const Appointment = ({
 };
 
 
-export default class Demo extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    var today = new Date(),
+export default function MealPlanner() {
+    let today = new Date(),
     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
-    this.state = {
-      data: recurrenceAppointments,
-      currentViewName: 'Week',
-      currentDate: date,
-      addedAppointment: {},
-      appointmentChanges: {},
-      editingAppointment: undefined,
-    };
-    //when view is changed - week,month
-    this.currentViewNameChange = (currentViewName) => {
-      this.setState({ currentViewName });
-    };
-    this.commitChanges = this.commitChanges.bind(this);
-    this.changeAddedAppointment = this.changeAddedAppointment.bind(this);
-    this.changeAppointmentChanges = this.changeAppointmentChanges.bind(this);
-    this.changeEditingAppointment = this.changeEditingAppointment.bind(this);
-  }
+    const { currentUser } = useAuth();
+    const [data,setData] = useState(recurrenceAppointments);
+    const [currentDate,setCurrentDate] = useState(date);
+    const [currentViewName,setCurrentViewName] = useState('Month');
+    const [addedAppointment,setAddedAppointment] = useState();
+    const [appointmentChanges,setAppointmentChanges] = useState();
+    const [editingAppointment,setEditingAppointment] = useState(undefined);
 
+    //when view is changed - week,month
+    const currentViewNameChange = (currentViewName) => {
+      setCurrentViewName(currentViewName);
+    };
+
+    const getAllMeals = async() =>{
+      const myMeals = await getMeals(currentUser.email)
+      setData(myMeals)
+      console.log(myMeals)
+    }
+
+ /**addedAppointment should be set to recipe title which you get from recipe + keep recipe id handy
+*/
+   useEffect(() => {
+     console.log('in getmeals')
+    getAllMeals()
+    },[]) 
+ 
   //when any change is made (including add and delete)
-  changeAddedAppointment(addedAppointment) {
-    console.log('adding stuff')
-    this.setState({ addedAppointment });
+  const changeAddedAppointment = (addedAppointment) => {
+    console.log('adding stuff',addedAppointment)
+    setAddedAppointment(addedAppointment);
   }
 
   //when date/time is changed
-  changeAppointmentChanges(appointmentChanges) {
+  const changeAppointmentChanges = (appointmentChanges) => {
     console.log('making changes')
-    this.setState({ appointmentChanges });
+    setAppointmentChanges(appointmentChanges)
   }
 
   //when editing plan
-  changeEditingAppointment(editingAppointment) {
+  const changeEditingAppointment = (editingAppointment) => {
     console.log('in editing')
-    this.setState({ editingAppointment });
+    console.log(editingAppointment)
+    setEditingAppointment(editingAppointment)
   }
 
   //when save is clicked (db addition here)
-  commitChanges({ added, changed, deleted }) {
-    console.log('commiting stuff')
-    this.setState((state) => {
-      let { data } = state;
+  const commitChanges = async({ added, changed, deleted }) =>{
+    console.log('commiting stuff',added,changed,deleted)
       if (added) { //new insert
-        const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
-        data = [...data, { id: startingAddedId, ...added }];
+        const datum = await addMeal(currentUser.email,added);
+        setData([...data, datum]);
+        console.log(data)
       }
       if (changed) { //update
-        data = data.map(appointment => (
-          changed[appointment.id] ? { ...appointment, ...changed[appointment.id] } : appointment));
+        console.log(changed)
+        let id = null;
+
+        for(let i = 0 ; i < data.length ; i++){
+          let datum = data[i].id;
+          if(changed[datum])
+            {
+                id = datum;
+                break;
+            }
+        }
+
+        console.log(id);
+        const allData = await editMeal(currentUser.email, id,changed[id]);
+        setData(allData)
+        
       }
       if (deleted !== undefined) { //delete
-        data = data.filter(appointment => appointment.id !== deleted);
+        console.log(deleted)              
+        const allData = await delMeal(currentUser.email,deleted);
+        setData(allData)
+        
       }
       return { data };
-    });
-  }
 
-  render() {
-    const { data, currentViewName, currentDate, addedAppointment, appointmentChanges, editingAppointment} = this.state;
+  }
 
     return (
       <div>
@@ -220,19 +242,19 @@ export default class Demo extends React.PureComponent {
           <ViewState
             defaultCurrentDate={currentDate}
             currentViewName={currentViewName}
-            onCurrentViewNameChange={this.currentViewNameChange}
+            onCurrentViewNameChange={currentViewNameChange}
           />
           <EditingState
-            onCommitChanges={this.commitChanges}
+            onCommitChanges={commitChanges}
 
             addedAppointment={addedAppointment}
-            onAddedAppointmentChange={this.changeAddedAppointment}
+            onAddedAppointmentChange={changeAddedAppointment}
 
             appointmentChanges={appointmentChanges}
-            onAppointmentChangesChange={this.changeAppointmentChanges}
+            onAppointmentChangesChange={changeAppointmentChanges}
 
             editingAppointment={editingAppointment}
-            onEditingAppointmentChange={this.changeEditingAppointment}
+            onEditingAppointmentChange={changeEditingAppointment}
           />
           <WeekView
             startDayHour={10}
@@ -274,6 +296,5 @@ export default class Demo extends React.PureComponent {
           
         </div>
     );
-  }
-}
 
+    }
