@@ -64,7 +64,6 @@ export function delShopList(user,item){
 
 export async function getMeals(user) {
     const res = await fetch(`/api/users/${user}/mealPlanner/show`);
-    console.log('res.json()')
     return await res.json();
 }
 
@@ -86,7 +85,6 @@ export async function delMeal(user,mealID)
 
 export async function editMeal(user,id,meal)
 {
-    console.log(meal)
     const res = await fetch(`/api/users/${user}/mealPlanner/${id}/edit`,
 
     { method: 'POST', 
