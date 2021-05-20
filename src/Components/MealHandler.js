@@ -9,14 +9,11 @@ export default function MealHandler(props){
   const history = useHistory();
 
   const mealHandler = ()=>{
-      const link = `Recipe link : http://localhost:3000/full-recipe/${props.id}`
 
     history.push({
       pathname: '/meal-planner',
-      state: 
-      { title : props.title,
-        notes: link
-    }});
+      state: props
+    });
   }
 
   return  <div>

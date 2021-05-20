@@ -33,8 +33,7 @@ export default function Card(props) {
         </IconButton>
 
       <MealHandler
-      id={props.id}
-      title={props.title}
+      recipe={props}
       />
         
         <Link to={{ pathname:`/full-recipe/${props.id}`,
