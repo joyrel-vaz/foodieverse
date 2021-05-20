@@ -188,31 +188,23 @@ app.post('/api/users/:userid/mealPlanner/add',(req,res) =>{
         mealPlan.create(req.body , (err,newMeal) =>{
             if(err) console.log(err)
             else{
-                meals.exists({ userID: req.params.userid }).then(exists =>{
-                    if(exists){
                         meals.findOneAndUpdate(
                             { userID: req.params.userid }, 
-                            { $push: { Meals: newMeal._id } },{new:true},(err,addMeal) =>{
+                            { $push: { Meals: newMeal._id } },{upsert:true},(err,addMeal) =>{
                                 if(err) console.log(err);
+                                else console.log(addMeal)
                             }
-                            );
-                    }
-                    else
-                    {
-                        meals.create({userID: req.params.userid, 
-                        $push: { Meals: newMeal._id }},(err,vnewMeal) =>{
-                        if(err) console.log(err);
-                        })}
-                })
-            }
+                            );                    
+                }
                 let obj = newMeal.toJSON();
                 obj.id = newMeal._id;
                 delete obj._id;
 
                 return res.json(obj);
+            })
+
             
         })
-})
 
 app.get('/api/users/:userid/mealPlanner/show',(req,res) =>{
     meals.exists({ userID: req.params.userid }).then(exists =>{
