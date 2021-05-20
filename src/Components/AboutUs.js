@@ -30,7 +30,7 @@ export default class AboutUs extends Component {
               </div>
               <div className="col-lg-6 pt-5 pt-lg-0">
                 <div className="about-content">
-                  <h4 className="font-weight-bold" style={{color:"#C90F03"}}>What is FoodKart?</h4>
+                  <h4 className="font-weight-bold" style={{color:"#C90F03"}}>What is FoodieVerse?</h4>
                   <p>The Universe of Recipes for Foodies All Over!</p>
                   <br />
                   <h4 className="font-weight-bold" style={{color:"#C90F03"}}>How we can help?</h4>

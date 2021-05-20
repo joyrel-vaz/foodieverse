@@ -1,0 +1,9 @@
+.logo-small{
+    height: auto;
+    width: auto;
+    max-height: 50px;
+    max-width: 150px;
+}
+.logo-navlink.nav-link{
+    padding:0!important;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Nav, NavItem, NavLink, Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap'
+import './Navbar.css'
 
 class MobileMenu extends Component {
   state = { isOpen: false }
@@ -212,23 +213,20 @@ export default class extends Component {
 
           <Nav className="nav-n">
             <NavItem className="nav-item-n logo">
-              <NavLink href="/">FoodKart</NavLink>
+              <NavLink className="logo-navlink" href="/"><img className="logo-small" src="images/logo1.png"></img></NavLink>
             </NavItem>
             <NavItem className="nav-item-n ham" onClick={this.showNav}>
               <NavLink href="">
                 <i class="fas fa-bars" />
               </NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
-              <NavLink href="/">home</NavLink>
-            </NavItem>
-            <NavItem className="nav-item-n">
+            <NavItem className="nav-item-n left-nav">
               <NavLink href="/aboutus">about</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
+            <NavItem className="nav-item-n left-nav">
               <NavLink href="/recipes">recipes</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
+            <NavItem className="nav-item-n left-nav">
               <NavLink href="/home-remedies">Dadi Ke Nuske</NavLink>
             </NavItem>
             <div
@@ -238,7 +236,7 @@ export default class extends Component {
               onTransitionEnd={this.onHide}
             >
               <NavItem>
-                <NavLink href="#" className="nav-item-n navD caret">
+                <NavLink href="#" className="nav-item-n navD caret left-nav">
                   Features
               </NavLink>
               </NavItem>
@@ -263,16 +261,13 @@ export default class extends Component {
               </div>
             </div>
 
-            <NavItem className="nav-item-n">
+            <NavItem className="nav-item-n left-nav">
               <NavLink href="/foodium">foodium</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
-              <NavLink href="/help">help</NavLink>
-            </NavItem>
-            <NavItem className="nav-item-n">
+            <NavItem className="nav-item-n right-nav">
               <NavLink href="/Login">Login</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
+            <NavItem className="nav-item-n right-nav">
               <NavLink href="/contact">Contact</NavLink>
             </NavItem>
           </Nav>
@@ -283,6 +278,12 @@ export default class extends Component {
             width: 100%;
             z-index: 4;
             box-shadow: #e1dfdf 1px 1px 11px;
+          }
+          .left-nav{
+            margin-right: auto;
+          }
+          .right-nav{
+            margin-left:auto;
           }
           .navD{
             color:#C90F03;
