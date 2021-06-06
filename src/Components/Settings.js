@@ -28,8 +28,9 @@ export default function ListDividers() {
       <>
       <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'0 0 0 0'}}
       >
-            <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
-        <center><h4>SETTINGS</h4>
+
+            <div className="w-100 div-main" style={{maxWidth:"400px" , padding:"20px"}}>
+        <center ><h4>SETTINGS</h4>
       <List component="nav" className={classes.root} aria-label="mailbox folders">
           <ListItem button  component="a" href="/notifications">
           <ListItemAvatar>

@@ -29,7 +29,9 @@ class MobileMenu extends Component {
           <NavItem className="nav-item-m">
             <NavLink className="navL">Dadi Ke Nuske</NavLink>
           </NavItem>
-          
+          <NavItem className="nav-item-m">
+            <NavLink href="/foodium" className="navL">Foodium</NavLink>
+          </NavItem>
           <NavItem>
             <Dropdown isOpen={this.state.isOpen} toggle={this.toggle}>
               <DropdownToggle className="drop-item" caret>
@@ -45,9 +47,6 @@ class MobileMenu extends Component {
             </Dropdown>
           </NavItem>
           <NavItem className="nav-item-m">
-            <NavLink href="/foodium" className="navL">Foodium</NavLink>
-          </NavItem>
-          <NavItem className="nav-item-m">
             <NavLink href="/help" className="navL">Help</NavLink>
           </NavItem>
           <NavItem className="nav-item-m">
@@ -58,9 +57,10 @@ class MobileMenu extends Component {
           </NavItem>
         </Nav>
         <style jsx>
-          {`.nav-n.nav{
+          {`
+          /* {.nav-n.nav{
             border-bottom: 2px solid black ;
-          }
+          } */}
             .mobile-wrapper {
               display: none;
               
@@ -221,13 +221,16 @@ export default class extends Component {
               </NavLink>
             </NavItem>
             <NavItem className="nav-item-n left-nav">
-              <NavLink href="/aboutus">about</NavLink>
+              <NavLink className="nav-hover" href="/aboutus">about</NavLink>
             </NavItem>
             <NavItem className="nav-item-n left-nav">
-              <NavLink href="/recipes">recipes</NavLink>
+              <NavLink className="nav-hover" href="/recipes">recipes</NavLink>
             </NavItem>
             <NavItem className="nav-item-n left-nav">
-              <NavLink href="/home-remedies">Dadi Ke Nuske</NavLink>
+              <NavLink className="nav-hover" href="/home-remedies">Dadi Ke Nuske</NavLink>
+            </NavItem>
+            <NavItem className="nav-item-n left-nav">
+              <NavLink className="nav-hover" href="/foodium">foodium</NavLink>
             </NavItem>
             <div
               className="drop"
@@ -235,8 +238,8 @@ export default class extends Component {
               onMouseOut={this.out}
               onTransitionEnd={this.onHide}
             >
-              <NavItem>
-                <NavLink href="#" className="nav-item-n navD caret left-nav">
+              <NavItem className="nav-item-n left-nav">
+                <NavLink href="#" className="nav-item-n navD left-nav nav-hover caret">
                   Features
               </NavLink>
               </NavItem>
@@ -260,19 +263,22 @@ export default class extends Component {
                 </Nav>
               </div>
             </div>
-
-            <NavItem className="nav-item-n left-nav">
-              <NavLink href="/foodium">foodium</NavLink>
-            </NavItem>
             <NavItem className="nav-item-n right-nav">
+              <NavLink href="/contact" className="nav-hover">Contact</NavLink>
+            </NavItem>
+            <NavItem className="nav-item-n right-nav l-n">
               <NavLink href="/Login">Login</NavLink>
-            </NavItem>
-            <NavItem className="nav-item-n right-nav">
-              <NavLink href="/contact">Contact</NavLink>
-            </NavItem>
+            </NavItem>            
           </Nav>
         </Container>
         <style jsx>{`
+          .l-n{
+            border: 4px solid white;
+            border-radius: 5px;
+            background-color:white;
+            color: #C90F03 !important;
+            margin-left:20% !important;
+          }
           .scroll-nav {
             background: #C90F03;
             width: 100%;
@@ -280,7 +286,7 @@ export default class extends Component {
             box-shadow: #e1dfdf 1px 1px 11px;
           }
           .left-nav{
-            margin-right: auto;
+            margin-right: auto !important;
           }
           .right-nav{
             margin-left:auto;
@@ -299,8 +305,8 @@ export default class extends Component {
           .nav-item-n:not(.logo) {
             text-transform: capitalize;
           }
-          .nav-link:hover{
-            border-bottom: 3px solid #C90F03;
+          .nav-hover:hover{
+            border-bottom: 3px solid black;
           }
           .nav-item-n a {
             padding: 0.5rem 0.6rem;
@@ -369,6 +375,7 @@ export default class extends Component {
             border-left: 2px solid;
             border-bottom: 2px solid;
             transform: rotate(-45deg);
+            
           }
           .navi-menu{
             background-color: #C90F03;
