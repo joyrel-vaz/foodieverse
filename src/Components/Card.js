@@ -6,8 +6,11 @@ import CardActions from '@material-ui/core/CardActions';
 import {Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import {FavoriteManager} from './FavoriteManager'
+import MealHandler from './MealHandler';
+
 
 export default function Card(props) {
+
 
     return (
         <div className="card">
@@ -28,6 +31,11 @@ export default function Card(props) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
+
+      <MealHandler
+      recipe={props}
+      />
+        
         <Link to={{ pathname:`/full-recipe/${props.id}`,
                     state:{
                       id:props.id,
@@ -41,8 +49,8 @@ export default function Card(props) {
                       
                     }}>
   
-        <Button variant="outline-danger" className="card__btn">
-          <span>View Recipe</span>
+        <Button variant="outline-danger" className="btn btn-md m-2">
+          View Recipe
           </Button>
         </Link>
       </CardActions>

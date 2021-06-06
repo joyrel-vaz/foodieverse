@@ -2,24 +2,17 @@ const mongoose = require('mongoose');
 
 //meal plan schema
 var mealPlanSchema = new mongoose.Schema({
-    startDate: String,
-    endDate : String,
-    startTime:String,
-    endTime: String,
+    title:String, //temporary
+    startDate: Date,
+    endDate : Date,
     notes:String,
     allDay:Boolean,
-    repeat:{
-        frequency:String,
-        numOfDays:Number,
-        endRepeat:{
-            numOfOccs:Number,
-            never: Boolean,
-            after:{
-                a_date: String,
-                a_time: String
-            }
-        }
-    }
+    recipeID:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "recipe"
+    },
+    rRule: String,
+    exDate:String
 });
 
 module.exports = mongoose.model('mealPlan', mealPlanSchema);
