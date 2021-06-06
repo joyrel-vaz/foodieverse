@@ -2,27 +2,89 @@ import React from 'react'
 import './Home.css'
 import ControlledCarousel from './ControlledCarousel';
 import { Container, Row, Col } from 'reactstrap'
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+
+const HtmlTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: '#f5f5f9',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9',
+  },
+}))(Tooltip);
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(1),
+      width: theme.spacing(16),
+      height: theme.spacing(16),
+    },
+  },
+  root1: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+}));
 
 export default function Home() {
+  const classes = useStyles();
+
   return(
     <>
       <header>
       <div className="intro-logo jumbo-bg">
+      <center>
       <h1>Welcome to FoodieVerse</h1>
         <h3 className="subtitle">The One-Stop Destination for all your Cooking Needs!</h3>
         <ControlledCarousel/>
-        <div className="company-icons">
-          <span className="company-icons__item">
-            <i className="fas fa-carrot" />
-            <a href="./recipes" class="navL">Search for Recipes</a>
-          </span>
-          <span className="company-icons__item">
-            <i className="fas fa-mortar-pestle" />
-            <a href="/home-remedies" class="navL">Dadi Ke Nuske</a>
-          </span>
-        </div>
-        </div>
-    </header>
+        <div className={classes.root1}>
+          <Grid container spacing={0}>      
+            <div className={classes.root}>
+            <Grid item xs={12} sm={6}>
+            <HtmlTooltip
+            title={
+              <React.Fragment>
+                <Typography color="inherit">Tooltip with HTML</Typography>
+                <em>{"And here's"}</em> <b>{'some'}</b> <u>{'amazing content'}</u>.{' '}
+                {"It's very engaging. Right?"}
+              </React.Fragment>
+            }
+            >
+              <Paper elevation={2} className="red-button">
+                <span className="company-icons__item">
+                    <i className="fas fa-carrot" />
+                    <a href="./recipes" class="navL">Search for Recipes</a>
+                </span>
+              </Paper>
+            </HtmlTooltip>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper elevation = {2} className="red-button">
+              <span className="company-icons__item">
+                    <i className="fas fa-mortar-pestle" />
+                    <a href="/home-remedies" class="navL">Dadi Ke Nuske</a>
+              </span>
+            </Paper>
+          </Grid>
+          </div>
+        </Grid>
+      </div>
+      </center>
+    </div>
+  </header>
     <section className="s1">
       <Container>
         <Row>

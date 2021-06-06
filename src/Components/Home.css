@@ -78,13 +78,17 @@ header {
     transition: all 0.5s;
     background-color: #C90F03; 
     border-radius: 20px;
-    padding:7px;
   }
   .company-icons__item:hover {
     cursor: pointer;
     color:white;
   }
 
+  .red-button{
+    background-color: #C90F03 !important; 
+    border-radius: 20px;
+    
+  }
   .subtitle{
     margin-bottom:0!important;
   }
