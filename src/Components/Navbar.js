@@ -29,9 +29,9 @@ class MobileMenu extends Component {
           <NavItem className="nav-item-m">
             <NavLink className="navL">Dadi Ke Nuske</NavLink>
           </NavItem>
-          <NavItem className="nav-item-m">
+          {/* <NavItem className="nav-item-m">
             <NavLink href="/foodium" className="navL">Foodium</NavLink>
-          </NavItem>
+          </NavItem> */}
           <NavItem>
             <Dropdown isOpen={this.state.isOpen} toggle={this.toggle}>
               <DropdownToggle className="drop-item" caret>
@@ -229,9 +229,9 @@ export default class extends Component {
             <NavItem className="nav-item-n left-nav">
               <NavLink className="nav-hover" href="/home-remedies">Dadi Ke Nuske</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n left-nav">
+            {/* <NavItem className="nav-item-n left-nav">
               <NavLink className="nav-hover" href="/foodium">foodium</NavLink>
-            </NavItem>
+            </NavItem> */}
             <div
               className="drop"
               onMouseOver={this.over}
