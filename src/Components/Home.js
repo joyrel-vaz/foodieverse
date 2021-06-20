@@ -84,7 +84,7 @@ export default function Home() {
               <Paper elevation={2} className="red-button">
                 <span className="company-icons__item">
                     <i className="fas fa-carrot" />
-                    <a href="./recipes" class="navL">Surprise Recipe</a>
+                    <a href="./surprise-recipes" class="navL">Surprise Recipe</a>
                 </span>
               </Paper>
             </HtmlTooltip>
