@@ -61,3 +61,34 @@ export function delShopList(user,item){
     console.log("in updateshop del API")
     return fetch("/api/userShopList/del/"+user+"/"+item).then(res => res.json());
 }
+
+export async function getMeals(user) {
+    const res = await fetch(`/api/users/${user}/mealPlanner/show`);
+    return await res.json();
+}
+
+export async function addMeal(user,meal)
+{
+   const res = await fetch(`/api/users/${user}/mealPlanner/add`,
+    { method: 'POST', 
+    headers: {'Content-Type':'application/json',
+            'Accept': 'application/json'}, 
+    body: JSON.stringify(meal)});
+    return await res.json();
+}
+
+export async function delMeal(user,mealID)
+{
+    const res = await fetch(`/api/users/${user}/mealPlanner/${mealID}/del`);
+    return await res.json()
+}
+
+export async function editMeal(user,id,meal)
+{
+    const res = await fetch(`/api/users/${user}/mealPlanner/${id}/edit`,
+
+    { method: 'POST', 
+    headers: {'Content-Type':'application/json',}, 
+    body: JSON.stringify(meal)});
+    return await res.json();
+}

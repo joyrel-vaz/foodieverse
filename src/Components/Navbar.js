@@ -38,7 +38,7 @@ class MobileMenu extends Component {
                 Features
               </DropdownToggle>
               <DropdownMenu className="drop-menu">
-                <DropdownItem href="/mealPlanner">Meal Planner</DropdownItem>
+                <DropdownItem href="/meal-planner">Meal Planner</DropdownItem>
                 <DropdownItem href="/shopping-list">Shopping List</DropdownItem>
                 <DropdownItem href='/favorites'>Favorites</DropdownItem>
                 <DropdownItem href="/surprise">Surprise</DropdownItem>

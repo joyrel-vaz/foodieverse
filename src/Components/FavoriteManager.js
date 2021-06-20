@@ -52,7 +52,7 @@ export function FavoriteManager(props){
            </Button>   
            :
            <Button
-              variant="secondary"
+              variant="light"
               onClick={() => {
                 if(currentUser === null)
                     sendLogin();
