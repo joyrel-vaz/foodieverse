@@ -63,3 +63,7 @@ body{
 [list]::-webkit-calendar-picker-indicator{
   opacity: 0;
 }
+
+.recipe-list{
+  list-style-type: none;
+}
