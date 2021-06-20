@@ -110,9 +110,17 @@ const removeChipTags =(index,tag) => {
                 style={inputStyling}
                 type="text"
                 name="searchTerm"
+                list="browsers"
                 placeholder="Press space to add tags"
                 onKeyUp={event => addTags(event)}
             />
+            <datalist id="browsers">
+              <option value="Edge"/>
+              <option value="Firefox"/>
+              <option value="Chrome"/>
+              <option value="Opera"/>
+              <option value="Safari"/>
+            </datalist>
             </label>
         <div className="text-center m-3" >
         <input type="button" className="btn btn-outline-success" value="Search" variant="outline-success" onClick= {handleClick}/>
