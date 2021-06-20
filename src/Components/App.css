@@ -34,3 +34,16 @@ body{
     .switch-integration{
       float:right !important;
     }
+    .MuiGrid-root {
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+  }
+
+  .MuiPaper-root {
+    padding:5px 20px;
+    margin:0 5px;
+}
+
+
+  

@@ -20,19 +20,7 @@ const HtmlTooltip = withStyles((theme) => ({
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    '& > *': {
-      margin: theme.spacing(1),
-      width: theme.spacing(16),
-      height: theme.spacing(16),
-    },
-  },
-  root1: {
-    flexGrow: 1,
-  },
-  paper: {
+    paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
@@ -50,38 +38,58 @@ export default function Home() {
       <h1>Welcome to FoodieVerse</h1>
         <h3 className="subtitle">The One-Stop Destination for all your Cooking Needs!</h3>
         <ControlledCarousel/>
-        <div className={classes.root1}>
-          <Grid container spacing={0}>      
-            <div className={classes.root}>
-            <Grid item xs={12} sm={6}>
+          <Grid >  
+            <Grid item xs={12} sm={3}>
             <HtmlTooltip
             title={
               <React.Fragment>
-                <Typography color="inherit">Tooltip with HTML</Typography>
-                <em>{"And here's"}</em> <b>{'some'}</b> <u>{'amazing content'}</u>.{' '}
-                {"It's very engaging. Right?"}
+               <center>Your search for recipes based on the ingredients you crave for ends here!</center>
               </React.Fragment>
             }
             >
               <Paper elevation={2} className="red-button">
                 <span className="company-icons__item">
                     <i className="fas fa-carrot" />
-                    <a href="./recipes" class="navL">Search for Recipes</a>
+                    <a href="./recipes" class="navL">Recipe Search</a>
                 </span>
               </Paper>
             </HtmlTooltip>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <br/>
+          <Grid item xs={12} sm={3}>
+          <HtmlTooltip
+            title={
+              <React.Fragment>
+                <center>Heal Naturally with verified homemade remedies.</center>
+              </React.Fragment>
+            }
+            >
             <Paper elevation = {2} className="red-button">
               <span className="company-icons__item">
                     <i className="fas fa-mortar-pestle" />
                     <a href="/home-remedies" class="navL">Dadi Ke Nuske</a>
               </span>
             </Paper>
+            </HtmlTooltip>
           </Grid>
-          </div>
+          <br/>
+          <Grid item xs={12} sm={3}>
+            <HtmlTooltip
+            title={
+              <React.Fragment>
+                <center>Don't know what to cook? Let us choose for you based on your requirements.</center>
+              </React.Fragment>
+            }
+            >
+              <Paper elevation={2} className="red-button">
+                <span className="company-icons__item">
+                    <i className="fas fa-carrot" />
+                    <a href="./recipes" class="navL">Surprise Recipe</a>
+                </span>
+              </Paper>
+            </HtmlTooltip>
+          </Grid>
         </Grid>
-      </div>
       </center>
     </div>
   </header>
@@ -213,9 +221,10 @@ export default function Home() {
     .s3__box-item {
         padding: 2em;
         transition: all .5s;
+        box-shadow: #ece9e9 1px 1px 5px;
     }
     .s3__box-item:hover {
-        box-shadow: #ece9e9 1px 1px 15px;
+        box-shadow: red 1px 1px 15px;
     }
     .s3__box-item img {
         height: 100px;
