@@ -79,7 +79,7 @@ export default function ShoppingList() {
 
                    
 
-                    <Button disabled={loading} className="w-100" type="submit">
+                    <Button disabled={loading} className="w-100 btn-red" type="submit">
                         Add Item
                     </Button>
                 </Form>

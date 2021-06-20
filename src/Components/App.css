@@ -67,3 +67,11 @@ body{
 .recipe-list{
   list-style-type: none;
 }
+.btn-red{
+  background-color:#C90F03 !important;
+  border-color:  #C90F03!important;
+}
+.text-red{
+  color:  #C90F03!important;
+  text-decoration:none !important;
+}
