@@ -9,10 +9,17 @@ export default function MealHandler(props){
   const history = useHistory();
 
   const mealHandler = ()=>{
-
+    let obj = {
+      id:props.recipe.id,
+      title:props.recipe.title,
+      instructions:props.recipe.instructions,
+      ingredients:props.recipe.ingredients,
+      img:props.recipe.img,
+      servings:props.recipe.servings
+    }
     history.push({
       pathname: '/meal-planner',
-      state: props
+      state: {recipe:obj}
     });
   }
 
