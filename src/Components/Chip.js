@@ -74,8 +74,6 @@ export default function SmallChips(props) {
         clickable={true}
         label={data.label}
         onClick={() => addChip(data)}
-        deleteIcon = {<CancelIcon/>}
-        onDelete={() => removeChip(data)}
       />
       )}
       

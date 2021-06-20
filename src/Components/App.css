@@ -59,3 +59,7 @@ body{
 .meal-planner-class{
   margin-top:15px;
 }
+
+[list]::-webkit-calendar-picker-indicator{
+  opacity: 0;
+}
