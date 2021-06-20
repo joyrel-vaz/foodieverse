@@ -38,7 +38,7 @@ function App() {
   return (
     <React.Fragment>
       <NavigationBar></NavigationBar>
-    <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh"}}
+    <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"66vh"}}
     >
       <div className="home-edits" >
         <Router>

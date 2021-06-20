@@ -300,7 +300,7 @@ const AppointmentFormContainer = withStyles(containerStyles, { name: 'Appointmen
 const styles = theme => ({
   addButton: {
     position: 'absolute',
-    bottom: theme.spacing(1) * 3,
+    top: theme.spacing(1) * 8,
     right: theme.spacing(1) * 4,
   },
 });
@@ -317,9 +317,11 @@ function getCurrentUser(Component) {
 class MealPlanner extends React.PureComponent {
   constructor(props) {
     super(props);
+    var today = new Date(),
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     this.state = {
       data: [],
-      currentDate: '2018-06-27',
+      currentDate: date,
       confirmationVisible: false,
       editingFormVisible: false,
       deletedAppointmentId: undefined,
@@ -480,10 +482,24 @@ class MealPlanner extends React.PureComponent {
     const { classes } = this.props;
 
     return (
-      <Paper>
+      <Paper className="meal-planner-class">
+        <Fab
+          color="secondary"
+          className={classes.addButton}
+          onClick={() => {
+            this.setState({ editingFormVisible: true });
+            this.onEditingAppointmentChange(undefined);
+            this.onAddedAppointmentChange({
+              startDate: new Date(currentDate).setHours(startDayHour),
+              endDate: new Date(currentDate).setHours(startDayHour + 1),
+            });
+          }}
+        >
+          <AddIcon />
+        </Fab>
         <Scheduler
           data={data}
-          height={660}
+          height={500}
         >
           <ViewState
             currentDate={currentDate}
@@ -521,11 +537,11 @@ class MealPlanner extends React.PureComponent {
           onClose={this.cancelDelete}
         >
           <DialogTitle>
-            Delete Appointment
+            Delete Plan
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete this appointment?
+              Are you sure you want to delete this meal plan?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -538,20 +554,7 @@ class MealPlanner extends React.PureComponent {
           </DialogActions>
         </Dialog>
 
-        <Fab
-          color="secondary"
-          className={classes.addButton}
-          onClick={() => {
-            this.setState({ editingFormVisible: true });
-            this.onEditingAppointmentChange(undefined);
-            this.onAddedAppointmentChange({
-              startDate: new Date(currentDate).setHours(startDayHour),
-              endDate: new Date(currentDate).setHours(startDayHour + 1),
-            });
-          }}
-        >
-          <AddIcon />
-        </Fab>
+        
       </Paper>
     );
   }

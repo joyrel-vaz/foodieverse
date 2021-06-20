@@ -45,5 +45,17 @@ body{
     margin:0 5px;
 }
 
+.Root-container-2{
+  height:66vh !important;
+}
 
-  
+
+.OverlayBase-fullSize-17 {
+    width: 80%;
+    max-width: 700px;
+    height: 100%;
+}
+
+.meal-planner-class{
+  margin-top:15px;
+}
