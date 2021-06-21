@@ -35,14 +35,14 @@ export default function Demo() {
           </Typography>
         </TimelineOppositeContent>
         <TimelineSeparator>
-          <TimelineDot>
+          <TimelineDot style={{color:"#C90F03", backgroundColor:"#FFF"}}>
             <FastfoodIcon />
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
           <Paper elevation={3} className={classes.paper}>
-            <Typography variant="h6" component="h1">
+            <Typography variant="h6" component="h1" style={{color:"#C90F03"}}>
               Hungry Much?
             </Typography>
             <Typography>Open the App</Typography>
@@ -56,14 +56,14 @@ export default function Demo() {
           </Typography>
         </TimelineOppositeContent>
         <TimelineSeparator>
-          <TimelineDot color="primary">
+          <TimelineDot style={{color:"#C90F03", backgroundColor:"#FFF"}}>
             <LaptopMacIcon />
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
           <Paper elevation={3} className={classes.paper}>
-            <Typography variant="h6" component="h1">
+            <Typography variant="h6" component="h1" style={{color:"#C90F03"}}>
               Check Ingredients
             </Typography>
             <Typography>Add these to your search criteria.</Typography>
@@ -77,14 +77,14 @@ export default function Demo() {
           </Typography>
         </TimelineOppositeContent>
         <TimelineSeparator>
-          <TimelineDot>
+          <TimelineDot style={{color:"#C90F03", backgroundColor:"#FFF"}}>
             <FastfoodIcon />
-          </TimelineDot>
+          </TimelineDot >
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
           <Paper elevation={3} className={classes.paper}>
-            <Typography variant="h6" component="h1">
+            <Typography variant="h6" component="h1" style={{color:"#C90F03"}}>
             What do you NOT want?
             </Typography>
             <Typography>Add Allergens and other items you hate.</Typography>
@@ -98,14 +98,14 @@ export default function Demo() {
           </Typography>
         </TimelineOppositeContent>
         <TimelineSeparator>
-          <TimelineDot color="primary">
+          <TimelineDot style={{color:"#C90F03", backgroundColor:"#FFF"}}>
             <LaptopMacIcon />
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
           <Paper elevation={3} className={classes.paper}>
-            <Typography variant="h6" component="h1">
+            <Typography variant="h6" component="h1" style={{color:"#C90F03"}}>
               Explore and Enjoy
             </Typography>
             <Typography>Choose the Best Recipe. Use Meal Planner, Shopping List, Favourites and others to make the best use of the app</Typography>

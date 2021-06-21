@@ -8,7 +8,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { Container} from 'react-bootstrap';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import BlockIcon from '@material-ui/icons/Block';
 import ShareIcon from '@material-ui/icons/Share';
 import StarRateIcon from '@material-ui/icons/StarRate';
 import InfoIcon from '@material-ui/icons/Info';
@@ -29,8 +28,9 @@ export default function ListDividers() {
       <>
       <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh", padding:'0 0 0 0'}}
       >
-            <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
-        <center><h4>SETTINGS</h4>
+
+            <div className="w-100 div-main" style={{maxWidth:"400px" , padding:"20px"}}>
+        <center ><h4>SETTINGS</h4>
       <List component="nav" className={classes.root} aria-label="mailbox folders">
           <ListItem button  component="a" href="/notifications">
           <ListItemAvatar>
@@ -39,15 +39,6 @@ export default function ListDividers() {
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary="Notifications" />
-        </ListItem>
-        <Divider />
-        <ListItem button  component="a" href="/permissions">
-        <ListItemAvatar>
-            <Avatar style={{ backgroundColor: '#C90F03' }}>
-              <BlockIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Permissions" />
         </ListItem>
         <Divider />
         <ListItem button  component="a" href="/integrations">
@@ -74,7 +65,7 @@ export default function ListDividers() {
               <InfoIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="Legal and Privacy Statement" />
+          <ListItemText primary="Privacy Policy" />
         </ListItem>
       </List>
       </center>

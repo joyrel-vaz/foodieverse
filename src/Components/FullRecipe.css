@@ -1,13 +1,19 @@
 .page__image{
     width: 500px;
-    height: 25rem;
-    object-fit:cover;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
     margin:auto;
 }
 .page__body{
     border-radius: 2px;
     box-shadow: 0 5px 5px black;
-    max-width: 500px;
+    max-width: 700px;
     margin: auto;
+    padding:10px 40px;
     text-align: center;
+}
+
+.page__instructions, .page-inst1 {
+    text-align: left !important;
 }

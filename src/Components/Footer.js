@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="col-md-8 col-sm-18">
         <br></br><br></br>
         <Navbar.Brand className="nav-footer" href="/">
-            FOODKART
+            FOODIEVERSE
         </Navbar.Brand>
         </div>
         <div className="col-md-4 col-sm-6">
@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="p.text-xs-center">
         <center>&copy;{
             new Date().getFullYear()
-        } FoodKart - All Rights Reserved</center>
+        } FoodieVerse - All Rights Reserved</center>
         <br></br>
         </div>
         </div>

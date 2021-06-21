@@ -1,13 +1,17 @@
 .main-footer{
-    background-color: #C90F03 !important;
+    background-color: black !important;
     font-size: 0.6rem;
 }
 .nav-footer{
-    color:black !important;
+    color:white !important;
 }
 
 .footer-list{
     list-style-type: none;
     text-align:right;
     margin-top:0.5rem;
+    color: white;
+}
+.footer-bottom{
+    color: white!important;
 }
