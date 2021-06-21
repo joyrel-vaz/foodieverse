@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { Link} from "react-router-dom";
 import {getRemedies} from '../api.js';
-import {Card, CardColumns}  from 'react-bootstrap'
+import {Card, CardDeck}  from 'react-bootstrap'
 import LocalPharmacyIcon from '@material-ui/icons/LocalPharmacy';
 import './Ailment.css'
 
@@ -27,7 +27,7 @@ function AilmentCategory() {
 
   return (
         <div>
-          <CardColumns style={{paddingTop:'2rem'}}>
+          <CardDeck className="card-deck" style={{paddingTop:'2rem'}}>
             { 
               uniqueCategories.map(c => 
                 <Card className="text-center">
@@ -45,7 +45,7 @@ function AilmentCategory() {
                 </Card>
               )
             }
-          </CardColumns>
+          </CardDeck>
         </div>
   );
 }
