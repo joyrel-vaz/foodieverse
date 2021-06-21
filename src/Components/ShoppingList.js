@@ -2,6 +2,7 @@ import React,{useRef, useState, useEffect} from 'react';
 import { Form, Card, Button, Alert, Container} from 'react-bootstrap';
 import { useAuth } from '../Contexts/AuthContext'
 import {Row, Col} from 'react-bootstrap'
+import ClearIcon from '@material-ui/icons/Clear';
 import {getShopList, addShopList, delShopList} from '../api.js'
 
 export default function ShoppingList() {
@@ -92,7 +93,7 @@ export default function ShoppingList() {
             {shopList.Items.length>0 ? shopList.Items.map(item=>
                 <Row>
                     <Col>{item}</Col>
-                    <Col><Button onClick={()=>delItem(item)} disabled={loading}>delete</Button></Col>
+                    <Col><Button variant="light" onClick={()=>delItem(item)} disabled={loading}><ClearIcon /></Button></Col>
                 </Row>
                 )
                 :
