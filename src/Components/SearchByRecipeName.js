@@ -18,15 +18,20 @@ export default function SearchByName(){
       state: { mode : 'Recipe'}});
   }
 
+  const handleKeyDown = (keyEvent) =>{
+    if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+      keyEvent.preventDefault();
+    }
+  }
 
     return(
       <>
       <Container className="d-flex align-items-center justify-content-center" style={{padding:'0 0 0 0'}}
       >
             <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
-        <Form  inline className="form-center">
+        <Form onKeyDown={handleKeyDown} inline className="form-center">
           <FormControl type="text" placeholder="Search" value={searchTerm}
-           className="mr-sm-2 inp" name="searchTerm" onChange={handleChange}/>
+           className="mr-sm-2 inp" onChange={handleChange}/>
           <Button type="button" variant="outline-success" onClick={handleClick} >Search</Button>
         </Form>
         </div>
