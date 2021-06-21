@@ -62,6 +62,15 @@ app.get('/api/recipes',(req,res) => {
             }).limit(12).sort({ score : { $meta : 'textScore' } });
 }});
 
+app.get('/api/recipes/:recipeID', (req,res)=>{
+    recipe.findById(req.params.recipeID,(err,recFound) =>{
+        if(err) console.log(err);
+        else{
+            console.log(recFound);
+            return res.json(recFound);
+        }
+    })
+})
 
 app.post('/api/createShop',(req,res) => {
     console.log("In createshop");
@@ -192,7 +201,6 @@ app.post('/api/users/:userid/mealPlanner/add',(req,res) =>{
                             { userID: req.params.userid }, 
                             { $push: { Meals: newMeal._id } },{upsert:true},(err,addMeal) =>{
                                 if(err) console.log(err);
-                                else console.log(addMeal)
                             }
                             );                    
                 }
@@ -232,7 +240,7 @@ app.get('/api/users/:userid/mealPlanner/:id/del' , (req,res) => {
         if(err) console.log(err);  
         else {
             if(del !== null){
-                meals.findOneAndDelete(
+                meals.findOneAndUpdate(
                     { userID: req.params.userid }, 
                     { $pull: { Meals: req.params.id } },(err,delMealID) =>{
                         if(err) console.log(err);
