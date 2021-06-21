@@ -4,7 +4,6 @@ import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import { Link } from 'react-router-dom';
-import classNames from 'clsx';
 import red from '@material-ui/core/colors/red'
 import {useAuth} from '../Contexts/AuthContext'
 import {getMeals , addMeal , editMeal , delMeal} from '../api.js'
@@ -17,9 +16,8 @@ import {
   Appointments,
   AppointmentTooltip,
   AppointmentForm,
-  DragDropProvider,
-  EditRecurrenceMenu,
   AllDayPanel,
+  DayView,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { connectProps } from '@devexpress/dx-react-core';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -87,6 +85,21 @@ const containerStyles = theme => ({
     width: '100%',
   },
 });
+
+const Appointment = ({
+  children, style, ...restProps
+}) => (
+  <Appointments.Appointment
+    {...restProps}
+    style={{
+      ...style,
+      backgroundColor: red[800],
+      borderRadius: '8px',
+    }}
+  >
+    {children}
+  </Appointments.Appointment>
+);
 
 class AppointmentFormContainerBasic extends React.PureComponent {
   constructor(props) {
@@ -264,9 +277,8 @@ class AppointmentFormContainerBasic extends React.PureComponent {
               {isNewAppointment ? 'Create' : 'Save'}
             </Button>
           
+              {locState?
             <Button variant= "outlined" color="primary">
-            {
-                locState?
                 <Link
                 to={{ pathname:`/full-recipe/${locState.recipe.id}`,
                   state:{
@@ -281,11 +293,9 @@ class AppointmentFormContainerBasic extends React.PureComponent {
                   
                 }}
                 >View Recipe</Link>
-                : 'Link recipe'
-
-            }
               </Button>
-            
+                :
+                <></>}
             
             
           </div>
@@ -317,12 +327,13 @@ function getCurrentUser(Component) {
 class MealPlanner extends React.PureComponent {
   constructor(props) {
     super(props);
-    var today = new Date(),
+    let today = new Date(),
     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     this.state = {
       data: [],
       currentDate: date,
       confirmationVisible: false,
+      currentViewName:'Month',
       editingFormVisible: false,
       deletedAppointmentId: undefined,
       editingAppointment: undefined,
@@ -340,6 +351,7 @@ class MealPlanner extends React.PureComponent {
     this.toggleEditingFormVisibility = this.toggleEditingFormVisibility.bind(this);
 
     this.commitChanges = this.commitChanges.bind(this);
+    this.currentViewNameChange = this.currentViewNameChange.bind(this);
     this.onEditingAppointmentChange = this.onEditingAppointmentChange.bind(this);
     this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this);
     this.appointmentForm = connectProps(AppointmentFormContainer, () => {
@@ -386,6 +398,10 @@ class MealPlanner extends React.PureComponent {
   onEditingAppointmentChange(editingAppointment) {
     this.setState({ editingAppointment });
   }
+
+  currentViewNameChange(currentViewName) {
+    this.setState({currentViewName});
+  };
 
   onAddedAppointmentChange(addedAppointment) {
     console.log('adddin')
@@ -478,6 +494,7 @@ class MealPlanner extends React.PureComponent {
       editingFormVisible,
       startDayHour,
       endDayHour,
+      currentViewName
     } = this.state;
     const { classes } = this.props;
 
@@ -503,6 +520,8 @@ class MealPlanner extends React.PureComponent {
         >
           <ViewState
             currentDate={currentDate}
+            currentViewName={currentViewName}
+            onCurrentViewNameChange={this.currentViewNameChange}
           />
           <EditingState
             onCommitChanges={this.commitChanges}
@@ -514,9 +533,11 @@ class MealPlanner extends React.PureComponent {
             endDayHour={endDayHour}
           />
           <MonthView />
+          <DayView/>
           <AllDayPanel />
-          <EditRecurrenceMenu />
-          <Appointments />
+          <Appointments 
+          appointmentComponent={Appointment}
+          />
           <AppointmentTooltip
             showOpenButton
             showCloseButton
@@ -529,7 +550,6 @@ class MealPlanner extends React.PureComponent {
             visible={editingFormVisible}
             onVisibilityChange={this.toggleEditingFormVisibility}
           />
-          <DragDropProvider />
         </Scheduler>
 
         <Dialog
