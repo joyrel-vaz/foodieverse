@@ -67,6 +67,11 @@ export async function getMeals(user) {
     return await res.json();
 }
 
+export async function getMealRecipe(recipeID) {
+    const res = await fetch(`/api/recipes/${recipeID}`);
+    return await res.json();
+}
+
 export async function addMeal(user,meal)
 {
    const res = await fetch(`/api/users/${user}/mealPlanner/add`,
