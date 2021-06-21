@@ -78,9 +78,9 @@ export default function ContactUs() {
         <br/>
         <ColorButton
         variant="contained"
-        endIcon={<SendIcon></SendIcon>}
+        endIcon={<SendIcon className="SendBtn"></SendIcon>}
       >
-        Send
+        <div className="SendBtn">Send</div>
       </ColorButton>
     </center>
     </Container>
