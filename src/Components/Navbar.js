@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Container, Nav, NavItem, NavLink, Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap'
 import './Navbar.css'
+import LoginButton from './LoginButton'
+import LoginMobile from './LoginMobile'
 
 class MobileMenu extends Component {
   state = { isOpen: false }
@@ -49,9 +51,7 @@ class MobileMenu extends Component {
           <NavItem className="nav-item-m">
             <NavLink href="/help" className="navL">Help</NavLink>
           </NavItem>
-          <NavItem className="nav-item-m">
-            <NavLink href="/Login" className="navL">Login</NavLink>
-          </NavItem>
+          <LoginMobile/>
           <NavItem className="nav-item-m">
             <NavLink href="/contact" className="navL">contact</NavLink>
           </NavItem>
@@ -266,9 +266,7 @@ export default class extends Component {
             <NavItem className="nav-item-n right-nav">
               <NavLink href="/contact" className="nav-hover">Contact</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n right-nav l-n">
-              <NavLink href="/Login">Login</NavLink>
-            </NavItem>            
+            <LoginButton/>           
           </Nav>
         </Container>
         <style jsx>{`
