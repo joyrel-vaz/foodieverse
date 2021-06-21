@@ -19,28 +19,39 @@ function HomeRemedies(props) {
     const {a_name} = useParams();
     const state = props.location.state;
     const classes = useStyles(); 
-  
-    let list = [];
-    state.forEach((d) => { 
-      if(d.ailment_name === a_name)
-        list.push(d);
-    })
-    
+    let regex = new RegExp('[0-9][.]');
+    let list=[];
+
+    for(let i = 0; i<state.length ; i++){
+      if(state[i].ailment_name === a_name){
+        let obj = state[i];
+        let met = obj.methods;
+       let newMet = met.split(regex);
+       let res = newMet.filter(m => m.length > 0);
+       res.forEach(r => list.push(r))
+      }
+
+    }
+
     useEffect(() => {
       setRemedies(list);
     },[]);
     
 
+
   return (
         <div>
           <h1 style={{paddingTop:'2rem'}}><center>Home remedies for {a_name}</center></h1>
             { 
+                  
                   remedies.map(r => 
                     <Card style={{marginTop:"1rem"}}>
                     <Card.Header as="h5" className={classes.root} >Remedy</Card.Header>
                     <Card.Body>
                       <Card.Text>
-                  <p key={r.methods}>{r.methods}</p>
+                  { 
+                    <p>{r}</p>
+                  }
                       </Card.Text>
                   </Card.Body>
                 </Card>
