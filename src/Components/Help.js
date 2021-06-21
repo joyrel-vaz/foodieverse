@@ -34,15 +34,6 @@ export default function ListDividers() {
          <div className="w-100" style={{maxWidth:"400px" , padding:"20px"}}>
       <center><h4>HELP</h4>
     <List component="nav" className={classes.root} aria-label="mailbox folders">
-       <ListItem button>
-       <ListItemAvatar>
-          <Avatar style={{ backgroundColor: '#C90F03' }}>
-            <HelpIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Recipe Enquiry" />
-      </ListItem>
-      <Divider />
       <ListItem button component='a' href="/payments">
       <ListItemAvatar>
           <Avatar style={{ backgroundColor: '#C90F03' }}>
@@ -59,15 +50,6 @@ export default function ListDividers() {
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary="FAQs" />
-      </ListItem>
-      <Divider />
-      <ListItem button>
-      <ListItemAvatar>
-          <Avatar style={{ backgroundColor: '#C90F03' }}>
-            <GroupIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Referrals" />
       </ListItem>
       <Divider />
       <ListItem button>

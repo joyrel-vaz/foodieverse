@@ -673,6 +673,7 @@ ul.pagination .active a {
   border: 2px solid #dedede;
   margin-right: 8px;
   padding: 6px 20px !important;
+  background-color:  #C90F03;
 }
 
 @media (max-width: 400px) {

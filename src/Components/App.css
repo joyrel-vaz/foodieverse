@@ -27,3 +27,51 @@ body{
       }
       
      
+      .div-main{
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .switch-integration{
+      float:right !important;
+    }
+    .MuiGrid-root {
+      display: flex;
+      align-items: center; 
+      justify-content: center;
+  }
+
+  .MuiPaper-root {
+    padding:5px 20px;
+    margin:0 5px;
+}
+
+.Root-container-2{
+  height:66vh !important;
+}
+
+
+.OverlayBase-fullSize-17 {
+    width: 80%;
+    max-width: 700px;
+    height: 100%;
+}
+
+.meal-planner-class{
+  margin-top:15px;
+}
+
+[list]::-webkit-calendar-picker-indicator{
+  opacity: 0;
+}
+
+.recipe-list{
+  list-style-type: none;
+}
+.btn-red{
+  background-color:#C90F03 !important;
+  border-color:  #C90F03!important;
+}
+.text-red{
+  color:  #C90F03!important;
+  text-decoration:none !important;
+}

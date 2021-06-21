@@ -19,7 +19,7 @@ import Settings from './Settings'
 import Footer from './Footer'
 import Help from './Help'
 import Demo from './Demo'
-import Surprise from './Surprise'
+import SurpriseRecipes from './Surprise'
 import './App.css';
 import Feedback from './Feedback'
 import Payments from './Payments'
@@ -28,14 +28,17 @@ import MealPlanner from './MealPlanner'
 import LoginError from './LoginError'
 import FullRecipe from './FullRecipe'
 import MyFavorites from './MyFavorites';
-
+// import Foodium from './Foodium'
+import ContactUs from './ContactUs'
+import Integration from './Integration'
+import PrivacyPolicy from './PrivacyPolicy'
 
 function App() {
   
   return (
     <React.Fragment>
       <NavigationBar></NavigationBar>
-    <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"100vh"}}
+    <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"66vh"}}
     >
       <div className="home-edits" >
         <Router>
@@ -53,16 +56,20 @@ function App() {
               <Route path="/home-remedies/:a_category" component={AilmentList}/>
               <Route path="/home-remedies" component={AilmentCategory}/>
               <Route exact path="/recipes" component={Recipes}/>
+              <Route path='/surprise-recipes' component={SurpriseRecipes}/>
               <PrivateRoute path="/settings" component={Settings}/>
               <Route path="/help" component={Help}/>
               <Route path="/demo" component={Demo}/>
               <Route path="/feedback" component={Feedback}/>
               <Route path="/payments" component={Payments}/>
               <Route path="/aboutus" component={AboutUs}/>
-              <PrivateRoute path="/surprise" component={Surprise}/>
               <PrivateRoute path="/meal-planner" component={MealPlanner}/>
               <Route path='/full-recipe' component={FullRecipe}/>
+              {/* <Route path='/foodium' component={Foodium}/> */}
+              <Route path='/contact' component={ContactUs}/>
               <PrivateRoute path='/favorites' component={MyFavorites}/>
+              <Route path='/integrations' component={Integration}/>
+              <Route path='/legal' component={PrivacyPolicy}/>
             </Switch>
           </AuthProvider>
         </Router>        

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Nav, NavItem, NavLink, Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap'
+import './Navbar.css'
 
 class MobileMenu extends Component {
   state = { isOpen: false }
@@ -28,7 +29,9 @@ class MobileMenu extends Component {
           <NavItem className="nav-item-m">
             <NavLink className="navL">Dadi Ke Nuske</NavLink>
           </NavItem>
-          
+          {/* <NavItem className="nav-item-m">
+            <NavLink href="/foodium" className="navL">Foodium</NavLink>
+          </NavItem> */}
           <NavItem>
             <Dropdown isOpen={this.state.isOpen} toggle={this.toggle}>
               <DropdownToggle className="drop-item" caret>
@@ -44,9 +47,6 @@ class MobileMenu extends Component {
             </Dropdown>
           </NavItem>
           <NavItem className="nav-item-m">
-            <NavLink href="/foodium" className="navL">Foodium</NavLink>
-          </NavItem>
-          <NavItem className="nav-item-m">
             <NavLink href="/help" className="navL">Help</NavLink>
           </NavItem>
           <NavItem className="nav-item-m">
@@ -57,9 +57,10 @@ class MobileMenu extends Component {
           </NavItem>
         </Nav>
         <style jsx>
-          {`.nav-n.nav{
-            border-bottom: 2px solid #C90F03 ;
-          }
+          {`
+          /* {.nav-n.nav{
+            border-bottom: 2px solid black ;
+          } */}
             .mobile-wrapper {
               display: none;
               
@@ -87,7 +88,6 @@ class MobileMenu extends Component {
             .pos-ref {
               position: relative;
             }
-
             .mobile-nav {
               position: fixed;
               left: 0;
@@ -122,10 +122,10 @@ class MobileMenu extends Component {
               width: 100%;
               text-align: left;
               padding: 0.5rem 1rem;
-              color: white;
-              background: inherit;
               border: none;
               font-size: 14px;
+              background-color:white;
+              color: #C90F03;
             }
             .drop-item:hover {
               background-color: transparent;
@@ -213,33 +213,33 @@ export default class extends Component {
 
           <Nav className="nav-n">
             <NavItem className="nav-item-n logo">
-              <NavLink href="/">FoodKart</NavLink>
+              <NavLink className="logo-navlink" href="/"><img className="logo-small" src="images/logo1.png"></img></NavLink>
             </NavItem>
             <NavItem className="nav-item-n ham" onClick={this.showNav}>
               <NavLink href="">
                 <i class="fas fa-bars" />
               </NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
-              <NavLink href="/">home</NavLink>
+            <NavItem className="nav-item-n left-nav">
+              <NavLink className="nav-hover" href="/aboutus">about</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
-              <NavLink href="/aboutus">about</NavLink>
+            <NavItem className="nav-item-n left-nav">
+              <NavLink className="nav-hover" href="/recipes">recipes</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
-              <NavLink href="/recipes">recipes</NavLink>
+            <NavItem className="nav-item-n left-nav">
+              <NavLink className="nav-hover" href="/home-remedies">Dadi Ke Nuske</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
-              <NavLink href="/home-remedies">Dadi Ke Nuske</NavLink>
-            </NavItem>
+            {/* <NavItem className="nav-item-n left-nav">
+              <NavLink className="nav-hover" href="/foodium">foodium</NavLink>
+            </NavItem> */}
             <div
               className="drop"
               onMouseOver={this.over}
               onMouseOut={this.out}
               onTransitionEnd={this.onHide}
             >
-              <NavItem>
-                <NavLink href="#" className="nav-item-n navD caret">
+              <NavItem className="nav-item-n left-nav">
+                <NavLink href="#" className="nav-item-n navD left-nav nav-hover caret">
                   Features
               </NavLink>
               </NavItem>
@@ -263,30 +263,36 @@ export default class extends Component {
                 </Nav>
               </div>
             </div>
-
-            <NavItem className="nav-item-n">
-              <NavLink href="/foodium">foodium</NavLink>
+            <NavItem className="nav-item-n right-nav">
+              <NavLink href="/contact" className="nav-hover">Contact</NavLink>
             </NavItem>
-            <NavItem className="nav-item-n">
-              <NavLink href="/help">help</NavLink>
-            </NavItem>
-            <NavItem className="nav-item-n">
+            <NavItem className="nav-item-n right-nav l-n">
               <NavLink href="/Login">Login</NavLink>
-            </NavItem>
-            <NavItem className="nav-item-n">
-              <NavLink href="/contact">Contact</NavLink>
-            </NavItem>
+            </NavItem>            
           </Nav>
         </Container>
         <style jsx>{`
+          .l-n{
+            border: 4px solid white;
+            border-radius: 5px;
+            background-color:white;
+            color: #C90F03 !important;
+            margin-left:20% !important;
+          }
           .scroll-nav {
-            background: white;
+            background: #C90F03;
             width: 100%;
             z-index: 4;
             box-shadow: #e1dfdf 1px 1px 11px;
           }
+          .left-nav{
+            margin-right: auto !important;
+          }
+          .right-nav{
+            margin-left:auto;
+          }
           .navD{
-            color:black;
+            color:#C90F03;
           }
           .nav-n {
             align-items: center;
@@ -294,12 +300,13 @@ export default class extends Component {
           .nav-item-n {
             display: none;
             font-size: 14px;
+            color:white;
           }
           .nav-item-n:not(.logo) {
             text-transform: capitalize;
           }
-          .nav-link:hover{
-            border-bottom: 3px solid #C90F03;
+          .nav-hover:hover{
+            border-bottom: 3px solid black;
           }
           .nav-item-n a {
             padding: 0.5rem 0.6rem;
@@ -368,6 +375,10 @@ export default class extends Component {
             border-left: 2px solid;
             border-bottom: 2px solid;
             transform: rotate(-45deg);
+            
+          }
+          .navi-menu{
+            background-color: #C90F03;
           }
         `}</style>
       </div>

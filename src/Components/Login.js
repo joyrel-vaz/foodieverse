@@ -126,12 +126,12 @@ export default function Login (){
                         <Form.Control type="password" ref={passwordRef} required/>
                     </Form.Group>
 
-                    <Button disabled={loading} className="w-100" type="submit">
+                    <Button disabled={loading} className="w-100 btn-red" type="submit">
                         Log In
                     </Button>
                 </Form>
-                <div className="w-100 text-center mt-3">
-                    <Link to="/forgot-password">Forgot Password?</Link>
+                <div className="w-100 text-center mt-3 text-red">
+                    <Link to="/forgot-password"  className="text-red">Forgot Password?</Link>
                 </div>
                 <hr></hr>
                 <div className="w-100 text-center mt-3 text-muted">
@@ -161,8 +161,8 @@ export default function Login (){
             </Card.Body>
         </Card>
         
-        <div className="w-100 text-center mt-2">
-            Need an account? <Link to="/signup">Sign Up</Link>
+        <div className="w-100 text-center mt-2 text-red">
+            Need an account? <Link to="/signup" className="text-red">Sign Up</Link>
         </div>
         </div>
         </Container>

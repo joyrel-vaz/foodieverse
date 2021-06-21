@@ -110,9 +110,17 @@ const removeChipTags =(index,tag) => {
                 style={inputStyling}
                 type="text"
                 name="searchTerm"
+                list="ingredientNames"
                 placeholder="Press space to add tags"
                 onKeyUp={event => addTags(event)}
             />
+            <datalist id="ingredientNames">
+              <option value="Potato"/>
+              <option value="Salt"/>
+              <option value="Milk"/>
+              <option value="Orange Peels"/>
+              <option value="Butter"/>
+            </datalist>
             </label>
         <div className="text-center m-3" >
         <input type="button" className="btn btn-outline-success" value="Search" variant="outline-success" onClick= {handleClick}/>
