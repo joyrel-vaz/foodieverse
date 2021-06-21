@@ -1,12 +1,13 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable react/no-unused-state */
 import * as React from 'react';
+import { withRouter } from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import { Link } from 'react-router-dom';
 import red from '@material-ui/core/colors/red'
 import {useAuth} from '../Contexts/AuthContext'
-import {getMeals , addMeal , editMeal , delMeal} from '../api.js'
+import {getMeals , addMeal , editMeal , delMeal, getMealRecipe} from '../api.js'
 import {
   Scheduler,
   Toolbar,
@@ -161,7 +162,8 @@ class AppointmentFormContainerBasic extends React.PureComponent {
       cancelAppointment,
       target,
       onHide,
-      locState
+      locState,
+      currentAppt
     } = this.props;
     const { appointmentChanges } = this.state;
 
@@ -205,6 +207,24 @@ class AppointmentFormContainerBasic extends React.PureComponent {
       visibleChange();
       cancelAppointment();
     };
+
+    const mealRecipeHandler = async(recipeID) =>{
+        let info = await getMealRecipe(recipeID);
+        this.setState({recipe:info});
+        this.props.history.push({
+         pathname: `/full-recipe/${recipeID}`,
+        state: {
+          id:info.id,
+          title:info.title,
+          instructions:info.instructions,
+          ingredients:info.ingredients,
+          img:info.image,
+          servings:info.servings
+        }
+
+        }
+          );
+    }
 
     return (
       <AppointmentForm.Overlay
@@ -277,7 +297,7 @@ class AppointmentFormContainerBasic extends React.PureComponent {
               {isNewAppointment ? 'Create' : 'Save'}
             </Button>
           
-              {locState?
+              {locState !== undefined?
             <Button variant= "outlined" color="primary">
                 <Link
                 to={{ pathname:`/full-recipe/${locState.recipe.id}`,
@@ -295,7 +315,18 @@ class AppointmentFormContainerBasic extends React.PureComponent {
                 >View Recipe</Link>
               </Button>
                 :
-                <></>}
+                currentAppt?
+                currentAppt.recipeID?
+                <Button variant= "outlined" color="primary"
+                  onClick={() => mealRecipeHandler(currentAppt.recipeID)}
+                >
+                View Meal Recipe
+              
+              </Button>
+                :
+                <></>
+                :<></>
+                }
             
             
           </div>
@@ -305,7 +336,7 @@ class AppointmentFormContainerBasic extends React.PureComponent {
   }
 }
 
-const AppointmentFormContainer = withStyles(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic);
+const AppointmentFormContainer = withRouter(withStyles(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic));
 
 const styles = theme => ({
   addButton: {
@@ -341,6 +372,7 @@ class MealPlanner extends React.PureComponent {
       addedAppointment: {},
       startDayHour: 9,
       endDayHour: 19,
+      currentAppt:undefined,
       isNewAppointment: false,
       locState : this.props.location.state,
       currentUser : this.props.currentUser, 
@@ -362,13 +394,16 @@ class MealPlanner extends React.PureComponent {
         addedAppointment,
         isNewAppointment,
         previousAppointment,
-        locState
+        locState,
+        currentAppt
       } = this.state;
 
-      console.log(locState)
       const currentAppointment = data
         .filter(appointment => editingAppointment && appointment.id === editingAppointment.id)[0]
         || addedAppointment;
+
+        this.setState({currentAppt:currentAppointment})
+
       const cancelAppointment = () => {
         if (isNewAppointment) {
           this.setState({
@@ -385,7 +420,8 @@ class MealPlanner extends React.PureComponent {
         visibleChange: this.toggleEditingFormVisibility,
         onEditingAppointmentChange: this.onEditingAppointmentChange,
         cancelAppointment,
-        locState
+        locState,
+        currentAppt
       };
     });
   }
@@ -445,9 +481,11 @@ class MealPlanner extends React.PureComponent {
   }
 
   async commitChanges({ added, changed, deleted }) {
-    console.log('commiting stuff',this.state.currentUser)
+    const {locState} = this.state;
     const {data, currentUser} = this.state;
     if(added){
+      if(locState !== undefined)
+        added.recipeID = locState.recipe.id;
      const datum = await addMeal(currentUser.email,added);
      this.setState({data : [...data , datum]})
     }
@@ -483,6 +521,7 @@ class MealPlanner extends React.PureComponent {
     console.log(currentUser.email)
     const myMeals = await getMeals(currentUser.email)
     this.setState({data : myMeals})
+    console.log(this.state.data)
 }
 
 
