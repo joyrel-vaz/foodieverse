@@ -50,7 +50,7 @@ body{
 }
 
 
-.OverlayBase-fullSize-17 {
+.OverlayBase-fullSize-17, .OverlayBase-fullSize-19  {
     width: 80%;
     max-width: 700px;
     height: 100%;
@@ -64,6 +64,10 @@ body{
   opacity: 0;
 }
 
+.MuiButton-outlinedPrimary{
+  margin-left:5px !important;
+}
+
 .recipe-list{
   list-style-type: none;
 }
@@ -74,4 +78,23 @@ body{
 .text-red{
   color:  #C90F03!important;
   text-decoration:none !important;
+}
+
+.MuiButton-label{
+  color:  #C90F03!important;
+}
+
+.MuiButton-label a{
+  color:  #C90F03!important;
+}
+
+.card-deck{
+  margin-top: 10px;
+  margin-left: auto;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  grid-gap: .5rem;
+}
+.SendBtn{
+  color:white !important;
 }
