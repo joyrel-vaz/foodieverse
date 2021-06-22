@@ -12,6 +12,7 @@ import {
   Scheduler,
   Toolbar,
   MonthView,
+  TodayButton,
   WeekView,
   ViewSwitcher,
   Appointments,
@@ -19,6 +20,7 @@ import {
   AppointmentForm,
   AllDayPanel,
   DayView,
+  DateNavigator,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { connectProps } from '@devexpress/dx-react-core';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -553,10 +555,11 @@ class MealPlanner extends React.PureComponent {
           height={500}
         >
           <ViewState
-            currentDate={currentDate}
+            defaultCurrentDate={currentDate}
             currentViewName={currentViewName}
             onCurrentViewNameChange={this.currentViewNameChange}
           />
+          
           <EditingState
             onCommitChanges={this.commitChanges}
             onEditingAppointmentChange={this.onEditingAppointmentChange}
@@ -576,7 +579,9 @@ class MealPlanner extends React.PureComponent {
             showOpenButton
             showCloseButton
           />
-          <Toolbar />
+          <Toolbar /> 
+          <TodayButton/>
+          <DateNavigator/>
           <ViewSwitcher />
           <AppointmentForm
             overlayComponent={this.appointmentForm}
