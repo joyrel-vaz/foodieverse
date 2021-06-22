@@ -6,7 +6,7 @@ export default function LoginButton() {
 
  return (
     <NavItem className="nav-item-m">
-            <NavLink href="/Login" className="navL">Login</NavLink>
-          </NavItem>
+      <NavLink href="/Login" className="navL">Login</NavLink>
+    </NavItem>
   );
 }
