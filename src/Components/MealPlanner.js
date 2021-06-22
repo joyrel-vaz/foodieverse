@@ -469,16 +469,13 @@ class MealPlanner extends React.PureComponent {
     this.setState({ confirmationVisible: !confirmationVisible });
   }
 
-  commitDeletedAppointment() {
+ async commitDeletedAppointment() {
       console.log('deleting stuff')
-    this.setState((state) => {
-      const { data, deletedAppointmentId } = state;
-      const nextData = data.filter(appointment => appointment.id !== deletedAppointmentId);
-
-      return { data: nextData, deletedAppointmentId: null };
-    });
+      const {deletedAppointmentId , currentUser} = this.state;
+      const allData = await delMeal(currentUser.email,deletedAppointmentId);
+      this.setState({data:allData});
     this.toggleConfirmationVisible();
-  }
+  } 
 
   async commitChanges({ added, changed, deleted }) {
     const {locState} = this.state;
@@ -510,8 +507,6 @@ class MealPlanner extends React.PureComponent {
         this.setDeletedAppointmentId(deleted);
         this.toggleConfirmationVisible();
      console.log(deleted)              
-     const allData = await delMeal(currentUser.email,deleted);
-     this.setState({data : allData})
     }
     return {data}
   }
@@ -580,7 +575,6 @@ class MealPlanner extends React.PureComponent {
           <AppointmentTooltip
             showOpenButton
             showCloseButton
-            showDeleteButton
           />
           <Toolbar />
           <ViewSwitcher />
