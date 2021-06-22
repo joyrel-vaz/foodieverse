@@ -1,15 +1,43 @@
 import React, { useState } from 'react'
-import { Card, Button, Alert, Row, Col } from 'react-bootstrap'
+import { Card, Alert, Row, Col, Button } from 'react-bootstrap'
+import { Container, Nav, NavItem, NavLink, Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap'
 import { Link, useHistory } from 'react-router-dom'
 import { useAuth } from '../Contexts/AuthContext'
 
-
+export function LoginButton() {
+    const [error, setError] = useState('')
+    const { currentUser, logout } = useAuth()
+    const history = useHistory()
+  
+    async function handleLogOut(){
+      setError('')
+      try{
+          await logout()
+          history.push('/login')
+      }catch(error){
+          setError(error.message)
+      }
+    }
+  
+   return (
+    <>
+      {console.log(error)}
+  
+      {currentUser?
+          <Button onclick={handleLogOut}>Log Out</Button>
+      :
+        <NavItem className="nav-item-n right-nav l-n">
+          <NavLink href="/Login">Login</NavLink>
+        </NavItem>
+      }
+    </>
+    );
+  }
 
 export default function Dashboard() {
     const [error, setError] = useState('')
     const { currentUser, logout } = useAuth()
     const history = useHistory()
-
     async function handleLogOut(){
         setError('')
         try{
@@ -23,20 +51,9 @@ export default function Dashboard() {
 
     return (
         <>
-        {/* <Card>
-            <Card.Body>
-                <h2 className="text-center mb-4">Search</h2>
-                <div className="mb-2" >
-                    <input type="text" className=" w-100"></input>
-                </div>                
-
-                <div className="text-right mt-2">
-                    <Button onclick={}>
-                       Search
-                    </Button>
-                </div>
-            </Card.Body>
-        </Card> */}
+        <Card>
+            <LoginButton/>
+        </Card>
         <br></br>
         <Card>
             <Card.Body>
