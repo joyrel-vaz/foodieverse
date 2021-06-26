@@ -43,7 +43,7 @@ class MobileMenu extends Component {
                 <DropdownItem href="/meal-planner">Meal Planner</DropdownItem>
                 <DropdownItem href="/shopping-list">Shopping List</DropdownItem>
                 <DropdownItem href='/favorites'>Favorites</DropdownItem>
-                <DropdownItem href="/surprise">Surprise</DropdownItem>
+                <DropdownItem href="/surprise-recipe">Surprise</DropdownItem>
                 <DropdownItem href="/settings">Settings</DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -255,7 +255,7 @@ export default class extends Component {
                     <NavLink href="/shopping-list">Shopping List</NavLink>
                   </NavItem>
                   <NavItem className="nav-item-n">
-                    <NavLink href="/surprise">Surprise</NavLink>
+                    <NavLink href="/surprise-recipe">Surprise</NavLink>
                   </NavItem>
                   <NavItem className="nav-item-n">
                     <NavLink href="/settings">Settings</NavLink>

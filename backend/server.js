@@ -8,6 +8,7 @@ const   express = require('express'),
         shopList = require('./models/shopList.js'),
         mealPlan = require('./models/mealPlan'),
         meals = require('./models/meals'),
+        user = require('./models/user'),
         PORT = 8080;
 
 
@@ -51,7 +52,7 @@ app.get('/api/recipes',(req,res) => {
     }
 
     else{ 
-        recipe.find( {$text : {$search : searchTerm}} ,  
+        recipe.find( {$text : {$search : searchTerm,$caseSensitive :false}} ,  
             { score : { $meta: "textScore" } } , 
             function(err,recipesFound)
             {
@@ -265,6 +266,27 @@ app.post('/api/users/:userid/mealPlanner/:id/edit',(req,res)=>{
     })
 })
 
+app.post('/api/surprise-recipe',(req,res)=>{
+    user.find({email:req.body.email},(req,res)=>{
+        //gets allergen details
+    })
+    const allergenArr = req.body.allergens;
+    allergenArr.forEach((part,index) =>{
+       allergenArr[index] = '-' + allergenArr[index];
+    })
+    
+    const allergens = allergenArr.join(' ') ;
+    const searchTerm  = req.body.ing + " ";
+    const filter = { $text: { $search: searchTerm + allergens , $caseSensitive :false} };
+    recipe.aggregate([
+      { $match: filter },
+      { $sort: { score: { $meta: "textScore" } } },
+      {$sample : {size:10}}
+    ]).then((succ,err)=> {
+        if(err) console.log(err)
+      else return res.json(succ[0])
+    });
+})
 
 
 app.listen(PORT, ()=> console.log(`Listening on port ${PORT}`));
