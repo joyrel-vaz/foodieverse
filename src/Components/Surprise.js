@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container} from 'react-bootstrap';
 import clsx from 'clsx';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import Chip from '@material-ui/core/Chip';
+import {useAuth} from '../Contexts/AuthContext'
+import { makeStyles, withStyles,useTheme } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
@@ -10,13 +13,29 @@ import RedeemIcon from '@material-ui/icons/Redeem';
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import {Card} from 'react-bootstrap';
+//import {Card} from 'react-bootstrap';
+import Card from './Card';
+import ShuffleIcon from '@material-ui/icons/Shuffle';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
+import { getSurpriseRecipe } from '../api';
 
 const names = [
+  'Tomato',
+  'Potato',
+  'Onion',
+  'Cheese',
+  'Milk',
+  'Apple',
+  'Peas',
+  'Rice',
+  'Chicken',
+  'Eggs',
+];
+
+const ings = [
   'Tomato',
   'Potato',
   'Onion',
@@ -105,28 +124,44 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
+  },
 }));
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: 48 * 4.5 + 8,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 export default function SurpriseRecipes() {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
+  const theme = useTheme();
+  const [randomIng, setRandomIng] = React.useState('');
+  const currentUser = useAuth();
   const [time, setTime] = React.useState('');
-  const [type, setType] = React.useState('');
-  const [allergens, setAllergens] = React.useState('');
-  const handleChange = (event) => {
-    setIngredientsName(event.target.value);
-  };
-  const handleChange1 = (event) => {
-    setType(event.target.value);
-  };
-  const handleChange2 = (event) => {
-    setTime(event.target.value);
-  };
-  const handleChange3 = (event) => {
-    setAllergens(event.target.value);
-  };
+  const [recipe,setRecipe] = React.useState();
+  const [allergens, setAllergens] = React.useState([]);
 
   const buttonClassname = clsx({
     [classes.buttonSuccess]: success,
@@ -138,7 +173,7 @@ export default function SurpriseRecipes() {
     };
   }, []);
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async() => {
     if (!loading) {
       setSuccess(false);
       setLoading(true);
@@ -147,31 +182,38 @@ export default function SurpriseRecipes() {
         setLoading(false);
       }, 2000);
     }
+    if(randomIng === '')
+      {
+        alert('Please click on shuffler to choose your hero ingredient!')
+      }
+    const res = await getSurpriseRecipe(currentUser.email,allergens,randomIng);
+    setRecipe(res);
   };
 
-  const [IngredientsName, setIngredientsName] = React.useState([]);
 
-
-  const handleChangeMultiple = (event) => {
-    const { options } = event.target;
-    const value = [];
-    for (let i = 0, l = options.length; i < l; i += 1) {
-      if (options[i].selected) {
-        value.push(options[i].value);
+  const randomizeHandler = ()=>{
+    let r = Math.floor(Math.random() * ings.length);
+    while(true){
+      if(allergens.includes(ings[r]))
+        r = Math.floor(Math.random() * ings.length);
+      else{
+        setRandomIng(ings[r]);
+        break;
       }
     }
-    setIngredientsName(value);
+
+  }
+
+  useEffect(() =>{
+    if(allergens.includes(randomIng))
+      setRandomIng('');
+  },[allergens])
+
+  const handleChange = (event) => {
+    setAllergens(event.target.value);
+    console.log(allergens);
   };
-  const handleChangeMultiple2 = (event) => {
-    const { options } = event.target;
-    const value = [];
-    for (let i = 0, l = options.length; i < l; i += 1) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
-    setAllergens(value);
-  };
+
   return (
       <>
       <center>
@@ -195,87 +237,55 @@ export default function SurpriseRecipes() {
         >
          Get Surprised!!!
         </Button>
+        <FormControl>
+          <InputLabel>Hero ingredient ;)</InputLabel>
+          <p>{randomIng}</p>
+          <Button onClick={randomizeHandler}><ShuffleIcon/></Button>
+        </FormControl>
         {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
       </div>
     </div>
     <div>
-    <FormControl className={classes.margin}>
-        <InputLabel shrink htmlFor="select-multiple-native">Ingredients</InputLabel>
-        <Select
-          multiple
-          native
-          value={IngredientsName}
-          onChange={handleChangeMultiple}
-          inputProps={{
-            id: 'select-multiple-native',
-          }}
-        >
-         {names.map((name) => (
-            <option key={name} value={name}>
-              {name}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
+      
       <FormControl className={classes.margin}>
-        <InputLabel shrink htmlFor="select-multiple-native">Allergens</InputLabel>
+        <InputLabel>Allergens</InputLabel>
         <Select
           multiple
-          native
           value={allergens}
-          onChange={handleChangeMultiple2}
-          inputProps={{
-            id: 'select-multiple-native',
-          }}
+          onChange={handleChange}
+          input={<Input id="select-multiple-chip" />}
+          renderValue={(selected) => (
+            <div className={classes.chips}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} className={classes.chip} />
+              ))}
+            </div>
+          )}
+          MenuProps={MenuProps}
         >
          {names.map((name) => (
-            <option key={name} value={name}>
+            <MenuItem key={name} value={name} style={getStyles(name,allergens, theme)}>
               {name}
-            </option>
+            </MenuItem>
           ))}
         </Select>
-      </FormControl>
-      <FormControl className={classes.margin}>
-        <InputLabel shrink id="demo-customized-select-label">Type</InputLabel>
-        <Select
-          labelId="demo-customized-select-label"
-          id="demo-customized-select"
-          value={type}
-          onChange={handleChange1}
-          input={<BootstrapInput />}
-        >
-          <MenuItem value={'Veg'}>Veg</MenuItem>
-          <MenuItem value={'Non-Veg'}>Non-Veg</MenuItem>
-          <MenuItem value={'Vegan'}>Vegan</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl className={classes.margin}>
-        <InputLabel shrink htmlFor="demo-customized-select-native">Cooking Time</InputLabel>
-        <NativeSelect
-          id="demo-customized-select-native"
-          value={time}
-          onChange={handleChange2}
-          input={<BootstrapInput />}
-        >
-          <option aria-label="Any" value="" />
-          <option value={30}>0-30 Minutes</option>
-          <option value={60}>0-60 Minutes</option>
-          <option value={90}>0-Above 1 Hour</option>
-        </NativeSelect>
       </FormControl>
     </div>
+    <div class="wrapper">
     { 
-                //   remedies.map(r => 
-                //     <Card style={{marginTop:"1rem"}}>
-                //     <Card.Header as="h5" className={classes.cardSurprise} >Remedy</Card.Header>
-                //     <Card.Body>
-                //       <Card.Text>
-                //   {/* <p key={r.methods}>{r.methods}</p> */}
-                //       </Card.Text>
-                //   </Card.Body>
-                // </Card>
-                //   )
+                recipe ?
+                <Card
+                id={recipe._id}
+                title={recipe.recipeTitle}
+                instructions={recipe.instructions}
+                ingredients={recipe.ingredients}
+                img={recipe.image}
+                servings={recipe.servings}
+                />
+                :
+                <></>
             }
+    </div>
     </center>
     </>
   );
