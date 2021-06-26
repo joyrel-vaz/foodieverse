@@ -2,7 +2,15 @@ import React, { Component } from 'react'
 import { Container, Nav, NavItem, NavLink, Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap'
 import './Navbar.css'
 import LoginButton from './LoginButton'
+import {useAuth} from '../Contexts/AuthContext'
 import LoginMobile from './LoginMobile'
+
+function getCurrentUser(Component) {
+  return function WrappedComponent(props) {
+    const {currentUser} = useAuth();
+    return <Component {...props} currentUser={currentUser} />;
+  }
+}
 
 class MobileMenu extends Component {
   state = { isOpen: false }
@@ -51,7 +59,12 @@ class MobileMenu extends Component {
           <NavItem className="nav-item-m">
             <NavLink href="/help" className="navL">Help</NavLink>
           </NavItem>
+          {!this.state.currentUser?
           <LoginMobile/>
+          :
+          <p>Hello, {this.state.currentUser.email}</p>
+          }
+          
           <NavItem className="nav-item-m">
             <NavLink href="/contact" className="navL">contact</NavLink>
           </NavItem>
@@ -145,8 +158,12 @@ class MobileMenu extends Component {
   }
 }
 
-export default class extends Component {
-  dropNav = React.createRef()
+ class NavigationBar extends Component {
+  dropNav = React.createRef();
+  constructor(props){
+    super(props);
+    this.state = { currentUser : this.props.currentUser};
+  }
 
   hamButton = React.createRef()
 
@@ -266,7 +283,11 @@ export default class extends Component {
             <NavItem className="nav-item-n right-nav">
               <NavLink href="/contact" className="nav-hover">Contact</NavLink>
             </NavItem>
-            <LoginButton/>           
+            {!this.state.currentUser?
+          <LoginButton/>
+          :
+          <p>Hello, {this.state.currentUser.email}</p>
+          }         
           </Nav>
         </Container>
         <style jsx>{`
@@ -383,3 +404,4 @@ export default class extends Component {
     )
   }
 }
+export default getCurrentUser(NavigationBar);

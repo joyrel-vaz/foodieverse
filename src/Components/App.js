@@ -37,7 +37,9 @@ function App() {
   
   return (
     <React.Fragment>
+      <AuthProvider>
       <NavigationBar></NavigationBar>
+      </AuthProvider>
     <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"66vh"}}
     >
       <div className="home-edits" >
