@@ -9,6 +9,7 @@ import SendIcon from '@material-ui/icons/Send';
 import EmailIcon from '@material-ui/icons/Email';
 import SubjectIcon from '@material-ui/icons/Subject';
 import MessageIcon from '@material-ui/icons/Message';
+import emailjs from 'emailjs-com';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -28,20 +29,32 @@ const ColorButton = withStyles((theme) => ({
   }))(Button);
 
 export default function ContactUs() {
+  function sendEmail(e) {
+    e.preventDefault();
+
+    emailjs.sendForm('service_ae2cyni', 'template_tcoxuwk', e.target, 'user_CRd20x0pFCUsDeI6n0iwQ')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+      e.target.reset()
+  }
+
   const classes = useStyles();
 
   return ( <>
-    <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"60vh", padding:'0 0 0 0'}}
-    >
+    
     <center>
           <h4>CONTACT US</h4>
+          <form className="contact-form" onSubmit={sendEmail}>
         <div className={classes.margin}>
             <Grid container spacing={1} alignItems="flex-end">
             <Grid item>
                 <AccountCircle />
             </Grid>
             <Grid item>
-                <TextField id="input-with-icon-grid" label="Name" />
+                <TextField id="input-with-icon-grid" label="Name" name="username"  required="required"/>
             </Grid>
             </Grid>
         </div>
@@ -51,7 +64,7 @@ export default function ContactUs() {
                 <EmailIcon />
             </Grid>
             <Grid item>
-                <TextField id="input-with-icon-grid" label="Email" />
+                <TextField id="input-with-icon-grid" label="Email" name="email"  required="required" />
             </Grid>
             </Grid>
         </div>
@@ -61,7 +74,7 @@ export default function ContactUs() {
                 <SubjectIcon />
             </Grid>
             <Grid item>
-                <TextField id="input-with-icon-grid" label="Subject" />
+                <TextField id="input-with-icon-grid" label="Subject" name="subject"  required="required" />
             </Grid>
             </Grid>
         </div>
@@ -71,19 +84,18 @@ export default function ContactUs() {
                 <MessageIcon />
             </Grid>
             <Grid item>
-                <TextField id="input-with-icon-grid" label="Message" />
+                <TextField id="input-with-icon-grid" label="Message" name="message" required="required" />
             </Grid>
             </Grid>
         </div>
         <br/>
         <ColorButton
         variant="contained"
-        endIcon={<SendIcon className="SendBtn"></SendIcon>}
-      >
-        <div className="SendBtn">Send</div>
+      >      
+        <input className="SendBtn" type="submit" />
       </ColorButton>
+      </form>
     </center>
-    </Container>
     </>
   );
 }
