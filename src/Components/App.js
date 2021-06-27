@@ -32,6 +32,7 @@ import MyFavorites from './MyFavorites';
 import ContactUs from './ContactUs'
 import Integration from './Integration'
 import PrivacyPolicy from './PrivacyPolicy'
+import UserProfile from './UserProfile'
 
 function App() {
   
@@ -70,6 +71,7 @@ function App() {
               <PrivateRoute path='/favorites' component={MyFavorites}/>
               <Route path='/integrations' component={Integration}/>
               <Route path='/legal' component={PrivacyPolicy}/>
+              <Route path='/user-profile' component={UserProfile}/>
             </Switch>
           </AuthProvider>
         </Router>        
