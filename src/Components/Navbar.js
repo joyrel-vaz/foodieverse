@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Container, Nav, NavItem, NavLink, Dropdown, DropdownMenu, DropdownItem, DropdownToggle} from 'reactstrap'
+import { Container, Nav, NavItem, NavLink, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, Button} from 'reactstrap'
 import './Navbar.css'
-import LoginButton from './LoginButton'
 import {useAuth} from '../Contexts/AuthContext'
-import LoginMobile from './LoginMobile'
 
 
 function getCurrentUser(Component) {
@@ -46,12 +44,13 @@ class MobileMenu extends Component {
         </div>
         <Nav vertical className={'mobile-nav'}>
         {this.state.currentUser === null?
-          <LoginMobile/>
+          <NavItem className="nav-item-m">
+            <NavLink href="/Login" className="navL">Login</NavLink>
+          </NavItem>
           :
           <div>
-          <NavItem><NavLink>Hello, {this.state.currentUser.displayName}</NavLink></NavItem>
-          <NavItem><NavLink href="/login" onClick={this.handleLogout}></NavLink></NavItem>
-      </div>
+            <NavItem className="nav-item-m"><NavLink className="navL">Hello, {this.state.currentUser.displayName}</NavLink></NavItem>
+          </div>
           }
           <NavItem className="nav-item-m">
             <NavLink href="/" className="navL">Home</NavLink>
@@ -84,12 +83,18 @@ class MobileMenu extends Component {
           </NavItem>
           <NavItem className="nav-item-m">
             <NavLink href="/help" className="navL">Help</NavLink>
-          </NavItem>
-        
-          
+          </NavItem>          
           <NavItem className="nav-item-m">
             <NavLink href="/contact" className="navL">Contact</NavLink>
           </NavItem>
+
+          {this.state.currentUser?
+          <div>
+            <NavItem className="nav-item-m"><NavLink href="/login" onClick={this.handleLogout} className="navL">Log Out</NavLink></NavItem>
+          </div>
+          :
+          <></>
+          }
         </Nav>
         <style jsx>
           {`
@@ -328,9 +333,6 @@ class MobileMenu extends Component {
                   <NavItem className="nav-item-n">
                     <NavLink href="/surprise-recipe">Surprise</NavLink>
                   </NavItem>
-                  <NavItem className="nav-item-n">
-                    <NavLink href="/settings">Settings</NavLink>
-                  </NavItem>
                 </Nav>
               </div>
             </div>
@@ -338,18 +340,33 @@ class MobileMenu extends Component {
               <NavLink href="/contact" className="nav-hover">Contact</NavLink>
             </NavItem>
             {this.state.currentUser === null?
-          <LoginButton/>
-          :
-          <div>
-          <NavItem className="nav-item-n right-nav">
-            <NavLink>Hello, {this.state.currentUser.displayName}</NavLink>
-           
-          </NavItem>
-          <NavItem className="nav-item-n">
-          <NavLink href="/login" onClick={this.handleLogout}>Log out</NavLink>
-          </NavItem></div>
-          
-          }         
+              <NavItem className="nav-item-n right-nav l-n">
+                <NavLink href="/Login">Login</NavLink>
+              </NavItem>
+            :
+              <div
+                className="drop"
+                onMouseOver={this.over}
+                onMouseOut={this.out}
+                onTransitionEnd={this.onHide}
+              >
+                <NavItem className="nav-item-n right-nav">
+                  <NavLink href="#" className="nav-item-n navD right-nav nav-hover caret">
+                  Hello, {this.state.currentUser.displayName}
+                  </NavLink>
+                </NavItem>
+                <div className="drop__item" ref={this.dropNav}>
+                  <Nav vertical>
+                    <NavItem className="nav-item-n">
+                      <NavLink href="/settings">Settings</NavLink>
+                    </NavItem>
+                    <NavItem className="nav-item-n">
+                      <NavLink href="/login" onClick={this.handleLogout}>Log out</NavLink>
+                    </NavItem>
+                  </Nav>
+                </div>
+              </div>
+            }         
           </Nav>
         </Container>
         <style jsx>{`
