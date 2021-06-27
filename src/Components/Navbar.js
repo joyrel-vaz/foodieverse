@@ -5,16 +5,34 @@ import LoginButton from './LoginButton'
 import {useAuth} from '../Contexts/AuthContext'
 import LoginMobile from './LoginMobile'
 
+
 function getCurrentUser(Component) {
   return function WrappedComponent(props) {
-    const {currentUser} = useAuth();
-    return <Component {...props} currentUser={currentUser} />;
+    const {currentUser, logout} = useAuth();
+    return <Component {...props} currentUser={currentUser} logout={logout}/>;
   }
 }
 
 class MobileMenu extends Component {
-  state = { isOpen: false }
+  state = { isOpen: false ,currentUser:null , logout:null, error:''}
   toggle = () => this.setState({ isOpen: !this.state.isOpen })
+
+  async handleLogout(){
+    try{
+    await this.state.logout()
+     
+  }catch(error){
+      this.setState({error: error.message})
+  }
+  }
+
+  static getDerivedStateFromProps(props,state) {
+    return {
+      currentUser:props.currentUser,
+      logout:props.logout
+    }
+  }
+
   render() {
     return (
       <div className="mobile-wrapper">
@@ -27,14 +45,22 @@ class MobileMenu extends Component {
           </Container>
         </div>
         <Nav vertical className={'mobile-nav'}>
+        {this.state.currentUser === null?
+          <LoginMobile/>
+          :
+          <div>
+          <NavItem><NavLink>Hello, {this.state.currentUser.displayName}</NavLink></NavItem>
+          <NavItem><NavLink href="/login" onClick={this.handleLogout}></NavLink></NavItem>
+      </div>
+          }
           <NavItem className="nav-item-m">
-            <NavLink href="/" className="navL">home</NavLink>
+            <NavLink href="/" className="navL">Home</NavLink>
           </NavItem>
           <NavItem className="nav-item-m">
-            <NavLink href="/aboutus" className="navL">about</NavLink>
+            <NavLink href="/aboutus" className="navL">About</NavLink>
           </NavItem>
           <NavItem className="nav-item-m">
-            <NavLink href="/recipes" className="navL">recipes</NavLink>
+            <NavLink href="/recipes" className="navL">Recipes</NavLink>
           </NavItem>
           <NavItem className="nav-item-m">
             <NavLink className="navL">Dadi Ke Nuske</NavLink>
@@ -59,14 +85,10 @@ class MobileMenu extends Component {
           <NavItem className="nav-item-m">
             <NavLink href="/help" className="navL">Help</NavLink>
           </NavItem>
-          {!this.state.currentUser?
-          <LoginMobile/>
-          :
-          <p>Hello, {this.state.currentUser.email}</p>
-          }
+        
           
           <NavItem className="nav-item-m">
-            <NavLink href="/contact" className="navL">contact</NavLink>
+            <NavLink href="/contact" className="navL">Contact</NavLink>
           </NavItem>
         </Nav>
         <style jsx>
@@ -158,14 +180,32 @@ class MobileMenu extends Component {
   }
 }
 
+
+
  class NavigationBar extends Component {
   dropNav = React.createRef();
+
   constructor(props){
     super(props);
-    this.state = { currentUser : this.props.currentUser};
+    this.state = { 
+    currentUser : null,
+    logout: null,
+    error :''};
+
+   this.handleLogout = this.handleLogout.bind(this);
+     
   }
 
   hamButton = React.createRef()
+
+  async handleLogout(){
+    try{
+    await this.state.logout()
+     
+  }catch(error){
+      this.setState({error: error.message})
+  }
+  }
 
   over = () => {
     this.dropNav.current.style.display = 'block'
@@ -212,6 +252,17 @@ class MobileMenu extends Component {
       nav.classList.remove('scroll-nav')
     }
   }
+
+
+
+  static getDerivedStateFromProps(props,state) {
+    console.log(props)
+    return {
+      currentUser:props.currentUser,
+      logout:props.logout,
+    }
+  }
+
   componentDidMount() {
     window.addEventListener('scroll', this.fixedNav)
     this.menuWrapper = document.querySelector('.mobile-wrapper')
@@ -223,10 +274,13 @@ class MobileMenu extends Component {
     window.removeEventListener('scroll', this.fixedNav)
   }
   render() {
+
     return (
       <div className="navi-menu">
         <Container>
-          <MobileMenu hideNav={this.hideNav} />
+          <MobileMenu 
+          currentUser={this.state.currentUser}
+          hideNav={this.hideNav} />
 
           <Nav className="nav-n">
             <NavItem className="nav-item-n logo">
@@ -283,10 +337,18 @@ class MobileMenu extends Component {
             <NavItem className="nav-item-n right-nav">
               <NavLink href="/contact" className="nav-hover">Contact</NavLink>
             </NavItem>
-            {!this.state.currentUser?
+            {this.state.currentUser === null?
           <LoginButton/>
           :
-          <p>Hello, {this.state.currentUser.email}</p>
+          <div>
+          <NavItem className="nav-item-n right-nav">
+            <NavLink>Hello, {this.state.currentUser.displayName}</NavLink>
+           
+          </NavItem>
+          <NavItem className="nav-item-n">
+          <NavLink href="/login" onClick={this.handleLogout}>Log out</NavLink>
+          </NavItem></div>
+          
           }         
           </Nav>
         </Container>
