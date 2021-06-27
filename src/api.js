@@ -97,3 +97,12 @@ export async function editMeal(user,id,meal)
     body: JSON.stringify(meal)});
     return await res.json();
 }
+
+export async function getSurpriseRecipe(user,allergenArr,randomIng){
+    const surprise = {email:user, allergens: allergenArr , ing:randomIng};
+    const res = await fetch(`/api/surprise-recipe`,
+    { method: 'POST', 
+    headers: {'Content-Type':'application/json',}, 
+    body: JSON.stringify(surprise)});
+    return await res.json();
+}

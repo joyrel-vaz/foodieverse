@@ -38,7 +38,10 @@ function App() {
   
   return (
     <React.Fragment>
+      <Router>
+      <AuthProvider>
       <NavigationBar></NavigationBar>
+      </AuthProvider></Router>
     <Container className="d-flex align-items-center justify-content-center" style={{minHeight:"66vh"}}
     >
       <div className="home-edits" >
@@ -57,7 +60,7 @@ function App() {
               <Route path="/home-remedies/:a_category" component={AilmentList}/>
               <Route path="/home-remedies" component={AilmentCategory}/>
               <Route exact path="/recipes" component={Recipes}/>
-              <Route path='/surprise-recipes' component={SurpriseRecipes}/>
+              <Route path='/surprise-recipe' component={SurpriseRecipes}/>
               <PrivateRoute path="/settings" component={Settings}/>
               <Route path="/help" component={Help}/>
               <Route path="/demo" component={Demo}/>
