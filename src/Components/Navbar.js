@@ -43,15 +43,7 @@ class MobileMenu extends Component {
           </Container>
         </div>
         <Nav vertical className={'mobile-nav'}>
-        {this.state.currentUser === null?
-          <NavItem className="nav-item-m">
-            <NavLink href="/Login" className="navL">Login</NavLink>
-          </NavItem>
-          :
-          <div>
-            <NavItem className="nav-item-m"><NavLink className="navL">Hello, {this.state.currentUser.displayName}</NavLink></NavItem>
-          </div>
-          }
+        
           <NavItem className="nav-item-m">
             <NavLink href="/" className="navL">Home</NavLink>
           </NavItem>
