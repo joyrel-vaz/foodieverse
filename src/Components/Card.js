@@ -7,6 +7,7 @@ import {Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import {FavoriteManager} from './FavoriteManager'
 import MealHandler from './MealHandler';
+import SocialMediaIntegration from './SocialMediaIntegration'
 
 
 export default function Card(props) {
@@ -28,9 +29,7 @@ export default function Card(props) {
                       changed={props.changed}
                       setChanged={props.setChanged}
                 />  
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        <SocialMediaIntegration title={props.title} url={`localhost:3000/full-recipe/${props.id}`} />
 
       <MealHandler
       recipe={props}

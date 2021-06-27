@@ -98,3 +98,9 @@ body{
 .SendBtn{
   color:white !important;
 }
+
+.smi-text{
+  margin-left:10px;
+  float:right;
+  width:110px;
+}
