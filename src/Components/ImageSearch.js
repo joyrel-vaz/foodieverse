@@ -1,9 +1,59 @@
-import React from 'react'
+import React, {Component} from 'react'
+import {getImageSearch} from '../api.js'
 
-export default function ImageSearch() {
-    return (
+class SearchImage extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        image: null,
+        tags: null,
+        error: null
+      };
+  
+      this.onImageChange = this.onImageChange.bind(this);
+      this.onAnalyse = this.onAnalyse.bind(this);
+    }
+  
+    onImageChange = event => {
+      if (event.target.files && event.target.files[0]) {
+        let img = event.target.files[0];
+        this.setState({
+          image: URL.createObjectURL(img)
+        });
+      }
+    };
+
+    onAnalyse =async(taglist) => {
+        try{
+            //get user shopList
+            taglist = await getImageSearch(this.state.image);
+            console.log(taglist);
+            this.setState({
+                tags: taglist
+              });
+        }catch(err){
+            this.setState({
+                error: err
+              });
+        }  
+      };
+  
+    render() {
+      return (
         <div>
-            
+          <div>
+            <div>
+              <img src={this.state.image} />
+              <h1>Select Image</h1>
+              <input type="file" name="myImage" onChange={this.onImageChange} />
+              <p>{this.state.image}</p>
+              <input type="button" onClick={this.onAnalyse}></input>
+              {console.log("this is state"+this.state.tags)}
+            </div>
+          </div>
         </div>
-    )
-}
+      );
+    }
+  }
+  export default SearchImage;
+  
