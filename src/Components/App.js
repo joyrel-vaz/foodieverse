@@ -28,6 +28,7 @@ import MealPlanner from './MealPlanner'
 import LoginError from './LoginError'
 import FullRecipe from './FullRecipe'
 import MyFavorites from './MyFavorites';
+import ImageSearch from './ImageSearch';
 // import Foodium from './Foodium'
 import ContactUs from './ContactUs'
 import Integration from './Integration'
