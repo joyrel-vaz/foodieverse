@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {getImageSearch} from '../api.js'
+import {Button} from 'reactstrap'
 
 class SearchImage extends Component {
     constructor(props) {
@@ -26,8 +27,8 @@ class SearchImage extends Component {
     onAnalyse =async(taglist) => {
         try{
             //get user shopList
-            taglist = await getImageSearch(this.state.image);
-            console.log(taglist);
+            taglist = await getImageSearch(this.state.image.slice(5, this.state.image.length));
+            //console.log(taglist);
             this.setState({
                 tags: taglist
               });
@@ -46,8 +47,9 @@ class SearchImage extends Component {
               <img src={this.state.image} />
               <h1>Select Image</h1>
               <input type="file" name="myImage" onChange={this.onImageChange} />
-              <p>{this.state.image}</p>
-              <input type="button" onClick={this.onAnalyse}></input>
+              {/* <p>{this.state.image}</p> */}
+
+              <Button type="button" onClick={this.onAnalyse}>Analyse</Button>
               {console.log("this is state"+this.state.tags)}
             </div>
           </div>
