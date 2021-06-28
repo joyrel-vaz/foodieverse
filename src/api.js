@@ -108,6 +108,6 @@ export async function getSurpriseRecipe(user,allergenArr,randomIng){
 }
 
 export async function getImageSearch(url){
-    console.log("in ImageSearch API")
-    return fetch("/api/imageSearch/"+url).then(res => res.json());
+    console.log("in ImageSearch API");
+    return fetch("/api/imageSearch/?url="+url).then(res => res.json());
 }
