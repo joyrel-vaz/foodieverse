@@ -48,7 +48,7 @@ class SearchImage extends Component {
               <h1>Select Image</h1>
               <input type="file" name="myImage" onChange={this.onImageChange} />
               {/* <p>{this.state.image}</p> */}
-
+              <input type="text" name="imageURL" />
               <Button type="button" onClick={this.onAnalyse}>Analyse</Button>
               {console.log("this is state"+this.state.tags)}
             </div>
