@@ -311,20 +311,20 @@ app.post('/api/surprise-recipe',(req,res)=>{
 
 // });
 
-app.get('/api/imageSearch/:url',(req,res) => {
+app.get('/api/imageSearch',(req,res) => {
+    console.log(req.query.url);
     const got = require('got');
-
     const apiKey = imgApiKey;
     const apiSecret = imgApiSecret;
 
     //const imageUrl = req.params.url;
     const imageUrl = "https://images.financialexpress.com/2020/02/2-94.jpg";
     const url = 'https://api.imagga.com/v2/tags?image_url=' + encodeURIComponent(imageUrl);
-
     (async () => {
         try {
             const response = await got(url, {username: apiKey, password: apiSecret});
             console.log(response.body);
+            res.json(response.body);
         } catch (error) {
             console.log(error.response.body);
         }
