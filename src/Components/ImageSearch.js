@@ -64,7 +64,7 @@ class SearchImage extends Component {
               <input type="text" value={this.state.url} name="imageURL" onChange={this.onUrlChange} />
 
               <Button type="button" onClick={this.onAnalyse}>Analyse</Button>
-              {this.state.tags && console.log("this is state"+this.state.tags.result)}
+              {console.log("this is state"+this.state.tags)}
             </div>
           </div>
         </div>
