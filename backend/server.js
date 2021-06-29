@@ -317,8 +317,8 @@ app.get('/api/imageSearch',(req,res) => {
     const apiKey = imgApiKey;
     const apiSecret = imgApiSecret;
 
-    //const imageUrl = req.params.url;
-    const imageUrl = "https://images.financialexpress.com/2020/02/2-94.jpg";
+    const imageUrl = req.query.url;
+    //const imageUrl = "https://images.financialexpress.com/2020/02/2-94.jpg";
     const url = 'https://api.imagga.com/v2/tags?image_url=' + encodeURIComponent(imageUrl);
     (async () => {
         try {
