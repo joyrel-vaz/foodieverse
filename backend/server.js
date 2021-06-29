@@ -52,7 +52,29 @@ app.get('/api/recipes',(req,res) => {
     }
 
     else{ 
-        recipe.find( {$text : {$search : searchTerm,$caseSensitive :false}} ,  
+        let cookTime = req.query.cookTimes.split(',').map(ct => parseInt(ct)); //cooktimes array [0,30,90,120,121]
+        let obj_arr = [];
+        let obj = {}, i = 0;
+        
+        while(i < cookTime.length){
+            if(i === cookTime.length-1)
+                if(cookTime%2 !== 0)
+                    { //last statement 
+                    obj = {cookTime: {$gte:121}};
+                    break;
+                }
+              
+            obj = {$and: [{"cookTime": {$gte: cookTime[i]}},{"cookTime": {$lte: cookTime[i+1]}},]};
+            i += 2 ;
+            
+            obj_arr.push(obj);
+        }
+
+        console.log(obj_arr)
+        
+        recipe.find( {$and: [
+            {$or: obj_arr},
+            {$text : {$search : searchTerm,$caseSensitive :false}}]} ,  
             { score : { $meta: "textScore" } } , 
             function(err,recipesFound)
             {
