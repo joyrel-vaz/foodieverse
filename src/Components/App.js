@@ -28,6 +28,7 @@ import MealPlanner from './MealPlanner'
 import LoginError from './LoginError'
 import FullRecipe from './FullRecipe'
 import MyFavorites from './MyFavorites';
+import ImageSearch from './ImageSearch';
 // import Foodium from './Foodium'
 import ContactUs from './ContactUs'
 import Integration from './Integration'
@@ -49,8 +50,6 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/dashboard" component={Dashboard} />
-              <PrivateRoute path="/update-profile" component={UpdateProfile} />
-              <PrivateRoute path="/shopping-list" component={ShoppingList} />
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={Login} />
               <Route path="/login-error" component={LoginError} />
@@ -60,19 +59,24 @@ function App() {
               <Route path="/home-remedies" component={AilmentCategory}/>
               <Route exact path="/recipes" component={Recipes}/>
               <Route path='/surprise-recipe' component={SurpriseRecipes}/>
-              <PrivateRoute path="/settings" component={Settings}/>
               <Route path="/help" component={Help}/>
               <Route path="/demo" component={Demo}/>
               <Route path="/feedback" component={Feedback}/>
               <Route path="/payments" component={Payments}/>
               <Route path="/aboutus" component={AboutUs}/>
-              <PrivateRoute path="/meal-planner" component={MealPlanner}/>
               <Route path='/full-recipe' component={FullRecipe}/>
-              {/* <Route path='/foodium' component={Foodium}/> */}
-              <Route path='/contact' component={ContactUs}/>
-              <PrivateRoute path='/favorites' component={MyFavorites}/>
               <Route path='/integrations' component={Integration}/>
               <Route path='/legal' component={PrivacyPolicy}/>
+              <Route path='/contact' component={ContactUs}/>
+              {/* <Route path='/foodium' component={Foodium}/> */}
+              <PrivateRoute path="/update-profile" component={UpdateProfile} />
+              <PrivateRoute path="/settings" component={Settings}/>
+              <PrivateRoute path="/image-search" component={ImageSearch}/>
+              <PrivateRoute path='/favorites' component={MyFavorites}/>
+              <PrivateRoute path="/shopping-list" component={ShoppingList} />
+              <PrivateRoute path="/meal-planner" component={MealPlanner}/>
+
+              
             </Switch>
           </AuthProvider>
         </Router>        

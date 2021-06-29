@@ -21,6 +21,8 @@ if (result.error) {
 app.use(express.json())
 app.use(cors());
 
+const imgApiKey=process.env.IMAGE_API_KEY;
+const imgApiSecret=process.env.IMAGE_API_SECRET;
 const uri = process.env.MONGO_DB_URI;
 var MongoClient = require('mongodb').MongoClient;
 
@@ -308,7 +310,50 @@ app.post('/api/surprise-recipe',(req,res)=>{
         if(err) console.log(err)
       else return res.json(succ[0])
     });
-})
+});
+
+// app.get('/api/imageSearch',(req,res) => {
+//     var unirest = require("unirest");
+//     req = unirest("GET", "https://api.imagga.com/v2/tags");
+//     req.query({
+//     "image_url": "https://images.financialexpress.com/2020/02/2-94.jpg",
+//     "version": "2"
+//     });
+//     req.headers({
+//     "accept": "application/json",
+//     "authorization": "Basic YWNjXzhiMDk2MGYwODViNzNhODo1YTIwYmZkY2QyN2U0NDI4YzJiMDBlZTUwMTRjYmNmNg=="
+//     });
+
+
+//      req.end(function (respons) {
+//     if (res.error) throw new Error(res.error);
+//     console.log(res.body);
+//     return res.body;
+//     });
+
+// });
+
+app.get('/api/imageSearch',(req,res) => {
+    console.log(req.query.url);
+    const got = require('got');
+    const apiKey = imgApiKey;
+    const apiSecret = imgApiSecret;
+
+    const imageUrl = req.query.url;
+    //const imageUrl = "https://images.financialexpress.com/2020/02/2-94.jpg";
+    const url = 'https://api.imagga.com/v2/tags?image_url=' + encodeURIComponent(imageUrl);
+    (async () => {
+        try {
+            const response = await got(url, {username: apiKey, password: apiSecret});
+            console.log(response.body);
+            res.json(response.body);
+        } catch (error) {
+            console.log(error.response.body);
+        }
+    })();
+
+});
+
 
 
 app.listen(PORT, ()=> console.log(`Listening on port ${PORT}`));
