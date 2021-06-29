@@ -16,11 +16,6 @@ class SearchImage extends Component {
       this.onUrlChange = this.onUrlChange.bind(this);
       this.onAnalyse = this.onAnalyse.bind(this);
     }
-  
-    onUrlChange = event => {
-      console.log(event.target.value)
-      this.setState({url: event.target.value});
-    };
 
     onImageChange = event => {
       if (event.target.files && event.target.files[0]) {
@@ -35,11 +30,9 @@ class SearchImage extends Component {
         try{
           console.log(this.state.url);
             //get user shopList
-            if(this.state.url){
-              taglist = await getImageSearch(this.state.url);
-            }else{
+            
               taglist = await getImageSearch(this.state.image.slice(5, this.state.image.length));
-            }
+            
             //console.log(taglist);
             this.setState({
                 tags: taglist
@@ -61,7 +54,7 @@ class SearchImage extends Component {
               <input type="file" name="myImage" onChange={this.onImageChange} />
               {/* <p>{this.state.image}</p> */}
 
-              <input type="text" value={this.state.url} name="imageURL" onChange={this.onUrlChange} />
+              
 
               <Button type="button" onClick={this.onAnalyse}>Analyse</Button>
               {this.state.tags && console.log("this is state"+this.state.tags.result)}
