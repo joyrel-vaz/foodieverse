@@ -33,7 +33,6 @@ import ImageSearch from './ImageSearch';
 import ContactUs from './ContactUs'
 import Integration from './Integration'
 import PrivacyPolicy from './PrivacyPolicy'
-import UserProfile from './UserProfile'
 
 function App() {
   
@@ -68,7 +67,6 @@ function App() {
               <Route path='/full-recipe' component={FullRecipe}/>
               <Route path='/integrations' component={Integration}/>
               <Route path='/legal' component={PrivacyPolicy}/>
-              <Route path='/user-profile' component={UserProfile}/>
               <Route path='/contact' component={ContactUs}/>
               {/* <Route path='/foodium' component={Foodium}/> */}
               <PrivateRoute path="/update-profile" component={UpdateProfile} />

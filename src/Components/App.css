@@ -97,8 +97,8 @@ body{
 }
 .SendBtn{
   color:white !important;
-  background-color: #C90F03;
-  border:none;
+  background-color: #C90F03 !important;
+  border:none !important;
 }
 
 .smi-text{
@@ -110,4 +110,44 @@ body{
 .allerg{
   width:150px;
   margin:0 30px!important;
+}
+
+.no-click{
+  cursor:pointer!important;
+}
+
+.right-align{
+  float:right!important;
+  margin-bottom:10px;
+}
+
+.btnpadd{
+  margin:10px 0;
+}
+
+.card-margin{
+  margin: 0 20px!important;
+}
+
+.title-dash{
+  text-transform: uppercase!important;
+  margin-top:20px;
+}
+
+.Btn-Margin{
+  margin-top: 10px !important;
+}
+
+.row1{
+  margin-top:0!important;
+}
+
+
+.title-add{
+  margin-bottom:0!important;
+  margin-top:50px!important;
+}
+
+.right-btn{
+  float:right;
 }
