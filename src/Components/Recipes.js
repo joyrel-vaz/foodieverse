@@ -19,37 +19,13 @@ export default function Recipes () {
       range5: false, //121 to 150
       range6: false, //150+
     });
-    let arr = [];
-
-    const allUnchecked = () =>{
-      const { range1,range2,range3,range4,range5,range6 } = ranges;
-      if(!range1 && !range2 && !range3 && !range4 && !range5 && !range6)
-        return true;
-      return false;
-    }
-
-    const addRangeValues = () =>{
-      const { range1,range2,range3,range4,range5,range6 } = ranges;
-      if(range1)
-        arr.push(0,30);
-      if(range2)
-        arr.push(31,60);
-      if(range3)
-        arr.push(61,90);
-      if(range4)
-        arr.push(91,120);
-        if(range5)
-        arr.push(121,150);
-      if(range6)
-        arr.push(150);
-      if(allUnchecked())
-        arr.push(0,30,31,61,90,91,120,121,150)
-    }
+    const [slider,setSlider] = React.useState([1,10])
+    const[rangeArr, setRangeArr] = useState([]);
+    
 
     const fetchRecipes=async()=>{
         try{
-          addRangeValues();
-         const rec = await getRecipes(location.search,arr);
+         const rec = await getRecipes(location.search,rangeArr,slider);
          setRecipes(rec);
         }catch(error){
           console.log(error);
@@ -70,12 +46,15 @@ export default function Recipes () {
               </Col>
               </Row>
             <Row>
-              <Col xs={6} md={3} className="border-right mh-100 border-dark"><RecipeFilter
+              <Col xs={4} md={3} className="border-right mh-100 border-dark"><RecipeFilter
               setRanges={setRanges}
               ranges={ranges}
+              slider={slider}
+              setSlider={setSlider}
+              setRangeArr={setRangeArr}
             /> 
             </Col>
-            <Col xs={6} md={9}>
+            <Col xs={8} md={9}>
             <div className="wrapper">
                     {
                     recipes.map(r =>
