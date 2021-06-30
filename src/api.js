@@ -1,11 +1,11 @@
 
 export const getRemedies = () => fetch("/api/home-remedies").then(res => res.json());
 
-export const getRecipes = async (search,cookTimes,servings) => {
+export const getRecipes = async (search,cookTimes) => {
     const decoded = decodeURIComponent(search);
     let url = '';
     if(decoded.length > 0)
-        url = `/api/recipes${decoded}&cookTimes=${cookTimes}&servings=${servings}`; 
+        url = `/api/recipes${decoded}&cookTimes=${cookTimes}`; 
     else
         url = `/api/recipes${decoded}`;
 

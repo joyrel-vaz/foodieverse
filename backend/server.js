@@ -56,9 +56,8 @@ app.get('/api/recipes',(req,res) => {
     else{ 
         let cookTime = req.query.cookTimes.split(',').map(ct => parseInt(ct)); //cooktimes array [0,30,90,120,121]
         let obj_arr = [];
-        let servings = req.query.servings.split(',').map(s => parseInt(s));
         let obj = {}, i = 0;
-
+        
         while(i < cookTime.length){
             if(i === cookTime.length-1)
                 if(cookTime%2 !== 0)
@@ -73,9 +72,10 @@ app.get('/api/recipes',(req,res) => {
             obj_arr.push(obj);
         }
 
+        console.log(obj_arr)
+        
         recipe.find( {$and: [
             {$or: obj_arr},
-            {$and:[{'maxServings':{$gte: servings[0]}},{'minServings':{$lte: servings[1]}}]},
             {$text : {$search : searchTerm,$caseSensitive :false}}]} ,  
             { score : { $meta: "textScore" } } , 
             function(err,recipesFound)
@@ -339,13 +339,12 @@ app.get('/api/imageSearch',(req,res) => {
     const apiKey = imgApiKey;
     const apiSecret = imgApiSecret;
 
-    //const imageUrl = req.query.url;
-    const imageUrl = "https://images.financialexpress.com/2020/02/2-94.jpg";
+    const imageUrl = req.query.url;
+    //const imageUrl = "https://images.financialexpress.com/2020/02/2-94.jpg";
     const url = 'https://api.imagga.com/v2/tags?image_url=' + encodeURIComponent(imageUrl);
     (async () => {
         try {
             const response = await got(url, {username: apiKey, password: apiSecret});
-            console.log('in response')
             console.log(response.body);
             res.json(response.body);
         } catch (error) {
