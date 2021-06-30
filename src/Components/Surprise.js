@@ -21,6 +21,7 @@ import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 import { getSurpriseRecipe } from '../api';
+import { white } from 'colorette';
 
 const names = [
   'Tomato',
@@ -102,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonSuccess: {
     backgroundColor: '#C90F03',
+    color:'#fff',
     '&:hover': {
       backgroundColor: '#C90F03',
     },
@@ -217,38 +219,17 @@ export default function SurpriseRecipes() {
   return (
       <>
       <center>
-        <div className={classes.root}>
-      <div className={classes.wrapper}>
-        <Fab
-          aria-label="save"
-          className={buttonClassname}
-          onClick={handleButtonClick}
-        >
-          {success ? <RedeemIcon /> : <SentimentVerySatisfiedIcon />}
-        </Fab>
-        {loading && <CircularProgress size={68} className={classes.fabProgress} />}
-      </div>
-      <div className={classes.wrapper}>
-        <Button
-          variant="contained"
-          className={buttonClassname}
-          disabled={loading}
-          onClick={handleButtonClick}
-        >
-         Get Surprised!!!
-        </Button>
-        <FormControl>
-          <InputLabel>Hero ingredient ;)</InputLabel>
-          <p>{randomIng}</p>
-          <Button onClick={randomizeHandler}><ShuffleIcon/></Button>
+        
+      <div>
+    <FormControl className="allerg">
+    <InputLabel>Hero ingredient</InputLabel>
+    <br/>   <br/>
+          <Button onClick={randomizeHandler}><ShuffleIcon/></Button><p>{randomIng}</p>
         </FormControl>
         {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-      </div>
-    </div>
-    <div>
       
-      <FormControl className={classes.margin}>
-        <InputLabel>Allergens</InputLabel>
+      <FormControl className="allerg">
+        <InputLabel >Allergens</InputLabel>
         <Select
           multiple
           value={allergens}
@@ -271,6 +252,29 @@ export default function SurpriseRecipes() {
         </Select>
       </FormControl>
     </div>
+    <div className={classes.root}>
+          <div className={classes.wrapper}>
+            <Fab
+              aria-label="save"
+              className={buttonClassname}
+              onClick={handleButtonClick}
+            >
+              {success ? <RedeemIcon /> : <SentimentVerySatisfiedIcon />}
+            </Fab>
+            {loading && <CircularProgress size={68} className={classes.fabProgress} />}
+          </div>
+          <div className={classes.wrapper}>
+            <Button
+              variant="contained"
+              className={buttonClassname}
+              disabled={loading}
+              onClick={handleButtonClick}
+            >
+            Get Surprised!!!
+            </Button>
+
+          </div>
+        </div>
     <div class="wrapper">
     { 
                 recipe ?
