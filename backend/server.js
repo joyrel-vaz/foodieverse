@@ -56,7 +56,7 @@ app.get('/api/recipes',(req,res) => {
     else{ 
         let cookTime = req.query.cookTimes.split(',').map(ct => parseInt(ct)); //cooktimes array [0,30,90,120,121]
         let obj_arr = [];
-        let servings = req.query.servings.split(',').map(s => parseInt(s));
+        let servings = parseInt(req.query.servings);
         let obj = {}, i = 0;
 
         while(i < cookTime.length){
@@ -75,7 +75,7 @@ app.get('/api/recipes',(req,res) => {
 
         recipe.find( {$and: [
             {$or: obj_arr},
-            {$and:[{'maxServings':{$gte: servings[0]}},{'minServings':{$lte: servings[1]}}]},
+            {'maxServings':{$gte: servings}},
             {$text : {$search : searchTerm,$caseSensitive :false}}]} ,  
             { score : { $meta: "textScore" } } , 
             function(err,recipesFound)

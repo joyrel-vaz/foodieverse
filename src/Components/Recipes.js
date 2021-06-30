@@ -19,7 +19,7 @@ export default function Recipes () {
       range5: false, //121 to 150
       range6: false, //150+
     });
-    const [slider,setSlider] = React.useState([1,10])
+    const [slider,setSlider] = React.useState(5)
     const[rangeArr, setRangeArr] = useState([]);
     
 

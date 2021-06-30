@@ -11,7 +11,7 @@ import {Col} from 'react-bootstrap'
 const useStyles = makeStyles((theme) => ({
   root: {
     width:200,
-    marginTop:50,
+    marginTop:20,
   },
   formControl: {
     margin: theme.spacing(3),
@@ -131,6 +131,7 @@ export default function RecipeFilter(props) {
       onChange={handleSlider}
       min={1}
       max={50}
+      marks={[{value:1,label:'1'}]}
       defaultValue={props.slider} /></Col>
     </div>
     </div>

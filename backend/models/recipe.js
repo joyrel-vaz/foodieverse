@@ -10,7 +10,6 @@ var recipeSchema = new mongoose.Schema({
     instructions : [
       {type:  String}
     ],
-    minServings:Number,
     maxServings:Number
 });
 
