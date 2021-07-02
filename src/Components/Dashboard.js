@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles} from '@material-ui/core/styles';
 import { Card, Alert, Row, Col, Button } from 'react-bootstrap'
 import {  NavItem, NavLink} from 'reactstrap'
@@ -14,60 +14,31 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import AddRecipe from './AddRecipe';
 import RecipeCarousel from './RecipeCarousel'
+import { getMyRecipes } from '../api';
+import {Table as BootstrapTable} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 
 
 const columns = [
-    { id: 'name', label: 'Recipe Name', minWidth: 170 },
+    { id: 'recipeTitle', label: 'Recipe Name', minWidth: 170 },
     {
-      id: 'procedure',
-      label: 'Procedure',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    {
-      id: 'uploaddate',
+      id: 'uploadDate',
       label: 'Date of Uploading',
       minWidth: 170,
       align: 'right',
       format: (value) => value.toLocaleString('en-US'),
     },
-    {
-      id: 'comments',
-      label: 'Comments',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toFixed(2),
-    },
+    { id: 'viewRecipe', label: 'Action', minWidth: 100 }
   ];
-  
-  function createData(name, procedure, uploaddate, comments) {
-    return { name, procedure, uploaddate, comments };
-  }
-  
-  const rows = [
-    createData('India', 'IN', 1324171354, 3287263),
-    createData('China', 'CN', 1403500365, 9596961),
-    createData('Italy', 'IT', 60483973, 301340),
-    createData('United States', 'US', 327167434, 9833520),
-    createData('Canada', 'CA', 37602103, 9984670),
-    createData('Australia', 'AU', 25475400, 7692024),
-    createData('Germany', 'DE', 83019200, 357578),
-    createData('Ireland', 'IE', 4857000, 70273),
-    createData('Mexico', 'MX', 126577691, 1972550),
-    createData('Japan', 'JP', 126317000, 377973),
-    createData('France', 'FR', 67022000, 640679),
-    createData('United Kingdom', 'GB', 67545757, 242495),
-    createData('Russia', 'RU', 146793744, 17098246),
-    createData('Nigeria', 'NG', 200962417, 923768),
-    createData('Brazil', 'BR', 210147125, 8515767),
-  ];
+
 
 export function LoginButton() {
     const [error, setError] = useState('')
     const { currentUser, logout } = useAuth()
     const history = useHistory()
   
+
+
     async function handleLogOut(){
       setError('')
       try{
@@ -113,10 +84,25 @@ export default function Dashboard() {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [pending,setPending] = useState([]); 
+    const [rejected,setRejected] = useState([]); 
+    const [accepted,setAccepted] = useState([]); 
   
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
     };
+
+    const getRecipeData = async() =>{
+      const data = await getMyRecipes(currentUser.email);
+      setAccepted(data[0].AcceptedRecipes)
+      setPending(data[0].PendingRecipes)
+      setRejected(data[0].RejectedRecipes)
+    }
+
+    useEffect(() => {
+      getRecipeData();
+    },[])
+
   
     const handleChangeRowsPerPage = (event) => {
       setRowsPerPage(+event.target.value);
@@ -167,11 +153,11 @@ export default function Dashboard() {
                                 </Row>
                             </center>
                             </Col>
-                            <h2 className="title-dash">My Recipes</h2>
+                            <h2 className="title-dash">My Approved Recipes</h2>
                                 <RecipeCarousel/>
                             <h2 className="title-dash">My Favourites</h2>
                                 <RecipeCarousel/>
-                            <h2 className="title-dash">Pending Approvals</h2>
+                            <h2 className="title-dash">Pending Recipes</h2>
                             <Paper elevation={3}>
                             <TableContainer className={classes.container}>
                                 <Table stickyHeader aria-label="sticky table">
@@ -189,9 +175,10 @@ export default function Dashboard() {
                                     </TableRow>
                                   </TableHead>
                                   <TableBody>
-                                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                    {pending.map((row,index) => {
                                       return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                    
                                           {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
@@ -200,6 +187,12 @@ export default function Dashboard() {
                                               </TableCell>
                                             );
                                           })}
+                                          <TableCell>
+                                            <Link to={{
+                                              pathname:'/user-recipe',
+                                              state:{recipe:row}
+                                            }}>View Recipe</Link>
+                                          </TableCell>
                                         </TableRow>
                                       );
                                     })}
@@ -209,13 +202,38 @@ export default function Dashboard() {
                               <TablePagination
                                 rowsPerPageOptions={[10, 25, 100]}
                                 component="div"
-                                count={rows.length}
+                                count={pending.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
                                 onChangePage={handleChangePage}
                                 onChangeRowsPerPage={handleChangeRowsPerPage}
                               />
-                            </Paper>        
+                            </Paper>   
+                            
+                              <Container>
+                              <h2 className="m-2">Rejected recipes</h2>
+                            <BootstrapTable className="m-3" hover striped bordered>
+                            <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Recipe Title</th>
+                                  <th>Upload Date</th>
+                                  <th>Comment</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {rejected.map((rej,index) =>
+                                <tr>
+                                  <td>{index+1}</td>
+                                  <td>{rej.recipeTitle}</td>
+                                  <td>{rej.uploadDate}</td>
+                                  <td>{rej.comment}</td>
+                                </tr>
+                                )}
+                                
+                              </tbody>
+                              </BootstrapTable>   
+                                </Container>  
                             </>
                         :
                             <div className="text-center mt-3" >
