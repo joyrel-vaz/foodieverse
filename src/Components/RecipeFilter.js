@@ -132,7 +132,7 @@ export default function RecipeFilter(props) {
       min={1}
       max={50}
       marks={[{value:1,label:'1'}]}
-      defaultValue={props.slider} /></Col>
+      defaultValue={5} /></Col>
     </div>
     </div>
   );

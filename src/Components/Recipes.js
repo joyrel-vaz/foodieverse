@@ -25,7 +25,9 @@ export default function Recipes () {
 
     const fetchRecipes=async()=>{
         try{
+          console.log('in fetch rec')
          const rec = await getRecipes(location.search,rangeArr,slider);
+         console.log(rec)
          setRecipes(rec);
         }catch(error){
           console.log(error);
@@ -33,10 +35,11 @@ export default function Recipes () {
       }
 
       useEffect(() => {
+        console.log('fetching again')
         if(location.state !== undefined)
           setMode(location.state.mode)
           fetchRecipes();
-      },[location.search]);
+      },[location.search,rangeArr,slider]);
 
         return (
             <Container>  
