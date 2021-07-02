@@ -10,7 +10,7 @@ var recipeSchema = new mongoose.Schema({
     instructions : [
       {type:  String}
     ],
-    maxServings:Number
+    maxServings:Number,
 });
 
 module.exports = mongoose.model('recipe', recipeSchema);
