@@ -335,7 +335,7 @@ app.get('/api/imageSearch',(req,res) => {
 app.post('api/imgbb',(req,res)=>{
     const imgbbUploader = require("imgbb-uploader");
         console.log("in analyse");
-        imgbbUploader("7625ed871ffbb5f3484ecd40733526e6", "/home/rushabh/React Projects/BE Project/Ingredient-to-Recipe App/public/images/home005.jpg")
+        imgbbUploader("7625ed871ffbb5f3484ecd40733526e6", "/home/rushabh/React Projects/BE Project/Ingredient-to-Recipe App/public/images/home006.jpg")
           .then((response) => console.log(response))
           .catch((error) => console.error(error));
 });
