@@ -396,7 +396,7 @@ app.post('/api/tempRecipes/add',(req,res) => {
     for(let i = 0 ; i< num.length; i++){
         if(num[i] !== '')
             {
-            num_arr.push(i, parseInt(num[i]))
+            num_arr.push(parseInt(num[i]))
             i += 1
         }        
     }
@@ -417,7 +417,7 @@ app.post('/api/tempRecipes/add',(req,res) => {
         if(num_arr.length === 1)
             max = num_arr[0] * 12;
         else if(num_arr.length === 2)
-            max = num_arr[0] * 12;
+            max = num_arr[1] * 12;
 
     //get instruction list
     let instList = data.recipe.procedure.map(inst => inst.step);
