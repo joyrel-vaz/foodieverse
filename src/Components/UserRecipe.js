@@ -3,6 +3,7 @@ import { Form , Container, Row, Col , Image, Button} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { approveRecipe , rejectRecipe} from '../api';
+import {useAuth} from '../Contexts/AuthContext'
 
 export function UserRecipe(props){
 
@@ -12,6 +13,7 @@ export function UserRecipe(props){
     const [show, setShow] = useState(false);
     const [comment,setComment] = useState('');
     const history = useHistory();
+    const {currentUser} = useAuth();
 
     const handleApproval = async() =>{
         const res = await approveRecipe(recipe);
@@ -66,7 +68,9 @@ export function UserRecipe(props){
                         </ol>
                 </Col>
             </Row>
-            <Row>
+            { currentUser.email === process.env.REACT_APP_ADMIN1 ||currentUser.email === process.env.REACT_APP_ADMIN2 
+        ||currentUser.email === process.env.REACT_APP_ADMIN3 ||currentUser.email === process.env.REACT_APP_ADMIN4 ?          
+    <Row>
                 <Col>
                 <Button variant="success" onClick={handleApproval}>Approve Recipe</Button>
                 <Button variant="danger" onClick={showCommentBox}>Reject Recipe</Button>
@@ -84,6 +88,11 @@ export function UserRecipe(props){
              }          
                 </Col>
             </Row>
+            :
+            <></>
+    
+    }
+            
         </Container>
 
     );
