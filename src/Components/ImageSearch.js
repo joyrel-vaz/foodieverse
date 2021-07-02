@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {getImageSearch} from '../api.js'
+import {getImageSearch, getImgbb} from '../api.js'
 import {Button} from 'reactstrap'
 
 class SearchImage extends Component {
@@ -43,12 +43,15 @@ class SearchImage extends Component {
             //console.log(taglist);
             this.setState({
                 tags: taglist
-              });
+             });
         }catch(err){
             this.setState({
                 error: err
               });
-        }  
+        } 
+
+        // getImgbb function
+        // getImgbb(this.state.url);
       };
   
     render() {
@@ -59,12 +62,12 @@ class SearchImage extends Component {
               <img src={this.state.image} />
               <h1>Select Image</h1>
               <input type="file" name="myImage" onChange={this.onImageChange} />
-              {/* <p>{this.state.image}</p> */}
+              <p>{this.state.image && this.state.image.slice(5,this.state.image.length)}</p>
 
               <input type="text" value={this.state.url} name="imageURL" onChange={this.onUrlChange} />
 
               <Button type="button" onClick={this.onAnalyse}>Analyse</Button>
-              {console.log("this is state"+this.state.tags)}
+              {this.state.tags && console.log("this is state"+ JSON.parse(this.state.tags).result.tags[0].tag.en)}
             </div>
           </div>
         </div>
