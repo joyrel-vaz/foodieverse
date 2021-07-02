@@ -32,24 +32,26 @@ class SearchImage extends Component {
     };
 
     onAnalyse =async(taglist) => {
-        // try{
-        //   console.log(this.state.url);
-        //     //get user shopList
-        //     if(this.state.url){
-        //       taglist = await getImageSearch(this.state.url);
-        //     }else{
-        //       taglist = await getImageSearch(this.state.image.slice(5, this.state.image.length));
-        //     }
-        //     //console.log(taglist);
-        //     this.setState({
-        //         tags: taglist
-        //       });
-        // }catch(err){
-        //     this.setState({
-        //         error: err
-        //       });
-        // } 
-        getImgbb(this.state.url);
+        try{
+          console.log(this.state.url);
+            //get user shopList
+            if(this.state.url){
+              taglist = await getImageSearch(this.state.url);
+            }else{
+              taglist = await getImageSearch(this.state.image.slice(5, this.state.image.length));
+            }
+            //console.log(taglist);
+            this.setState({
+                tags: taglist
+             });
+        }catch(err){
+            this.setState({
+                error: err
+              });
+        } 
+
+        // getImgbb function
+        // getImgbb(this.state.url);
       };
   
     render() {
