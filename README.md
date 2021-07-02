@@ -1,9 +1,5 @@
 # This is the INGREDIENT TO RECIPE APP
-## APP developed by
-  Vritika Naik,
-  Rushabh Wadkar,
-  Joyrel Vaz,
-  Apurva Virgincar.
+**APP developed by** Vritika Naik, Rushabh Wadkar, Joyrel Vaz, Apurva Virgincar.
 
 ## App built using MERN Stack (Mongo-Express-React-Node)
 ### This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
