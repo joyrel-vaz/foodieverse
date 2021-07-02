@@ -18,20 +18,6 @@ import { getMyRecipes } from '../api';
 import {Table as BootstrapTable} from 'react-bootstrap';
 import {Container} from 'react-bootstrap';
 
-
-const columns = [
-    { id: 'recipeTitle', label: 'Recipe Name', minWidth: 170 },
-    {
-      id: 'uploadDate',
-      label: 'Date of Uploading',
-      minWidth: 170,
-      align: 'right',
-      format: (value) => value.toLocaleString('en-US'),
-    },
-    { id: 'viewRecipe', label: 'Action', minWidth: 100 }
-  ];
-
-
 export function LoginButton() {
     const [error, setError] = useState('')
     const { currentUser, logout } = useAuth()
@@ -163,30 +149,19 @@ export default function Dashboard() {
                                 <Table stickyHeader aria-label="sticky table">
                                   <TableHead>
                                     <TableRow>
-                                      {columns.map((column) => (
-                                        <TableCell
-                                          key={column.id}
-                                          align={column.align}
-                                          style={{ minWidth: column.minWidth }}
-                                        >
-                                          {column.label}
-                                        </TableCell>
-                                      ))}
+                                      <TableCell>#</TableCell>
+                                      <TableCell>Recipe title</TableCell>
+                                      <TableCell>Upload date</TableCell>
+                                      <TableCell></TableCell>
                                     </TableRow>
                                   </TableHead>
                                   <TableBody>
                                     {pending.map((row,index) => {
                                       return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                    
-                                          {columns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                              <TableCell key={column.id} align={column.align}>
-                                                {column.format && typeof value === 'number' ? column.format(value) : value}
-                                              </TableCell>
-                                            );
-                                          })}
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                          <TableCell>{index+1}</TableCell>
+                                          <TableCell>{row.recipeTitle}</TableCell>
+                                          <TableCell>{row.uploadDate}</TableCell>
                                           <TableCell>
                                             <Link to={{
                                               pathname:'/user-recipe',
@@ -211,7 +186,7 @@ export default function Dashboard() {
                             </Paper>   
                             
                               <Container>
-                              <h2 className="m-2">Rejected recipes</h2>
+                              <h2 className="m-2">REJECTED RECIPES</h2>
                             <BootstrapTable className="m-3" hover striped bordered>
                             <thead>
                                 <tr>
