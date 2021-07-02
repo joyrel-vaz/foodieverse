@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {getImageSearch} from '../api.js'
+import {getImageSearch, getImgbb} from '../api.js'
 import {Button} from 'reactstrap'
 
 class SearchImage extends Component {
@@ -32,23 +32,24 @@ class SearchImage extends Component {
     };
 
     onAnalyse =async(taglist) => {
-        try{
-          console.log(this.state.url);
-            //get user shopList
-            if(this.state.url){
-              taglist = await getImageSearch(this.state.url);
-            }else{
-              taglist = await getImageSearch(this.state.image.slice(5, this.state.image.length));
-            }
-            //console.log(taglist);
-            this.setState({
-                tags: taglist
-              });
-        }catch(err){
-            this.setState({
-                error: err
-              });
-        }  
+        // try{
+        //   console.log(this.state.url);
+        //     //get user shopList
+        //     if(this.state.url){
+        //       taglist = await getImageSearch(this.state.url);
+        //     }else{
+        //       taglist = await getImageSearch(this.state.image.slice(5, this.state.image.length));
+        //     }
+        //     //console.log(taglist);
+        //     this.setState({
+        //         tags: taglist
+        //       });
+        // }catch(err){
+        //     this.setState({
+        //         error: err
+        //       });
+        // } 
+        getImgbb(this.state.url);
       };
   
     render() {
