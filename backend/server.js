@@ -4,11 +4,14 @@ const   express = require('express'),
         mongoose = require('mongoose'),
         dadiKeNuske = require('./models/dadiKeNuske.js'),
         recipe = require('./models/recipe.js'),
+        tempRecipe = require('./models/tempRecipe.js'),
         favorite = require('./models/favorite.js'),
         shopList = require('./models/shopList.js'),
         mealPlan = require('./models/mealPlan'),
         meals = require('./models/meals'),
         user = require('./models/user'),
+        ingredient = require('./models/ingredient'),
+        myRecipe = require('./models/myRecipe'),
         PORT = 8080;
 
 
@@ -34,7 +37,7 @@ mongoose.connect(uri, {
 .catch(err => console.log(err));;
 
 app.get('/api/home-remedies',(req,res) => {
-    dadiKeNuske.find((err,dKNFound) =>{
+    dadiKeNuske.find({},(err,dKNFound) =>{
         if(err) console.log(err);
         else {
         res.json(dKNFound);
@@ -54,6 +57,7 @@ app.get('/api/recipes',(req,res) => {
     }
 
     else{ 
+        console.log('in else')
         let cookTime = req.query.cookTimes.split(',').map(ct => parseInt(ct)); //cooktimes array [0,30,90,120,121]
         let obj_arr = [];
         let servings = parseInt(req.query.servings);
@@ -75,7 +79,7 @@ app.get('/api/recipes',(req,res) => {
 
         recipe.find( {$and: [
             {$or: obj_arr},
-            {'maxServings':{$gte: servings}},
+            {'maxServings':{$lte: servings}},
             {$text : {$search : searchTerm,$caseSensitive :false}}]} ,  
             { score : { $meta: "textScore" } } , 
             function(err,recipesFound)
@@ -356,5 +360,233 @@ app.get('/api/imageSearch',(req,res) => {
 });
 
 
+//adds user submitted recipe to temporary collection
+app.post('/api/tempRecipes/add',(req,res) => {
+    const data = req.body;
+    const email = data.email;
+    const author = data.username;
+    /**
+     * cooktime comes as string. must first isolate minutes,hours etc from it [use regex], then convert to int
+     * ingredients comes as an object array of ingname and amount. need to join these 2 fields
+     * an additional array of ingredient names to be maintained to update ingredient collection
+     * servings comes as a string. use regex to get maxServings
+     * iterate through instruction object array and extract step strings
+     */
+
+    console.log(data)
+    let regex = new RegExp('[0-9]+')
+    let cookTime = parseInt(data.recipe.cookTime.match(regex))
+
+    let ingList = data.recipe.ingredients.map(ing => ing.amount+ " " + ing.ingName); //array
+    const ingNames = data.recipe.ingredients.map(ing => ing.ingName); //array
+    const ingStr = ingList.join('$') //delimeter between 2 consecutive ingredients
+    let servings = data.recipe.servings;
+
+    //extract numerical servings from string
+    let num_arr = [], max = 0;
+    let num = servings.match(regex)
+    for(let i = 0 ; i< num.length; i++){
+        if(num[i] !== '')
+            {
+            num_arr.push(i, parseInt(num[i]))
+            i += 1
+        }        
+    }
+
+    if(num_arr.length === 0)
+        max = 1;
+
+    else if(num_arr.length === 1 || num_arr.length > 2)
+        max = num_arr[0];
+
+    else if(num_arr.length === 2) 
+        if(servings.includes('to'))
+            max = num_arr[1];
+        else
+            max = num_arr[0];
+
+    if(servings.includes('dozen'))
+        if(num_arr.length === 1)
+            max = num_arr[0] * 12;
+        else if(num_arr.length === 2)
+            max = num_arr[0] * 12;
+
+    //get instruction list
+    let instList = data.recipe.procedure.map(inst => inst.step);
+
+    let tmp = {
+        userEmail:email,
+        cookTime: cookTime,
+        image: data.recipe.image,
+        ingredients: ingStr,
+        ingredientNameList: ingNames,
+        recipeTitle : data.recipe.recipeName,
+        servings : data.recipe.servings,
+        instructions : instList,
+        author:author,
+        maxServings:max
+    }
+
+    console.log(tmp)
+
+        //add recipe to temp database collection
+        tempRecipe.create(tmp,(err,newTempRecipe)=>{
+            if(err) console.log(err)
+            else{
+                //add recipe to users myrecipes list
+                myRecipe.exists({ userID: email }).then(exists =>{
+                    if(exists){
+                        console.log('my recipe exists')
+                        myRecipe.findOneAndUpdate(
+                            { userID: email }, 
+                            { $push: { PendingRecipes: newTempRecipe._id } },{new:true},(err,updatePRec) =>{
+                                if(err) console.log(err);
+                                else console.log(updatePRec)
+                            }
+                            );
+                    }
+                    else
+                    {
+                        console.log('my recipe does not exist')
+                        myRecipe.create({userID: email, 
+                        $push: { PendingRecipes: newTempRecipe._id }},(err,newPRec) =>{
+                        if(err) console.log(err);
+                        else console.log(newPRec)
+                        })
+                    }
+                })
+            }
+        })
+})
+
+
+// adds new recipe to recipe collection
+app.post('/api/tempRecipes/accept', (req,res) =>{
+    /**
+     * get recipe id from params
+     * query the temp collection for this id
+     * ---------------------------------------------- above may not be needed if object is passed from server
+     * put this temp recipe object in permanent recipe db
+     * remove the temp recipe doc from temprecipes
+     */
+    const data = req.body.recipe;
+    const newrecipe = {
+        cookTime: data.cookTime,
+        image: data.image,
+        ingredients: data.ingredients,
+        recipeTitle : data.recipeTitle,
+        servings : data.servings,
+        instructions : data.instructions,
+        maxServings:data.maxServings
+    };
+    const recipeID = data._id;
+    const email = data.userEmail;
+
+
+    //add recipe to permanent database
+    
+        recipe.create(newrecipe,(err1,vnewRecipe)=>{
+            if(err1) console.log(err1)
+            else{
+            //add recipe to users accepted recipes list and remove from pending list
+                    myRecipe.findOneAndUpdate(
+                        { userID: email }, 
+                        {$pull: { PendingRecipes: recipeID } ,  
+                        $push: { AcceptedRecipes: vnewRecipe._id }},
+                        {new:true},(err2,accRecipe) =>{
+                            if(err2) console.log(err2);
+                            else console.log(accRecipe)
+                        }
+                        );
+
+           
+                    const ingred = data.ingredientNameList; //array of ingredients
+            
+                    ingredient.find({}, (err3,ingFound) => {
+                        if(err3)
+                            console.log(err3);
+                        else {                    
+                            ingredient.findOneAndUpdate({_id : ingFound._id},
+                                { $addToSet: { Ingredients: { $each:  ingred} } },
+                                {upsert:true},
+                                (err1,addedIngs) =>{
+                                    if(err1) console.log(err1);
+                                    else console.log(addedIngs)
+                                }
+                                )
+                        }
+                    })
+                
+            }
+        })
+   
+        tempRecipe.findByIdAndDelete(recipeID,(err,rec) =>{
+            if(err)
+                console.log(err)
+            else return true;
+        })
+})
+
+//rejection of recipe by admin
+app.post('/api/tempRecipes/reject', (req,res) => {
+    /**
+     * comment,recipe & user object present in body
+     * remove from pending
+     * add appropriate data to rejected recipes [my recipes]
+     * redirect to route to delete from temp
+     */
+    const recipe = req.body.recipe;
+    let rej ={ 
+       comment: req.body.comment
+    };
+       
+            rej['recipeName'] = recipe.recipeTitle ;
+            console.log(rej)
+
+            myRecipe.findOneAndUpdate({userID:recipe.userEmail},
+                 { $pull: { PendingRecipes: recipe._id } },{new:true},(err,pen) =>{
+                     if(err) console.log(err);
+                     else console.log(pen)
+                 }
+                )
+
+            myRecipe.findOneAndUpdate({userID:recipe.userEmail},
+                    { $push: { RejectedRecipes: rej } },{new:true},(err,reje) =>{
+                        if(err) console.log(err);
+                        else console.log(reje)
+                    }
+                   )
+
+        tempRecipe.findByIdAndDelete(recipe._id,(err,rec) =>{
+                    if(err)
+                        console.log(err)
+                    else return res.json(true);
+                })
+        
+})
+
+app.get('/api/tempRecipes',(req,res) =>{
+    tempRecipe.find({},(err,tFound) => {
+        if(err) 
+            console.log(err);
+
+        else{
+           res.json(tFound);
+        }
+    })
+})
+
+
+app.get('/api/users/:userid/myRecipes',(req,res) =>{
+    myRecipe.find({userID: req.params.userid})
+    .populate({path: 'AcceptedRecipes', model: 'recipe'})
+    .populate({path: 'PendingRecipes', model: 'tempRecipe'}).exec((err,myrecs) => {
+        if(err)
+            console.log(err)
+            
+        else {console.log(myrecs)
+        return res.json(myrecs);}
+    })
+})
 
 app.listen(PORT, ()=> console.log(`Listening on port ${PORT}`));
