@@ -111,3 +111,8 @@ export function getImageSearch(url){
     console.log("in ImageSearch API");
     return fetch("/api/imageSearch/?url="+url).then(res => res.json());
 }
+
+export function getImgbb(url){
+    console.log("in ImageSearch API");
+    return fetch("/api/imgbb/?url="+url, {method: 'POST'}).then(res => res.json());
+}
