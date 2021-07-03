@@ -1,10 +1,17 @@
 
 export const getRemedies = () => fetch("/api/home-remedies").then(res => res.json());
 
-export const getRecipes = async (search) => {
+export const getRecipes = async (search,cookTimes,servings) => {
     const decoded = decodeURIComponent(search);
-    const url = `/api/recipes${decoded}`;
+    let url = '';
+    if(decoded.length > 0)
+        url = `/api/recipes${decoded}&cookTimes=${cookTimes}&servings=${servings}`; 
+    else
+        url = `/api/recipes${decoded}`;
+
+    console.log(url)
     const res = await fetch(url);
+    console.log(res)
     return await res.json();
 
 }
@@ -110,6 +117,55 @@ export async function getSurpriseRecipe(user,allergenArr,randomIng){
 export function getImageSearch(url){
     console.log("in ImageSearch API");
     return fetch("/api/imageSearch/?url="+url).then(res => res.json());
+}
+
+export async function submitRecipe(username,email,recipe)
+{
+    const obj ={username:username,email:email,recipe:recipe}
+    console.log('in add api')
+    console.log(obj);
+   const res = await fetch(`/api/tempRecipes/add`,
+    { method: 'POST', 
+    headers: {'Content-Type':'application/json',
+            'Accept': 'application/json'}, 
+    body: JSON.stringify(obj)});
+    return await res.json();
+}
+
+export async function getTempRecipes(){
+    const res = await fetch('/api/tempRecipes');
+    return await res.json();
+}
+
+export async function approveRecipe(recipe)
+{
+    const obj ={recipe:recipe}
+    console.log(obj);
+   const res = await fetch(`/api/TempRecipes/accept`,
+    { method: 'POST', 
+    headers: {'Content-Type':'application/json',
+            'Accept': 'application/json'}, 
+    body: JSON.stringify(obj)});
+    return await res.json();
+}
+
+export async function rejectRecipe(recipe,comment)
+{
+    const obj ={recipe:recipe, comment:comment}
+    console.log(obj);
+   const res = await fetch(`/api/tempRecipes/reject`,
+    { method: 'POST', 
+    headers: {'Content-Type':'application/json',
+            'Accept': 'application/json'}, 
+    body: JSON.stringify(obj)});
+    return await res.json();
+}
+
+export async function getMyRecipes(userid){
+    const res = await fetch(`/api/users/${userid}/myRecipes`);
+    const data = await res.json();
+    console.log(data);
+    return data;
 }
 
 export function getImgbb(url){
