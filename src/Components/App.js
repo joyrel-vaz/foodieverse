@@ -33,6 +33,9 @@ import ImageSearch from './ImageSearch';
 import ContactUs from './ContactUs'
 import Integration from './Integration'
 import PrivacyPolicy from './PrivacyPolicy'
+import { AdminRoute } from './AdminRoute';
+import { NotFound } from './NotFound';
+import {UserRecipe} from './UserRecipe'
 
 function App() {
   
@@ -75,7 +78,9 @@ function App() {
               <PrivateRoute path='/favorites' component={MyFavorites}/>
               <PrivateRoute path="/shopping-list" component={ShoppingList} />
               <PrivateRoute path="/meal-planner" component={MealPlanner}/>
-
+              <PrivateRoute path="/admin-route" component={AdminRoute}/>
+              <Route path='/not-found' component={NotFound}/>
+              <Route path='/user-recipe' component={UserRecipe}/>
               
             </Switch>
           </AuthProvider>

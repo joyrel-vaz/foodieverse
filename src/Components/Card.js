@@ -42,6 +42,7 @@ export default function Card(props) {
                       instructions:props.instructions,
                       ingredients:props.ingredients,
                       img:props.img,
+                      cookTime:props.cookTime,
                       servings:props.servings
                       
                     }     
