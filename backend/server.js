@@ -58,29 +58,52 @@ app.get('/api/recipes',(req,res) => {
 
     else{ 
         console.log('in else')
-        let cookTime = req.query.cookTimes.split(',').map(ct => parseInt(ct)); //cooktimes array [0,30,90,120,121]
-        let obj_arr = [];
-        let servings = parseInt(req.query.servings);
-        let obj = {}, i = 0;
+        let query,obj_arr = [],servings,cookTime = [];
 
-        while(i < cookTime.length){
-            if(i === cookTime.length-1)
-                if(cookTime%2 !== 0)
-                    { //last statement 
-                    obj = {cookTime: {$gte:121}};
-                    break;
-                }
-              
-            obj = {$and: [{"cookTime": {$gte: cookTime[i]}},{"cookTime": {$lte: cookTime[i+1]}},]};
-            i += 2 ;
-            
-            obj_arr.push(obj);
+        if(req.query.cookTimes){ //if cooktime filter is used 
+            cookTime = req.query.cookTimes.split(',').map(ct => parseInt(ct)); 
+            let obj = {}, i = 0;
+
+            while(i < cookTime.length){
+                if(i === cookTime.length-1)
+                    if(cookTime%2 !== 0)
+                        { //last statement 
+                        obj = {cookTime: {$gte:150}};
+                        break;
+                    }
+                
+                obj = {$and: [{"cookTime": {$gte: cookTime[i]}},{"cookTime": {$lte: cookTime[i+1]}},]};
+                i += 2 ;
+                
+                obj_arr.push(obj);
+        }}
+        
+        if(req.query.servings){ //if servings filter is used
+             servings = parseInt(req.query.servings);
         }
 
-        recipe.find( {$and: [
-            {$or: obj_arr},
+
+        if(cookTime.length > 0 && servings)
+            query = {$and: [
+                {$or: obj_arr},
+                {'maxServings':{$lte: servings}},
+                {$text : {$search : searchTerm,$caseSensitive :false}}]} ;
+        
+        else if(cookTime.length > 0 && !servings)
+            query = {$and: [
+                {$or: obj_arr},
+                {$text : {$search : searchTerm,$caseSensitive :false}}]} ;  
+                
+        else if(!cookTime.length > 0 && servings)
+            query = {$and: [
             {'maxServings':{$lte: servings}},
-            {$text : {$search : searchTerm,$caseSensitive :false}}]} ,  
+            {$text : {$search : searchTerm,$caseSensitive :false}}]} ;
+        
+        else 
+            query = {$text : {$search : searchTerm,$caseSensitive :false}} ;
+
+
+        recipe.find( query ,  
             { score : { $meta: "textScore" } } , 
             function(err,recipesFound)
             {
@@ -167,22 +190,23 @@ app.get('/api/userShopList/del/:id/:item',(req,res) => {
 });
 
 app.get('/api/users/:userid/favorites/add/:id' , (req,res) => {
-    favorite.exists({ userID: req.params.userid }).then(exists =>{
-        if(exists){
+    console.log(req.params.userid,req.params.id)
+    //favorite.exists({ userID: req.params.userid }).then(exists =>{
+        //if(exists){
             favorite.findOneAndUpdate(
                 { userID: req.params.userid }, 
-                { $push: { Favorites: req.params.id } },(err,updateFav) =>{
+                { $push: { Favorites: req.params.id } },{new:true,upsert:true},(err,updateFav) =>{
                     if(err) console.log(err);
-                    //console.log(updateFav);
+                    else console.log(updateFav);
                 }
                 );
-        }
+       /* }
         else
         {favorite.create({userID: req.params.userid, 
             $push: { Favorites: req.params.id }},(err,newFav) =>{
             if(err) console.log(err);
             })}
-    })
+    })*/
 
 })
 
@@ -442,19 +466,19 @@ app.post('/api/tempRecipes/add',(req,res) => {
             if(err) console.log(err)
             else{
                 //add recipe to users myrecipes list
-                myRecipe.exists({ userID: email }).then(exists =>{
-                    if(exists){
+               // myRecipe.exists({ userID: email }).then(exists =>{
+                   // if(exists){
                         console.log('my recipe exists')
                         myRecipe.findOneAndUpdate(
                             { userID: email }, 
-                            { $push: { PendingRecipes: newTempRecipe._id } },{new:true},(err,updatePRec) =>{
+                            { $push: { PendingRecipes: newTempRecipe._id } },{upsert:true,new:true},(err,updatePRec) =>{
                                 if(err) console.log(err);
                                 else console.log(updatePRec)
                             }
                             );
-                    }
+                 /*   }
                     else
-                    {
+                   {
                         console.log('my recipe does not exist')
                         myRecipe.create({userID: email, 
                         $push: { PendingRecipes: newTempRecipe._id }},(err,newPRec) =>{
@@ -462,7 +486,7 @@ app.post('/api/tempRecipes/add',(req,res) => {
                         else console.log(newPRec)
                         })
                     }
-                })
+                })*/
             }
         })
 })
