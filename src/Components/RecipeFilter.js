@@ -60,13 +60,6 @@ export default function RecipeFilter(props) {
     props.setSlider(newVal)
   }
 
-  const allUnchecked = () =>{
-    const { range1,range2,range3,range4,range5,range6 } = props.ranges;
-    if(!range1 && !range2 && !range3 && !range4 && !range5 && !range6)
-      return true;
-    return false;
-  }
-
 
   useEffect(() =>{
     let arr = [];
@@ -83,8 +76,6 @@ export default function RecipeFilter(props) {
       arr.push(121,150);
     if(range6)
       arr.push(150);
-    if(allUnchecked())
-      arr.push(0,30,31,61,90,91,120,121,150)
     
     console.log(arr)
       props.setRangeArr(arr);
@@ -130,7 +121,7 @@ export default function RecipeFilter(props) {
       <PrettoSlider valueLabelDisplay="on" aria-label="pretto slider"
       onChange={handleSlider}
       min={1}
-      max={50}
+      max={100}
       marks={[{value:1,label:'1'}]}
       defaultValue={5} /></Col>
     </div>
