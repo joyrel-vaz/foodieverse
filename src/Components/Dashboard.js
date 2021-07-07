@@ -78,15 +78,16 @@ export default function Dashboard() {
       setPage(newPage);
     };
 
-    const getRecipeData = async() =>{
+    const getMyRecipeData = async() =>{
       const data = await getMyRecipes(currentUser.email);
+      if(data.length > 0)
       setAccepted(data[0].AcceptedRecipes)
       setPending(data[0].PendingRecipes)
       setRejected(data[0].RejectedRecipes)
     }
 
     useEffect(() => {
-      getRecipeData();
+      getMyRecipeData();
     },[])
 
   
