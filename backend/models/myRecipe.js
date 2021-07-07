@@ -19,7 +19,7 @@ var myRecipeSchema = new mongoose.Schema({
       {
         recipeTitle:String,
         comment:String,
-        uploadDate:Date
+        rejectionDate:Date
     }
     ],
 });
