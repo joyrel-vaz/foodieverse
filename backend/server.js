@@ -472,8 +472,14 @@ app.post('/api/tempRecipes/add',(req,res) => {
                         myRecipe.findOneAndUpdate(
                             { userID: email }, 
                             { $push: { PendingRecipes: newTempRecipe._id } },{upsert:true,new:true},(err,updatePRec) =>{
-                                if(err) console.log(err);
-                                else console.log(updatePRec)
+                                if(err) {
+                                    console.log(err);
+                                    return false;
+                                }
+                                else {
+                                    console.log(updatePRec);
+                                    return true;
+                                }
                             }
                             );
                  /*   }
@@ -554,7 +560,7 @@ app.post('/api/tempRecipes/accept', (req,res) =>{
    
         tempRecipe.findByIdAndDelete(recipeID,(err,rec) =>{
             if(err)
-                console.log(err)
+                {console.log(err); return false;}
             else return true;
         })
 })
@@ -567,13 +573,14 @@ app.post('/api/tempRecipes/reject', (req,res) => {
      * add appropriate data to rejected recipes [my recipes]
      * redirect to route to delete from temp
      */
+    const date = new Date().toISOString();
     const recipe = req.body.recipe;
     let rej ={ 
-       comment: req.body.comment
+       comment: req.body.comment,
+       rejectionDate:date,
+       recipeTitle: recipe.recipeTitle
     };
        
-            rej['recipeName'] = recipe.recipeTitle ;
-            console.log(rej)
 
             myRecipe.findOneAndUpdate({userID:recipe.userEmail},
                  { $pull: { PendingRecipes: recipe._id } },{new:true},(err,pen) =>{
@@ -590,13 +597,14 @@ app.post('/api/tempRecipes/reject', (req,res) => {
                    )
 
         tempRecipe.findByIdAndDelete(recipe._id,(err,rec) =>{
-                    if(err)
-                        console.log(err)
+                    if(err){
+                        console.log(err); return false;}
                     else return res.json(true);
                 })
         
 })
 
+//get all pending recipes
 app.get('/api/tempRecipes',(req,res) =>{
     tempRecipe.find({},(err,tFound) => {
         if(err) 
@@ -608,7 +616,7 @@ app.get('/api/tempRecipes',(req,res) =>{
     })
 })
 
-
+//get myrecipes
 app.get('/api/users/:userid/myRecipes',(req,res) =>{
     myRecipe.find({userID: req.params.userid})
     .populate({path: 'AcceptedRecipes', model: 'recipe'})
