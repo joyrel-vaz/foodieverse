@@ -3,13 +3,25 @@ export const getRemedies = () => fetch("/api/home-remedies").then(res => res.jso
 
 export const getRecipes = async (search,cookTimes,servings) => {
     const decoded = decodeURIComponent(search);
+    console.log(decoded)
     let url = '';
-    if(decoded.length > 0)
-        url = `/api/recipes${decoded}&cookTimes=${cookTimes}&servings=${servings}`; 
-    else
-        url = `/api/recipes${decoded}`;
+    if(decoded.length > 0 ){
+        if(cookTimes.length > 0 && servings)
+            url = `/api/recipes${decoded}&cookTimes=${cookTimes}&servings=${servings}`; 
 
-    console.log(url)
+        else if(cookTimes.length > 0 && !servings)
+            url = `/api/recipes${decoded}&cookTimes=${cookTimes}`; 
+
+        else if(cookTimes.length === 0 && servings)
+            url = `/api/recipes${decoded}&servings=${servings}`; 
+            
+        else
+            url = `/api/recipes${decoded}`;        
+    }
+
+    else 
+        url = '/api/recipes'
+        
     const res = await fetch(url);
     console.log(res)
     return await res.json();
@@ -34,11 +46,13 @@ export const getFavRecipes = async (user) =>{
 }
 
 export async function getFavorites(user){
+    console.log(user)
     const res = await fetch(`/api/users/${user}/favorites/show`);
     return await res.json();
 }
 
 export async function addFavorites(user,recipeID){
+    console.log(user,recipeID)
     const res = await fetch(`/api/users/${user}/favorites/add/${recipeID}`);
     return await res.json();
 }
