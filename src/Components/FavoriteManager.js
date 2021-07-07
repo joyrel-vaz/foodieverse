@@ -17,6 +17,29 @@ export function FavoriteManager(props){
       const data = await getFavorites(currentUser.email);  
       setFavs(data[0].Favorites)      
     }
+
+    const addFav = async() => {
+            if(currentUser === null)
+            sendLogin();
+        else
+        {console.log(props.id)
+          setIsLiked(true);
+          setChange(!change)
+          await addFavorites(currentUser.email,props.id);
+        console.log('add to favs')
+}
+    }
+
+    const delFav = async() =>{
+          if(currentUser === null)
+          sendLogin();
+      else
+      {
+        setIsLiked(false);
+        setChange(!change)
+        await delFavorites(currentUser.email,props.id);
+}
+    }
   
     const sendLogin = () =>{
         history.push({
@@ -37,49 +60,33 @@ export function FavoriteManager(props){
     return (
         <div>
         { props.isMyFav === undefined ? 
-            <div>       
+            <div>      
             {isLiked ?
           <Button
               variant="danger"
-              onClick={() => {
-                  if(currentUser === null)
-                    sendLogin();
-                else
-                {delFavorites(currentUser.email,props.id);
-                setIsLiked(false);
-                setChange(!change)}}}>
+              onClick={delFav}>
           <FavoriteIcon />
            </Button>   
            :
            <Button
               variant="light"
-              onClick={() => {
-                if(currentUser === null)
-                    sendLogin();
-                else
-                {addFavorites(currentUser.email,props.id);
-                console.log('add to favs')
-                setIsLiked(true);
-              setChange(!change)}}}>
+              onClick={addFav}>
           <FavoriteIcon />
-           </Button>   }
+           </Button>   
+           }
           </div>
-          :
+            :
           <div>
           <Button
           type="button"
           variant="danger"
-          onClick={() => {
-            if(currentUser === null)
-                sendLogin();  
-            delFavorites(currentUser.email, props.id) ; 
-            console.log('have clicked on delete')
-            props.setChanged(!props.changed)}}
+          onClick={delFav}
           >
-          <FavoriteIcon />
-          </Button></div>
-        }
-                  </div>
+            <FavoriteIcon/>
+          </Button>
+          </div>
+          }
+          </div>
     );
 
 }

@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { Form , Container, Row, Col , Image, Button} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import { FormControl } from 'react-bootstrap';
 import { approveRecipe , rejectRecipe} from '../api';
 import {useAuth} from '../Contexts/AuthContext'
 
@@ -47,41 +47,56 @@ export function UserRecipe(props){
         <Container>
             <Row>
                 <Col>
-                    <Form.Label>Image</Form.Label>
-                        <Image src={recipe.img}
-                        alt="Recipe img"/>
-                    <Form.Label>Recipe Title</Form.Label>
-                        <Form.Control type="text" placeholder={recipe.recipeTitle} readOnly /> 
-                    <Form.Label>Cook Time</Form.Label>
-                        <Form.Control type="text" placeholder={recipe.cookTime} readOnly /> 
-                    <Form.Label>Servings</Form.Label>
-                        <Form.Control type="text" placeholder={recipe.servings} readOnly /> 
-                    <Form.Label>Ingredients</Form.Label>
-                            {ingred.map(i => 
-                            <Form.Control type="text" placeholder={i} readOnly />  
-                            )
-                            }
-                    <Form.Label>Instructions</Form.Label>
-                        <ol>{method.map(m =>
-                            <Form.Control type="text" placeholder={m} readOnly /> 
-                        )}               
-                        </ol>
+                    <Form.Group>
+                            <Image src={recipe.image}
+                            thumbnail
+                            className="h-50 w-25" 
+                            alt="Recipe img"/>
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Recipe Title</Form.Label>
+                            <Form.Control type="text" placeholder={recipe.recipeTitle} readOnly /> 
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Cook Time</Form.Label>
+                            <Form.Control type="text" placeholder={recipe.cookTime} readOnly /> 
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Servings</Form.Label>
+                            <Form.Control type="text" placeholder={recipe.servings} readOnly /> 
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Ingredients</Form.Label>
+                                {ingred.map(i => 
+                                <Form.Control type="text" placeholder={i} readOnly />  
+                                )
+                                }
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Instructions</Form.Label>
+                            <ol>{method.map(m =>
+                                <Form.Control type="text" placeholder={m} readOnly /> 
+                            )}               
+                            </ol>
+                    </Form.Group>
                 </Col>
             </Row>
             { currentUser.email === process.env.REACT_APP_ADMIN1 ||currentUser.email === process.env.REACT_APP_ADMIN2 
         ||currentUser.email === process.env.REACT_APP_ADMIN3 ||currentUser.email === process.env.REACT_APP_ADMIN4 ?          
     <Row>
                 <Col>
-                <Button variant="success" onClick={handleApproval}>Approve Recipe</Button>
-                <Button variant="danger" onClick={showCommentBox}>Reject Recipe</Button>
+                <Button variant="outline-success" className="mr-3" onClick={handleApproval}>Approve Recipe</Button>
+                <Button variant="outline-danger" onClick={showCommentBox}>Reject Recipe</Button>
 
                 {show?
-            <div>
-                <TextareaAutosize aria-label="minimum height" 
-                rowsMin={3} 
-                onChange={handleComment}
-                placeholder="Enter a comment for user" />
-                <Button onClick={handleRejection}>Confirm Rejection</Button>
+            <div className="mt-3">
+                <FormControl as="textarea" placeholder="Enter a comment for user" onChange={handleComment} name="comment" />
+                <Button variant="outline-primary" className="mt-3" onClick={handleRejection}>Confirm Rejection</Button>
             </div>
             :
             <></>     

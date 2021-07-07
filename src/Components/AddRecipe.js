@@ -61,12 +61,12 @@ export default function AddRecipe() {
   };
 
   const addNewRecipe = async(recipe) =>{
-        const result = submitRecipe(currentUser.displayName,currentUser.email,recipe);//returns true or false
+        const result = await submitRecipe(currentUser.displayName,currentUser.email,recipe);//returns true or false
         if(result)
           alert('Recipe submitted successfully')
         else 
           alert('Recipe submission unsuccessful. Please try again later.')
-          history.push('/dashboard')
+          window.location.reload();
   }
 
   const formik = useFormik({
