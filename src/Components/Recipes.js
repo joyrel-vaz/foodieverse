@@ -21,7 +21,7 @@ export default function Recipes () {
     });
     const [slider,setSlider] = React.useState(5)
     const[rangeArr, setRangeArr] = useState([]);
-    
+    const [allergenName,setAllergenName] = React.useState([]);
 
     const fetchRecipes=async()=>{
         try{
@@ -55,6 +55,8 @@ export default function Recipes () {
               slider={slider}
               setSlider={setSlider}
               setRangeArr={setRangeArr}
+              allergenName={allergenName}
+              setAllergenName={setAllergenName}
             /> 
             </Col>
             <Col xs={8} md={9}>
