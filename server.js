@@ -13,7 +13,7 @@ const   express = require('express'),
         Ingredient = require('./models/ingredient'),
         MyRecipe = require('./models/myRecipe'),
         PopularSearch = require('./models/popularSearch'),
-        PORT = 8080;
+        PORT = process.env.PORT || 8080;
 
 
 const dotenv = require('dotenv');
@@ -691,6 +691,18 @@ app.get('/api/popularSearch', (req,res) =>{
         }
     }).limit(12).sort({count:-1})
 })
+
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 
 
 app.listen(PORT, ()=> console.log(`Listening on port ${PORT}`));
