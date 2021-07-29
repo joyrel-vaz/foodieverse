@@ -66,13 +66,14 @@ export function LoginButton() {
     event.preventDefault();
   }
 
-export default function Dashboard() {
+export default function UserProfile() {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [pending,setPending] = useState([]); 
     const [rejected,setRejected] = useState([]); 
     const [accepted,setAccepted] = useState([]); 
+    const [rerender,setRerender] = useState(false);
   
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -88,8 +89,7 @@ export default function Dashboard() {
 
     useEffect(() => {
       getMyRecipeData();
-    },[])
-
+    },[rerender])
   
     const handleChangeRowsPerPage = (event) => {
       setRowsPerPage(+event.target.value);
@@ -135,15 +135,21 @@ export default function Dashboard() {
                             <center>
                                 <Row className="d-flex justify-content-around mt-2">
                                     <Link to="/update-profile" className="btn SendBtn btnpadd">Update Profile</Link>
-                                    <AddRecipe/>
+                                    <AddRecipe
+                                      setRerender={setRerender}
+                                    />
                                     <Link to="/shopping-list" className="btn SendBtn btnpadd">Shopping List</Link>
                                 </Row>
                             </center>
                             </Col>
                             <h2 className="title-dash">My Approved Recipes</h2>
-                                <RecipeCarousel/>
-                            <h2 className="title-dash">My Favourites</h2>
-                                <RecipeCarousel/>
+                                <RecipeCarousel
+                                  recipes={accepted}
+                                  carousel={rerender}
+                                  setCarousel={setRerender}
+                                />
+                            {/*<h2 className="title-dash">My Favourites</h2>
+                                <RecipeCarousel/>*/}
                             <h2 className="title-dash">Pending Recipes</h2>
                             <Paper elevation={3}>
                             <TableContainer className={classes.container}>
@@ -193,7 +199,7 @@ export default function Dashboard() {
                                 <tr>
                                   <th>#</th>
                                   <th>Recipe Title</th>
-                                  <th>Upload Date</th>
+                                  <th>Rejection Date</th>
                                   <th>Comment</th>
                                 </tr>
                               </thead>
@@ -202,7 +208,7 @@ export default function Dashboard() {
                                 <tr>
                                   <td>{index+1}</td>
                                   <td>{rej.recipeTitle}</td>
-                                  <td>{rej.uploadDate}</td>
+                                  <td>{rej.rejectionDate}</td>
                                   <td>{rej.comment}</td>
                                 </tr>
                                 )}
