@@ -13,7 +13,7 @@ const   express = require('express'),
         Ingredient = require('./models/ingredient'),
         MyRecipe = require('./models/myRecipe'),
         PopularSearch = require('./models/popularSearch'),
-        PORT = 8080;
+        PORT = process.env.PORT || 8080;
 
 
 const dotenv = require('dotenv');
