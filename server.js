@@ -13,7 +13,7 @@ const   express = require('express'),
         Ingredient = require('./models/ingredient'),
         MyRecipe = require('./models/myRecipe'),
         PopularSearch = require('./models/popularSearch'),
-        PORT = process.env.PORT || 8080;
+        PORT = 8080;
 
 
 const dotenv = require('dotenv');
@@ -46,6 +46,136 @@ app.get('/api/home-remedies',(req,res) => {
     });
 });
 
+
+app.post('/api/recipes', (req,res) => {
+    //console.log(req.body)
+    let searchArray = [] , obj_arr = [], query, allergies = '',
+    searchTerm = req.body.searchTerm
+    const allergArray = req.body.allergies;
+    
+
+    const 
+          mode = req.body.mode,
+          servings = req.body.servings,
+          cookTime = req.body.cookTimes;
+
+    if(mode === 'Ingredient' && searchTerm.length > 0){
+        searchArray = searchTerm.split(' ');
+        let newSA = searchArray.map(sa => sa.charAt(0).toUpperCase() + sa.slice(1))
+
+    newSA.forEach(sa => {
+        if(sa.length > 0)
+            PopularSearch.findOneAndUpdate({'name': sa},{$inc:{'count':1}},{new:true,upsert:true},
+            (err,ps) => {
+                if(err)
+                    console.log(err)
+                else console.log(ps)
+            }
+            )
+    })        
+    }
+
+    //if cooktime filter is used     
+    if(cookTime.length > 0){ 
+        let obj = {}, i = 0;
+
+        while(i < cookTime.length){
+            if(i === cookTime.length-1)
+                if(cookTime%2 !== 0)
+                    { //last statement 
+                    obj = {cookTime: {$gte:150}};
+                    break;
+                }
+            
+            obj = {$and: [{"cookTime": {$gte: cookTime[i]}},{"cookTime": {$lte: cookTime[i+1]}},]};
+            i += 2 ;
+            
+            obj_arr.push(obj);
+    }}
+   
+   if(searchTerm === undefined || searchTerm === ''){
+    allergies = allergArray.join('|')
+    if(cookTime.length > 0 && servings && allergies.length > 0) //111
+    query = {$and: [
+        {$or: obj_arr},
+        {ingredients : { $not: { $regex:  allergies, $options: 'i'}}},
+        {'maxServings':{$lte: servings}}]}
+
+    else if(cookTime.length > 0 && !servings && allergies.length > 0) //101
+        query = 
+        {
+            $and: [{$or: obj_arr},{ingredients : { $not: { $regex:  allergies, $options: 'i'}}}]
+        }
+        
+    
+    else if(!cookTime.length > 0 && !servings && allergies.length > 0) //001
+        query = 
+        {ingredients : { $not: { $regex:  allergies, $options: 'i'}}}
+    
+        
+    else if(!cookTime.length > 0 && servings && allergies.length > 0) //011
+        query = {$and: [{'maxServings':{$lte: servings}},
+        {ingredients : { $not: { $regex:  allergies, $options: 'i'}}}
+    ]}
+
+    else if(cookTime.length > 0 && !servings && allergies.length === 0) //100
+        query = {$or: obj_arr}
+    
+    else if(!cookTime.length > 0 && servings && allergies.length === 0) //010
+        query = {'maxServings':{$lte: servings}}
+    
+    else query = {} //000
+
+        //console.log(query)
+
+    Recipe.find(query,(err,recipesFound) =>{
+        if(err) console.log(err);
+        else {
+        //console.log(recipesFound)
+        res.json(recipesFound);
+        }
+    }).limit(12).sort({'likes': -1}) //descending order sort based on number of likes
+}
+
+else{ 
+   // console.log('in else')
+    allergies = allergArray.map(aa => '-' + aa).join(' ');
+    searchTerm += ' ' + allergies
+
+    if(cookTime.length > 0 && servings)
+        query = {$and: [
+            {$or: obj_arr},
+            {'maxServings':{$lte: servings}},
+            {$text : {$search : searchTerm,$caseSensitive :false}}]} ;
+    
+    else if(cookTime.length > 0 && !servings)
+        query = {$and: [
+            {$or: obj_arr},
+            {$text : {$search : searchTerm,$caseSensitive :false}}]} ;  
+            
+    else if(!cookTime.length > 0 && servings)
+        query = {$and: [
+        {'maxServings':{$lte: servings}},
+        {$text : {$search : searchTerm,$caseSensitive :false}}]} ;
+    
+    else 
+        query = {$text : {$search : searchTerm,$caseSensitive :false}} ;
+
+//console.log(query)
+    Recipe.find( query ,  
+        { score : { $meta: "textScore" } } , 
+        function(err,recipesFound)
+        {
+            if(err) console.log(err);
+            else {
+            res.json(recipesFound);
+            }
+        }).limit(12).sort({ score : { $meta : 'textScore' } });
+}
+
+})
+
+/*
 app.get('/api/recipes',(req,res) => {
     let searchTerm = req.query.search_query;
     let mode = req.query.mode;
@@ -68,8 +198,8 @@ app.get('/api/recipes',(req,res) => {
     })        
     }
 
-    
-    if(req.query.cookTimes){ //if cooktime filter is used 
+    //if cooktime filter is used 
+    if(req.body.cookTimes){ 
         cookTime = req.query.cookTimes.split(',').map(ct => parseInt(ct)); 
         let obj = {}, i = 0;
 
@@ -87,7 +217,8 @@ app.get('/api/recipes',(req,res) => {
             obj_arr.push(obj);
     }}
     
-    if(req.query.servings){ //if servings filter is used
+    //if servings filter is used
+    if(req.query.servings){ 
          servings = parseInt(req.query.servings);
     }
 
@@ -147,6 +278,7 @@ app.get('/api/recipes',(req,res) => {
                 }
             }).limit(12).sort({ score : { $meta : 'textScore' } });
 }});
+*/
 
 app.get('/api/recipes/:recipeID', (req,res)=>{
     Recipe.findById(req.params.recipeID,(err,recFound) =>{
@@ -157,6 +289,9 @@ app.get('/api/recipes/:recipeID', (req,res)=>{
         }
     })
 })
+
+
+
 
 app.post('/api/createShop',(req,res) => {
     console.log("In createshop");
@@ -224,21 +359,21 @@ app.get('/api/userShopList/del/:id/:item',(req,res) => {
 });
 
 app.get('/api/users/:userid/favorites/add/:id' , (req,res) => {
-    console.log(req.params.userid,req.params.id)
+    //console.log(req.params.userid,req.params.id)
     //favorite.exists({ userID: req.params.userid }).then(exists =>{
         //if(exists){
             Favorite.findOneAndUpdate(
                 { userID: req.params.userid }, 
                 { $addToSet: { Favorites: req.params.id } },{new:true,upsert:true},(err,updateFav) =>{
                     if(err) console.log(err);
-                    else console.log(updateFav);
+                    else{
+                        Recipe.findByIdAndUpdate(req.params.id,{$inc:{likes:1}},{new:true},(err,recUp) =>{
+                            if(err) console.log(err)
+                            //else console.log(recUp)
+                    })
+                    }
                 }
                 );
-
-            Recipe.findByIdAndUpdate(req.params.id,{$inc:{likes:1}},{new:true},(err,recUp) =>{
-                    if(err) console.log(err)
-                    else console.log(recUp)
-            })
        /* }
         else
         {favorite.create({userID: req.params.userid, 
@@ -286,7 +421,7 @@ app.get('/api/users/:userid/favorites/del/:id' , (req,res) => {
 
             Recipe.findByIdAndUpdate(req.params.id,{$inc:{likes:-1}},{new:true},(err,recUp) =>{
                 if(err) console.log(err)
-                else console.log(recUp)
+               // else return true;
         })
 })
 
@@ -372,15 +507,16 @@ app.post('/api/surprise-recipe',(req,res)=>{
     })
     
     const allergens = allergenArr.join(' ') ;
-    const searchTerm  = req.body.ing + " ";
-    const filter = { $text: { $search: searchTerm + allergens , $caseSensitive :false} };
+    const searchTerm  = req.body.ing;
+    const filter = { ingredients: { $regex: searchTerm , $options :'i'} };
     Recipe.aggregate([
       { $match: filter },
-      { $sort: { score: { $meta: "textScore" } } },
-      {$sample : {size:10}}
+      {$sample : {size:1}}
     ]).then((succ,err)=> {
         if(err) console.log(err)
-      else return res.json(succ[0])
+      else if(succ.length > 0)
+            res.json(succ[0])
+    else res.json({})
     });
 });
 
@@ -518,11 +654,11 @@ app.post('/api/tempRecipes/add',(req,res) => {
                             { $push: { PendingRecipes: newTempRecipe._id } },{upsert:true,new:true},(err,updatePRec) =>{
                                 if(err) {
                                     console.log(err);
-                                    return false;
+                                    res.json(false);
                                 }
                                 else {
-                                    console.log(updatePRec);
-                                    return true;
+                                    //console.log(updatePRec);
+                                    res.json(true);
                                 }
                             }
                             );
@@ -577,7 +713,7 @@ app.post('/api/tempRecipes/accept', (req,res) =>{
                         $push: { AcceptedRecipes: vnewRecipe._id }},
                         {new:true},(err2,accRecipe) =>{
                             if(err2) console.log(err2);
-                            else console.log(accRecipe)
+                           // else console.log(accRecipe)
                         }
                         );
 
@@ -593,7 +729,7 @@ app.post('/api/tempRecipes/accept', (req,res) =>{
                                 {upsert:true},
                                 (err1,addedIngs) =>{
                                     if(err1) console.log(err1);
-                                    else console.log(addedIngs)
+                                    //else console.log(addedIngs)
                                 }
                                 )
                         }
@@ -604,8 +740,8 @@ app.post('/api/tempRecipes/accept', (req,res) =>{
    
         TempRecipe.findByIdAndDelete(recipeID,(err,rec) =>{
             if(err)
-                {console.log(err); return false;}
-            else return true;
+                {console.log(err); res.json(false);}
+            else res.json(true);
         })
 })
 
@@ -629,14 +765,14 @@ app.post('/api/tempRecipes/reject', (req,res) => {
             MyRecipe.findOneAndUpdate({userID:recipe.userEmail},
                  { $pull: { PendingRecipes: recipe._id } },{new:true},(err,pen) =>{
                      if(err) console.log(err);
-                     else console.log(pen)
+                     //else console.log(pen)
                  }
                 )
 
             MyRecipe.findOneAndUpdate({userID:recipe.userEmail},
                     { $push: { RejectedRecipes: rej } },{new:true},(err,reje) =>{
                         if(err) console.log(err);
-                        else console.log(reje)
+                        //else console.log(reje)
                     }
                    )
 
@@ -663,13 +799,13 @@ app.get('/api/tempRecipes',(req,res) =>{
 //get myrecipes
 app.get('/api/users/:userid/myRecipes',(req,res) =>{
     MyRecipe.find({userID: req.params.userid})
-    .populate({path: 'AcceptedRecipes', model: 'recipe'})
-    .populate({path: 'PendingRecipes', model: 'tempRecipe'}).exec((err,myrecs) => {
+    .populate({path: 'AcceptedRecipes', model: 'Recipe'})
+    .populate({path: 'PendingRecipes', model: 'TempRecipe'}).exec((err,myrecs) => {
         if(err)
             console.log(err)
             
-        else {console.log(myrecs)
-        return res.json(myrecs);}
+        //else {console.log(myrecs)
+        return res.json(myrecs);//}
     })
 })
 
@@ -692,18 +828,19 @@ app.get('/api/popularSearch', (req,res) =>{
     }).limit(12).sort({count:-1})
 })
 
+app.get('/api/users/:userid/allergens' , (req,res)=>{
+    User.findOne({email:req.params.userid},(err,foundUser) => {
+        if(err) console.log(err)
+        else res.json(foundUser.Allergens)
+    })
+})
 
-// Serve static assets if in production
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static('client/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
-
-
+app.get('/api/ingredients' , (req,res)=>{
+    Ingredient.find({},(err,foundIng) => {
+        if(err) console.log(err)
+        else res.json(foundIng[0].Ingredients)
+    })
+})
 
 app.listen(PORT, ()=> console.log(`Listening on port ${PORT}`));
 
