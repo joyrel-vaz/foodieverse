@@ -15,6 +15,18 @@ class MobileMenu extends Component {
   state = { isOpen: false ,currentUser:null , logout:null, error:''}
   toggle = () => this.setState({ isOpen: !this.state.isOpen })
 
+  constructor(props){
+    super(props);
+    this.state = { 
+    isOpen: false,
+    currentUser : null,
+    logout: null,
+    error :''};
+
+   this.handleLogout = this.handleLogout.bind(this);
+     
+  }
+
   async handleLogout(){
     try{
     await this.state.logout()
@@ -305,6 +317,7 @@ class MobileMenu extends Component {
         <Container>
           <MobileMenu 
           currentUser={this.state.currentUser}
+          logout={this.state.logout}
           hideNav={this.hideNav} />
 
           <Nav className="nav-n">

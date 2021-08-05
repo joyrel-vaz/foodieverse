@@ -139,7 +139,7 @@ export default function Login (){
                 <br></br>
                 <Col>
                     <Row className="d-flex align-items-center justify-content-around ">
-                        <button class="btn btn-outline-dark" onClick={googleLogin}>
+                        <button className="btn btn-outline-dark" onClick={googleLogin}>
                             <Image src="https://img.icons8.com/color/24/000000/google-logo.png" /> Login with Google
                         </button>
 
