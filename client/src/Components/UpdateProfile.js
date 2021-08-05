@@ -16,9 +16,10 @@ export default function UpdateProfile (){
   const [tags, setTags] = React.useState([]);
 
   const addTags = event => {
-    if (event.keyCode === 32 && event.target.value !== "") {
-        if(!tags.includes(event.target.value))
-            setTags([...tags, event.target.value.trim()]);
+    let word = event.target.value;
+    let len = word.length - 1;
+    if (word.charAt(len) === ' ' && word !== "") {
+        setTags([...tags, event.target.value.trim()]);
         event.target.value = "";
     }
 };
@@ -79,15 +80,20 @@ const removeTags = index => {
         }
 
         const newEmail = emailRef.current;
+        promises.push(setProfile(currentUser.email,newEmail.value, tags))
+
         Promise.all(promises)
             .then(()=>{
-                history.push("/");
+                alert('Update successful!')
             })
             .catch((error)=>{
+                alert('Update unsuccessful! Please try again')
                 setError(error.message)
             })
-            .finally(()=>{
-                submitProfile(newEmail);
+            .finally(()=>{ 
+                setLoading(false);
+                history.push("/");
+               
             })
     }
 
