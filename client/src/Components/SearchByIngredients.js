@@ -114,6 +114,7 @@ const removeChipTags =(index,tag) => {
                 name="searchTerm"
                 list="ingredientNames"
                 placeholder="Press space to add tags"
+                onTouchEnd={event => addTags(event)}
                 onKeyUp={event => addTags(event)}
             />
             <datalist id="ingredientNames">
