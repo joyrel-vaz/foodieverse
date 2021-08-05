@@ -120,14 +120,9 @@ export default function UserProfile() {
                     <div className="text-center mb-4" >
                         {error && <Alert variant="danger">{error}</Alert>}
                         <h2 className="mb-2">Hello {currentUser.displayName}!</h2>
-                        <strong>Email:</strong> {currentUser.email}
 
                         {currentUser.emailVerified ?
                         <>
-                         <Button className="SendBtn right-align" onClick={handleLogOut}>
-                                        Log Out
-                                    </Button>
-                                    <br/>
                             <Col>
                             <center>
                                 <Row className="d-flex justify-content-around mt-2">
