@@ -138,7 +138,7 @@ app.post('/api/recipes', (req,res) => {
         //console.log(recipesFound)
         res.json(recipesFound);
         }
-    }).limit(60).sort({'likes': -1}) //descending order sort based on number of likes
+    }).limit(50).sort({'likes': -1}) //descending order sort based on number of likes
 }
 
 else{ 
@@ -174,7 +174,7 @@ else{
             else {
             res.json(recipesFound);
             }
-        }).limit(60).sort({ score : { $meta : 'textScore' } });
+        }).limit(50).sort({ score : { $meta : 'textScore' } });
 }
 
 })
