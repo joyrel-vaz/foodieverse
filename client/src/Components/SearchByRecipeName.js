@@ -30,7 +30,7 @@ export default function SearchByName(){
       >
         <div style={{maxWidth:"400px" , padding:"20px"}}>
           <Form onKeyDown={handleKeyDown} inline className="form-center display-block">
-            <FormControl type="text" placeholder="Search" value={searchTerm} className="mr-sm-2 inp display-block" onChange={handleChange}/>
+            <FormControl type="text" placeholder="Search" value={searchTerm} className="mr-sm-2 inp display-block my-3" onChange={handleChange}/>
             <Button type="button" onClick={handleClick} className="btn-red"><SearchIcon className="white-icon"/></Button>
           </Form>
         </div>
