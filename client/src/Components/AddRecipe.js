@@ -80,7 +80,7 @@ export default function AddRecipe(props) {
       {/* <button type="button" onClick={handleOpen}>
         react-transition-group
       </button> */}
-      <Link className="btn SendBtn" onClick={handleClickOpen('paper')}>Add Recipe</Link>
+      <Link className="btn SendBtn btnpadd" onClick={handleClickOpen('paper')}>Add Recipe</Link>
       <Dialog
         open={open}
         onClose={handleClose}
