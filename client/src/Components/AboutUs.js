@@ -101,7 +101,7 @@ export default class AboutUs extends Component {
             </div>
           </div>
         </section>
-        <section className="section bg-gray">
+        {/* <section className="section bg-gray">
           <div className="container">
             <div className="row">
             <div className="col-lg-3 col-sm-6 my-lg-0 my-3">
@@ -146,7 +146,7 @@ export default class AboutUs extends Component {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
       </div>
             </>
         )

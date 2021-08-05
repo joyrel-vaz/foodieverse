@@ -50,7 +50,7 @@ export default function Card(props) {
                   surprise={props.surprise}
                   rerender={props.rerender}
                 />  
-        <SocialMediaIntegration title={props.title} url={`localhost:3000/recipe/${props.id}`} />
+        <SocialMediaIntegration title={props.title} url={`foodieverse.herokuapp.com/recipe/${props.id}`} />
 
       <MealHandler
       recipe={props}
