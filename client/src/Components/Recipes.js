@@ -30,7 +30,7 @@ export default function Recipes () {
 
     const getUserAllergens = async() =>{
       const data = await getAllergens(currentUser.email)
-      console.log(data)
+     // console.log(data)
      setAllergenName(data)
     }
     

@@ -178,8 +178,8 @@ export async function postImgbb(img){
 export async function submitRecipe(username,email,recipe)
 {
     const obj ={username:username,email:email,recipe:recipe}
-    console.log('in add api')
-    console.log(obj);
+    //console.log('in add api')
+    //console.log(obj);
    const res = await fetch(`/api/tempRecipes/add`,
     { method: 'POST', 
     headers: {'Content-Type':'application/json',
@@ -208,7 +208,7 @@ export async function approveRecipe(recipe)
 export async function rejectRecipe(recipe,comment)
 {
     const obj ={recipe:recipe, comment:comment}
-    console.log(obj);
+    //console.log(obj);
    const res = await fetch(`/api/tempRecipes/reject`,
     { method: 'POST', 
     headers: {'Content-Type':'application/json',
@@ -220,7 +220,7 @@ export async function rejectRecipe(recipe,comment)
 export async function getMyRecipes(userid){
     const res = await fetch(`/api/users/${userid}/myRecipes`);
     const data = await res.json();
-    console.log(data);
+    //console.log(data);
     return data;
 }
 
@@ -232,27 +232,27 @@ export function getImgbb(url){
 export async function getPopularChips(){
     const res = await fetch(`/api/popularSearch`);
     const data = await res.json();
-    console.log(data);
+    //console.log(data);
     return data;
 }
 
 export async function getAllergens(email){
     const res = await fetch(`/api/users/${email}/allergens`);
     const data = await res.json();
-    console.log(data);
+    //console.log(data);
     return data;
 }
 
 export async function getIngredients(){
     const res = await fetch(`/api/ingredients`);
     const data = await res.json();
-    console.log(data);
+    //console.log(data);
     return data;
 }
 
 export async function setProfile(currentEmail,newEmail,allergenList){
     const obj = {oldEmail: currentEmail, newEmail:newEmail, allergies: allergenList};
-    console.log(obj)
+    //console.log(obj)
     const res = await fetch(`/api/users/:userid/edit`,
     { method: 'POST', 
     headers: {'Content-Type':'application/json',

@@ -38,7 +38,7 @@ export default function SmallChips(props) {
 
   const getChips = async() =>{
       let chips = await getPopularChips(); //array of chip names and counts
-      console.log(chips)
+      //console.log(chips)
       setChipData(chips)
   }
 
@@ -47,8 +47,6 @@ export default function SmallChips(props) {
       return () => setChipData(false);
   },[])
 
-
-  useEffect(() => console.log(chipData),[chipData])
 
   const removeChip = (chipToDelete) => {
     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
