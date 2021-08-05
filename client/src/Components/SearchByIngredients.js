@@ -24,16 +24,10 @@ export default function SearchByIng () {
   const [tags, setTags] = React.useState([]);
 
   const addTags = event => {
-    if (event.keyCode === 32 && event.target.value !== "") {
+    if (event.target.value.charCodeAt(0) === 32 && event.target.value !== "") {
         setTags([...tags, event.target.value]);
         event.target.value = "";
     }
-};
-
-const addTagsMob = event => {
-  if (event.target.value !== "") {
-      setTags([...tags, event.target.value]);
-      event.target.value = "";
 };
 
 const reformSearchTerm = () =>{
@@ -120,7 +114,6 @@ const removeChipTags =(index,tag) => {
                 name="searchTerm"
                 list="ingredientNames"
                 placeholder="Press space to add tags"
-                onTouchEnd={event => addTagsMob(event)}
                 onKeyUp={event => addTags(event)}
             />
             <datalist id="ingredientNames">
