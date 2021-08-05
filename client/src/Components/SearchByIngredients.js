@@ -30,6 +30,12 @@ export default function SearchByIng () {
     }
 };
 
+const addTagsMob = event => {
+  if (event.target.value !== "") {
+      setTags([...tags, event.target.value]);
+      event.target.value = "";
+};
+
 const reformSearchTerm = () =>{
   tags.forEach(tag => {
     if(typeof(tag) === 'object') {
@@ -114,7 +120,7 @@ const removeChipTags =(index,tag) => {
                 name="searchTerm"
                 list="ingredientNames"
                 placeholder="Press space to add tags"
-                onTouchEnd={event => addTags(event)}
+                onTouchEnd={event => addTagsMob(event)}
                 onKeyUp={event => addTags(event)}
             />
             <datalist id="ingredientNames">
