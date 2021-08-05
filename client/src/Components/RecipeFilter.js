@@ -115,7 +115,7 @@ const names = [
 
 
   useEffect(() =>{
-    console.log(props)
+    //console.log(props)
     let arr = [];
     const { range1,range2,range3,range4,range5,range6 } = props.ranges;
     if(range1)
@@ -131,7 +131,7 @@ const names = [
     if(range6)
       arr.push(150);
     
-    console.log(arr)
+    //console.log(arr)
       props.setRangeArr(arr);
 
   },[props.ranges])

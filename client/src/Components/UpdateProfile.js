@@ -26,7 +26,7 @@ export default function UpdateProfile (){
 
 const getMyAllergies = async() =>{
     const res = await getAllergens(currentUser.email);
-    console.log(res)
+    //console.log(res)
     setTags(res)
 }
 
@@ -36,11 +36,9 @@ const submitProfile = async(newEmail) => {
         if(newEmail.value !== undefined)
     {
     const data = await setProfile(currentUser.email,newEmail.value,tags);
-    console.log(data);
+    //console.log(data);
  }
 }
-
-useEffect(()=> console.log(tags) ,[tags])
 
 const removeTags = index => {
     setTags([...tags.filter(tag => tags.indexOf(tag) !== index)]);

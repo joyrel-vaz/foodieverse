@@ -41,7 +41,7 @@ export default function Recipes () {
 
     const fetchRecipes=async()=>{
         try{
-          console.log('in fetch rec')
+          //console.log('in fetch rec')
           const search = location.state ? location.state.search : '' ;
          const rec = await getRecipes(search,rangeArr,slider,mode,allergenName);
          setRecipes(rec);
@@ -51,7 +51,7 @@ export default function Recipes () {
       }
 
       useEffect(() => {
-        console.log('fetching again')
+        //console.log('fetching again')
         if(location.state !== undefined)
           setMode(location.state.mode)
           fetchRecipes();

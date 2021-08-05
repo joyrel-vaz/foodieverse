@@ -290,7 +290,7 @@ export default function SurpriseRecipes() {
     if(recipe)
     {const data = await getMealRecipe(recipe._id);
     setRecipe(data);
-      console.log(data)
+      //console.log(data)
   }
   }
 
@@ -298,7 +298,7 @@ export default function SurpriseRecipes() {
   },[rerender])
 
   useEffect(() =>{
-    console.log(allergens)
+    //console.log(allergens)
     if(allergens.includes(randomIng))
       setRandomIng('');
   },[allergens])
@@ -306,7 +306,7 @@ export default function SurpriseRecipes() {
   const handleChange = (event) => {
     let tmp = allergens;
     tmp.push(event.target.value);
-    console.log(tmp)
+    //console.log(tmp)
     alert(event.target.value)
     setAllergens(tmp);
   };

@@ -11,7 +11,7 @@ export default function SharedRecipe(){
 
     const getRecipe = async() =>{
         const data = await getMealRecipe(recipeid); 
-        console.log(data)   
+        //console.log(data)   
         setMethod(data.instructions)
         setIngred(data.ingredients.split('$'));
         setRecipe(data);

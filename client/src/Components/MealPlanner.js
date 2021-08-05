@@ -126,7 +126,7 @@ class AppointmentFormContainerBasic extends React.PureComponent {
   }
 
   changeAppointment({ field, changes }) {
-    console.log('chaniging stff');
+   // console.log('chaniging stff');
     const nextChanges = {
       ...this.getAppointmentChanges(),
       [field]: changes,
@@ -137,7 +137,7 @@ class AppointmentFormContainerBasic extends React.PureComponent {
   }
 
   commitAppointment(type) {
-      console.log('commit app')
+     // console.log('commit app')
     const { commitChanges } = this.props;
     const appointment = {
       ...this.getAppointmentData(),
@@ -429,7 +429,7 @@ class MealPlanner extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    console.log('update')
+    //('update')
     this.appointmentForm.update();
   }
 
@@ -442,7 +442,7 @@ class MealPlanner extends React.PureComponent {
   };
 
   onAddedAppointmentChange(addedAppointment) {
-    console.log('adddin')
+    //console.log('adddin')
     if(this.state.locState)
         addedAppointment.title = this.state.locState.recipe.title;
     this.setState({ addedAppointment });
@@ -472,7 +472,7 @@ class MealPlanner extends React.PureComponent {
   }
 
  async commitDeletedAppointment() {
-      console.log('deleting stuff')
+      //('deleting stuff')
       const {deletedAppointmentId , currentUser} = this.state;
       const allData = await delMeal(currentUser.email,deletedAppointmentId);
       this.setState({data:allData});
@@ -489,7 +489,7 @@ class MealPlanner extends React.PureComponent {
      this.setState({data : [...data , datum]})
     }
     if(changed){
-     console.log(changed)
+     //console.log(changed)
      let id = null;
 
      for(let i = 0 ; i < data.length ; i++){
@@ -501,24 +501,24 @@ class MealPlanner extends React.PureComponent {
          }
      }
 
-     console.log(id);
+     //console.log(id);
      const allData = await editMeal(currentUser.email, id,changed[id]);
      this.setState({data : allData})
     }
     if(deleted !== undefined){
         this.setDeletedAppointmentId(deleted);
         this.toggleConfirmationVisible();
-     console.log(deleted)              
+     //console.log(deleted)              
     }
     return {data}
   }
 
   async componentDidMount(){
     const {currentUser} = this.state;
-    console.log(currentUser.email)
+    //console.log(currentUser.email)
     const myMeals = await getMeals(currentUser.email)
     this.setState({data : myMeals})
-    console.log(this.state.data)
+    //console.log(this.state.data)
 }
 
 

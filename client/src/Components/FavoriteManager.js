@@ -32,13 +32,13 @@ export function FavoriteManager(props){
           setIsLiked(true); //illusion of faster response
           addFavorites(currentUser.email,props.id);
           setChange(!change)
-        console.log('add to favs')
+       // console.log('add to favs')
 }
     }
 
     const delFav = async() =>{
         setIsLiked(false); //illusion of faster response
-        console.log('deleting')
+       // console.log('deleting')
         if(props.surprise)
           props.surprise(!props.rerender)
 
@@ -46,15 +46,15 @@ export function FavoriteManager(props){
           props.setCarousel(!props.carousel)
           
          delFavorites(currentUser.email,props.id);
-         console.log('deleted')
+         //console.log('deleted')
          setChange(!change)
         
     }
   
     const delMyFav = async() =>{
-      console.log('deleting')
+      //console.log('deleting')
        delFavorites(currentUser.email,props.id);
-       console.log('deleted')  
+      // console.log('deleted')  
       props.setChanged(!props.changed)
         
   }
@@ -70,7 +70,7 @@ export function FavoriteManager(props){
     },[favs])
 
     useEffect(() =>{
-      console.log('in change')
+      //console.log('in change')
         if(currentUser !== null)
       getAll();
     },[change])
