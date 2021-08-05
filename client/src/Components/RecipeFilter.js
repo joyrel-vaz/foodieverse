@@ -202,6 +202,7 @@ const names = [
           <TextField {...params} variant="outlined" label="Allergens" placeholder="Allergen" />
         )}
         />
+        <br></br>
       
          {/*<Select
           multiple
