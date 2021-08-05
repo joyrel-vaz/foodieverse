@@ -23,7 +23,10 @@ if (result.error) {
     throw result.error;
 }*/
 
-app.use(express.json())
+// Instead of using body-parser middleware, use the new Express implementation
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
+
 app.use(cors());
 
 const imgApiKey=process.env.IMAGE_API_KEY;
