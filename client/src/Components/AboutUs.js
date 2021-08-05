@@ -34,13 +34,26 @@ export default class AboutUs extends Component {
                   <p>The Universe of Recipes for Foodies All Over!</p>
                   <br />
                   <h4 className="font-weight-bold" style={{color:"#C90F03"}}>How we can help?</h4>
-                  <p>You have the ingredients, we have the recipes! Together we ensure that you have the most cherishing meals of your life! With a wide variety of cuisines and ingredients, we take care of your needs and cravings. Features like Shopping List, Meal Planner and Surprise Recipe are just an added beenfit!</p>
+                  <p>You have the ingredients, we have the recipes! Together we ensure that you have the most cherishing meals of your life! With a wide variety of cuisines and ingredients, we take care of your needs and cravings. Features like Shopping List, Meal Planner and Surprise Recipe are just added benefits!</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
         <Demo/>     
+        <section className="section"style={{paddingTop:'4rem'}}>
+          <div className="container">
+              <center>
+                <div className="about-content">
+                  <h3 className="font-weight-bold" style={{color:"#C90F03"}}>Sources</h3>
+                  <h4 className="font-weight-bold" style={{color:"black"}}>Dadi Ke Nuskhe</h4>
+                  <p>Home Remedies by Dr. Vilas Orosakar (Rahul Publications)</p>
+                  <h4 className="font-weight-bold" style={{color:"black"}}>Recipes</h4>
+                  <p>AllRecipes.com</p>
+                </div>
+              </center>
+          </div>
+        </section>
         <section className="mb-5">
           <div className="container">
             <div className="row">

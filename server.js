@@ -84,8 +84,9 @@ app.post('/api/recipes', (req,res) => {
             if(i === cookTime.length-1)
                 if(cookTime%2 !== 0)
                     { //last statement 
-                    obj = {cookTime: {$gte:150}};
-                    break;
+                        obj = {cookTime: {$gte:151}};
+                        obj_arr.push(obj);
+                        break;
                 }
             
             obj = {$and: [{"cookTime": {$gte: cookTime[i]}},{"cookTime": {$lte: cookTime[i+1]}},]};
