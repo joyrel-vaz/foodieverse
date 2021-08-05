@@ -24,7 +24,9 @@ export default function SearchByIng () {
   const [tags, setTags] = React.useState([]);
 
   const addTags = event => {
-    if (event.target.value.charCodeAt(0) === 32 && event.target.value !== "") {
+    let word = event.target.value;
+    let len = word.length - 1;
+    if (word.charAt(len) === ' ' && word !== "") {
         setTags([...tags, event.target.value]);
         event.target.value = "";
     }
@@ -114,7 +116,7 @@ const removeChipTags =(index,tag) => {
                 name="searchTerm"
                 list="ingredientNames"
                 placeholder="Press space to add tags"
-                onKeyUp={event => addTags(event)}
+                onChange={event => addTags(event)}
             />
             <datalist id="ingredientNames">
               <option value="Potato"/>
