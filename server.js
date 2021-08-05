@@ -12,6 +12,7 @@ const   express = require('express'),
         User = require('./models/user'),
         Ingredient = require('./models/ingredient'),
         MyRecipe = require('./models/myRecipe'),
+        path = require('path'),
         PopularSearch = require('./models/popularSearch'),
         PORT = process.env.PORT || 8080;
 
