@@ -67,7 +67,7 @@ class MobileMenu extends Component {
             <NavLink href="/recipes" className="navL">Recipes</NavLink>
           </NavItem>
           <NavItem className="nav-item-m">
-            <NavLink className="navL">Dadi Ke Nuske</NavLink>
+            <NavLink href="/home-remedies" className="navL">Dadi Ke Nuske</NavLink>
           </NavItem>
           {/* <NavItem className="nav-item-m">
             <NavLink href="/foodium" className="navL">Foodium</NavLink>
@@ -281,7 +281,7 @@ class MobileMenu extends Component {
 
 
   static getDerivedStateFromProps(props,state) {
-    console.log(props)
+    //console.log(props)
     return {
       currentUser:props.currentUser,
       logout:props.logout,
