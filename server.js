@@ -16,12 +16,12 @@ const   express = require('express'),
         PopularSearch = require('./models/popularSearch'),
         PORT = process.env.PORT || 8080;
 
-/*
+
 const dotenv = require('dotenv');
 const result = dotenv.config();
 if (result.error) {
     throw result.error;
-}*/
+}
 
 // Instead of using body-parser middleware, use the new Express implementation
 app.use(express.json({limit: '50mb'}));
@@ -55,7 +55,7 @@ app.post('/api/recipes', (req,res) => {
     let searchArray = [] , obj_arr = [], query, allergies = '',
     searchTerm = req.body.searchTerm
     const allergArray = req.body.allergies;
-    
+    //console.log(req.body)
 
     const 
           mode = req.body.mode,
@@ -84,7 +84,7 @@ app.post('/api/recipes', (req,res) => {
 
         while(i < cookTime.length){
             if(i === cookTime.length-1)
-                if(cookTime%2 !== 0)
+                if(cookTime.length%2 !== 0)
                     { //last statement 
                     obj = {cookTime: {$gte:151}};
                     obj_arr.push(obj);
