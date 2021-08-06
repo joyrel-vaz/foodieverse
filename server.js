@@ -16,13 +16,13 @@ const   express = require('express'),
         PopularSearch = require('./models/popularSearch'),
         PORT = process.env.PORT || 8080;
 
-
+/*
 const dotenv = require('dotenv');
 const result = dotenv.config();
 if (result.error) {
     throw result.error;
 }
-
+*/
 
 // Instead of using body-parser middleware, use the new Express implementation
 app.use(express.json({limit: '50mb'}));
