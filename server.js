@@ -16,13 +16,13 @@ const   express = require('express'),
         PopularSearch = require('./models/popularSearch'),
         PORT = process.env.PORT || 8080;
 
-/*
+
 const dotenv = require('dotenv');
 const result = dotenv.config();
 if (result.error) {
     throw result.error;
 }
-*/
+
 
 // Instead of using body-parser middleware, use the new Express implementation
 app.use(express.json({limit: '50mb'}));
@@ -833,7 +833,9 @@ app.get('/api/popularSearch', (req,res) =>{
 app.get('/api/users/:userid/allergens' , (req,res)=>{
     User.findOne({email:req.params.userid},(err,foundUser) => {
         if(err) console.log(err)
-        else res.json(foundUser.Allergens)
+        else if(foundUser !== null)
+            res.json(foundUser.Allergens)
+        else res.json([])
     })
 })
 
