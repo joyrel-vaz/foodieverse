@@ -401,7 +401,7 @@ app.get('/api/users/:userid/favorites/show' , (req,res) => {
                 }
                 );
         }
-        else return [];
+        else res.json([]);
     })
 
 })
