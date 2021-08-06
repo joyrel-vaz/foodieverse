@@ -468,7 +468,7 @@ app.get('/api/users/:userid/mealPlanner/show',(req,res) =>{
                     }
                 })
         }
-        else return [];
+        else res.json([]);
     })
 })
 
