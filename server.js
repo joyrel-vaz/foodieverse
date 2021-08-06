@@ -397,7 +397,7 @@ app.get('/api/users/:userid/favorites/show' , (req,res) => {
                     if(err) console.log(err);
                     //console.log(allFavs[0].Favorites)
                     else 
-                    res.send(allFavs)
+                    res.json(allFavs)
                 }
                 );
         }
