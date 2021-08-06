@@ -19,7 +19,7 @@ export default function UpdateProfile (){
     let word = event.target.value;
     let len = word.length - 1;
     if (word.charAt(len) === ' ' && word !== "") {
-        setTags([...tags, event.target.value.trim()]);
+        setTags([...tags, event.target.value]);
         event.target.value = "";
     }
 };
